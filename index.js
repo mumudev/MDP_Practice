@@ -66,6 +66,7 @@ var bindMethod = {
                 break;
         }
     },
+
     delete: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
@@ -75,6 +76,7 @@ var bindMethod = {
             }
         }
     },
+
     changeBgColor: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
@@ -94,6 +96,7 @@ var bindMethod = {
             }
         }
     },
+
     upFontSize: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
@@ -105,6 +108,7 @@ var bindMethod = {
             }
         }
     },
+
     downFontSize: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
@@ -116,6 +120,7 @@ var bindMethod = {
             }
         }
     }
+    
 };
 
 var baseMethod = {
