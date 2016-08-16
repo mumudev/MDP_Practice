@@ -58,8 +58,8 @@ var bindMethod = {
             case "button":
                 baseMethod.getContent().appendChild(data.button());
                 break;
-            case "text":
-                baseMethod.getContent().appendChild(data.text());
+            case "inputtext":
+                baseMethod.getContent().appendChild(data.inputtext());
                 break;
             case "div":
                 baseMethod.getContent().appendChild(data.div());
@@ -97,21 +97,21 @@ var bindMethod = {
     upFontSize: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
-        var fontSize = contentList[0].style["font-size"] === "" ?
-            17 : parseInt(contentList[0].style["font-size"].replace(/[^0-9]/ig, ""))+1;
         for (var i = 0; i < contentList.length; i++) {
-            if (contentList[i].nodeName == comboName) {
-                contentList[i].style["font-size"] = ""+ fontSize + "px";
+            if (comboName.indexOf(contentList[i].nodeName) != -1) {
+                var fontSize = contentList[i].style["font-size"] === "" ?
+                    17 : parseInt(contentList[i].style["font-size"].replace(/[^0-9]/ig, "")) + 1;
+                contentList[i].style["font-size"] = "" + fontSize + "px";
             }
         }
     },
     downFontSize: function() {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
-        var fontSize = contentList[0].style["font-size"] === "" ?
-            15 : parseInt(contentList[0].style["font-size"].replace(/[^0-9]/ig, ""))-1;
         for (var i = 0; i < contentList.length; i++) {
-            if (contentList[i].nodeName == comboName) {
+            if (comboName.indexOf(contentList[i].nodeName) != -1) {
+                var fontSize = contentList[i].style["font-size"] === "" ?
+                    15 : parseInt(contentList[i].style["font-size"].replace(/[^0-9]/ig, "")) - 1;
                 contentList[i].style["font-size"] = fontSize + "px";
             }
         }
@@ -185,11 +185,12 @@ var data = {
         e.innerHTML = data;
         return e;
     },
-    text: function() {
+    inputtext: function() {
         // body...
-        var e = document.createElement("p");
-        var data = 'This is a text';
-        e.innerHTML = data;
+        var e = document.createElement("input");
+        var data = 'This is a input text';
+        e.type = "text";
+        e.value = data;
         return e;
     },
     div: function() {
