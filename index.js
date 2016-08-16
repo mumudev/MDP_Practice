@@ -71,7 +71,7 @@ var bindMethod = {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
         for (var i = contentList.length - 1; i >= 0; i--) {
-            if (contentList[i].nodeName == comboName) {
+            if (comboName.indexOf(contentList[i].nodeName) != -1) {
                 baseMethod.removeElement(contentList[i]);
             }
         }
@@ -81,7 +81,7 @@ var bindMethod = {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
         for (var i = 0; i < contentList.length; i++) {
-            if (contentList[i].nodeName == comboName) {
+            if (comboName.indexOf(contentList[i].nodeName) != -1) {
                 contentList[i].style["background-color"] = "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
             }
         }
@@ -91,7 +91,7 @@ var bindMethod = {
         var comboName = baseMethod.getComboName().toUpperCase();
         var contentList = baseMethod.getContentList();
         for (var i = 0; i < contentList.length; i++) {
-            if (contentList[i].nodeName == comboName) {
+            if (comboName.indexOf(contentList[i].nodeName) != -1) {
                 contentList[i].style["color"] = "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
             }
         }
