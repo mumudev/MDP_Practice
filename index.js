@@ -20,6 +20,9 @@ var initMethod = {
         for (var i = 0; i < document.getElementsByName("btn").length; i++) {
             document.getElementsByName("btn")[i].onclick = binding;
         }
+    },
+    cssStyle:function () {
+
     }
 
 };
@@ -153,11 +156,11 @@ var data = {
         // body...
         var e = document.createElement("table");
         var data = '<tr>' +
-            '		<td>element1</td>' +
-            '		<td>element2</td>' +
-            '		<td>element3</td>' +
-            '		<td>element4</td>' +
-            '		<td>element5</td>' +
+            '       <th>element1</th>' +
+            '       <th>element2</th>' +
+            '       <th>element3</th>' +
+            '       <th>element4</th>' +
+            '       <th>element5</th>' +
             '	</tr>' +
             '	<tr>' +
             '		<td>element1</td>' +
@@ -181,6 +184,8 @@ var data = {
             '		<td>element5</td>' +
             '	</tr>';
         e.innerHTML = data;
+        e.className = "table";
+        e.setAttribute("cellspacing","0px");
         return e;
     },
     button: function() {
@@ -188,6 +193,7 @@ var data = {
         var e = document.createElement("button");
         var data = 'New Button';
         e.innerHTML = data;
+        e.className = "btn-default";
         return e;
     },
     inputtext: function() {
@@ -196,6 +202,7 @@ var data = {
         var data = 'This is a input text';
         e.type = "text";
         e.value = data;
+        e.className = "inputtext";
         return e;
     },
     div: function() {
@@ -203,6 +210,7 @@ var data = {
         var e = document.createElement("div");
         var data = 'This is a div';
         e.innerHTML = data;
+        e.className = "div";
         return e;
     }
 };
