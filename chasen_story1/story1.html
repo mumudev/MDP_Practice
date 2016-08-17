@@ -1,20 +1,39 @@
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/story1.css">
-	</head>
+<!DOCTYPE html>
+<html lang="en">
 
-	<body>
-		<input class="head_button" type="button" value="">
-		<input class="head_button" type="button" value="">
-		<input class="head_button" type="button" value="">
-		<input class="head_button" type="button" value="">
-		<input class="head_button" type="button" value="">
-		<input class="head_button_item" type="button" value="">
-		<input class="head_button_item" type="button" value="">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamicly Operate Elements</title>
+    <script type="text/javascript" src="js/story1.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/story1.css">
+</head>
 
-		<input class="list_button" type="button" value="Table">
-		<input class="list_button" type="button" value="Button">
-		<input class="list_button" type="button" value="Text">
-		<input class="list_button" type="button" value="DIV">
-	</body>
+<body>
+    <table class="tableT">
+        <tr>
+            <select id="list_button">
+                <option value="Table">&nbsp;&nbsp;&nbsp;Table</option>
+                <option value="Button">&nbsp;&nbsp;&nbsp;Button</option>
+                <option value="Text">&nbsp;&nbsp;&nbsp;Text</option>
+                <option value="Div">&nbsp;&nbsp;&nbsp;Div</option>
+            </select>
+            <div id="head">
+                <input class="head_button button" type="button" value="Create" onclick="create()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                <input class="head_button button" type="button" value="Delete" onclick="delete1()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                <input class="head_button button" type="button" value="Background Color" onclick="backcolor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                <input class="head_button button" type="button" value="Font Color" onclick="fontcolor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                <div class="head_fontsize" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                    <span style="width:65px;float:left;height:30px;margin-left: 8px;
+                    margin-top:15px">Font&nbsp;Size:</span>
+                    <input class="head_button_item button"  type="button" value="+" onclick="plus()">
+                    <input class="head_button_item button"  type="button" value="-" onclick="decrease()">
+                </div>
+            </div>
+        </tr>
+        <tr id="contents">
+            <div id="contents_p"></div>
+        </tr>
+    </table>
+</body>
+
 </html>
