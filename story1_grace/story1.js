@@ -1,12 +1,20 @@
+//获取下拉列表选项
+function getOption() {
+    var sel = document.getElementById("option");
+    var index = sel.selectedIndex;
+    return sel.options[index].text;
+}
+//生成随机的颜色
+function randomColor() {
+    return '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).substr(-6); 
+}
 //点击create按钮时的事件
 function CreateElements() {
 
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         // 创建一个<table>元素和一个<tbody>元素 
         var mytable = document.createElement("table");
         var mytablebody = document.createElement("tbody");
@@ -39,12 +47,12 @@ function CreateElements() {
         mytable.setAttribute("border", "2");
         mytable.setAttribute("class", "DynamicTable");
 
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var obj_btn = document.createElement("input");
         obj_btn.type = "button";
         // obj_btn.class = "DynamicButton";
         obj_btn.setAttribute("class", "DynamicButton");
-        obj_btn.value = "popup box";
+        obj_btn.value = "alert box";
         if (obj_btn.attachEvent) {
             obj_btn.addEventListener("onclick", CreateAlertbox);
         } else {
@@ -52,7 +60,7 @@ function CreateElements() {
         }
         mydiv.appendChild(obj_btn);
 
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var obj_text = document.createElement("input");
         obj_text.type = "text";
         // obj_text.class = "DynamicText";
@@ -61,7 +69,7 @@ function CreateElements() {
         obj_text.value = "Grace Liu";
         mydiv.appendChild(obj_text);
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var obj_div = document.createElement("div");
         //obj_div.class = "DynamicDiv";
         obj_div.setAttribute("class", "DynamicDiv");
@@ -92,13 +100,10 @@ function getByClass(oParent, sClass) {
 }
 //点击delete按钮时
 function DeleteElements() {
-    //获取下拉列表选中的文本内容
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
         if (table_ele.length > 0) {
 
@@ -109,7 +114,7 @@ function DeleteElements() {
 
         }
 
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         if (btn_ele.length > 0) {
             for (var i = 0; i < btn_ele.length; i++) {
@@ -118,7 +123,7 @@ function DeleteElements() {
 
         }
 
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
         if (text_ele.length > 0) {
             for (var i = 0; i < text_ele.length; i++) {
@@ -126,7 +131,7 @@ function DeleteElements() {
             }
         }
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
         if (div_ele.length > 0) {
             for (var i = 0; i < div_ele.length; i++) {
@@ -142,44 +147,41 @@ function DeleteElements() {
 //点击background color按钮时
 function SetBackgroundColor() {
 
-    //获取下拉列表选中的文本内容
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
 
         if (table_ele.length > 0) {
             //table_ele.setAttribute("bgcolor", "red");
             for (var i = 0; i < table_ele.length; i++) {
-                table_ele[i].style.background = "red";
+                table_ele[i].style.background = randomColor();
             }
 
         }
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         if (btn_ele.length > 0) {
             for (var i = 0; i < btn_ele.length; i++) {
-                btn_ele[i].style.background = "red";
+                btn_ele[i].style.background = randomColor();
             }
 
         }
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
         if (text_ele.length > 0) {
             for (var i = 0; i < text_ele.length; i++) {
-                text_ele[i].style.background = "red";
+                text_ele[i].style.background = randomColor();
             }
 
         }
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
         if (div_ele.length > 0) {
             for (var i = 0; i < div_ele.length; i++) {
-                div_ele[i].style.background = "red";
+                div_ele[i].style.background = randomColor();
             }
 
         }
@@ -189,44 +191,41 @@ function SetBackgroundColor() {
 }
 //点击font color按钮时
 function SetFont_Color() {
-    //获取下拉列表选中的文本内容
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
 
         if (table_ele.length > 0) {
             //table_ele.setAttribute("bgcolor", "red");
             for (var i = 0; i < table_ele.length; i++) {
-                table_ele[i].style.color = "red";
+                table_ele[i].style.color = randomColor();
             }
 
         }
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         if (btn_ele.length > 0) {
             for (var i = 0; i < btn_ele.length; i++) {
-                btn_ele[i].style.color = "red";
+                btn_ele[i].style.color =randomColor();
             }
 
         }
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
         if (text_ele.length > 0) {
             for (var i = 0; i < text_ele.length; i++) {
-                text_ele[i].style.color = "red";
+                text_ele[i].style.color = randomColor();
             }
 
         }
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
         if (div_ele.length > 0) {
             for (var i = 0; i < div_ele.length; i++) {
-                div_ele[i].style.color = "red";
+                div_ele[i].style.color = randomColor();
             }
 
         }
@@ -235,7 +234,7 @@ function SetFont_Color() {
     }
 }
 
-var defaultSize = "12px"; //默认字体大小
+var defaultSize = "15px"; //默认字体大小
 //获取元素当前字体大小
 var current_fontSize = 0,
     flag = "true",
@@ -244,10 +243,10 @@ var current_fontSize = 0,
 function getCurrentFontSize(element) {
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (element.currentStyle) {//IE
+    if (element.currentStyle) { //IE
         flag = "false";
         return element.currentStyle.fontSize;
-    } else if (document.defaultView) {//非IE
+    } else if (document.defaultView) { //非IE
         flag = "false";
         return document.defaultView.getComputedStyle(mydiv, null).getPropertyValue('font-Size');
     }
@@ -262,7 +261,7 @@ function increaseSize(element) {
     if (flag == "true") {
         current_fontSize = getCurrentFontSize(element);
     }
-   
+
     if (first == "true") {
         var font_Size = subNo(current_fontSize) + 1;
     } else {
@@ -271,7 +270,7 @@ function increaseSize(element) {
 
     current_fontSize = font_Size + "px";
     //alert(fontSize);//px
-    
+
     element.style.fontSize = current_fontSize;
 }
 
@@ -286,16 +285,16 @@ function decreaseSize(element) {
     if (flag == "true") {
         current_fontSize = getCurrentFontSize(element);
     }
-   
-    if (first == "true" && subNo(current_fontSize)>1) {
-        var font_Size = subNo(current_fontSize) -1;
+
+    if (first == "true" && subNo(current_fontSize) > 1) {
+        var font_Size = subNo(current_fontSize) - 1;
     } else {
         var font_Size = subNo(current_fontSize);
     }
 
     current_fontSize = font_Size + "px";
     //alert(fontSize);//px
-    
+
     element.style.fontSize = current_fontSize;
 }
 
@@ -308,13 +307,10 @@ function JudgeFirstTime(i) {
 }
 
 function IncFontSize() {
-    //获取下拉列表选中的文本内容
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
 
         if (table_ele.length > 0) {
@@ -324,7 +320,7 @@ function IncFontSize() {
             }
 
         }
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         if (btn_ele.length > 0) {
             for (var i = 0; i < btn_ele.length; i++) {
@@ -333,7 +329,7 @@ function IncFontSize() {
             }
 
         }
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
         if (text_ele.length > 0) {
             for (var i = 0; i < text_ele.length; i++) {
@@ -343,7 +339,7 @@ function IncFontSize() {
 
         }
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
         if (div_ele.length > 0) {
             for (var i = 0; i < div_ele.length; i++) {
@@ -358,13 +354,10 @@ function IncFontSize() {
 }
 
 function DecFontSize() {
-//获取下拉列表选中的文本内容
-    var sel = document.getElementById("option");
-    var index = sel.selectedIndex;
-    var sel_text = sel.options[index].text;
+
     //获取div标签 
     var mydiv = document.getElementById("contents");
-    if (sel_text == "table") {
+    if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
 
         if (table_ele.length > 0) {
@@ -374,7 +367,7 @@ function DecFontSize() {
             }
 
         }
-    } else if (sel_text == "button") {
+    } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         if (btn_ele.length > 0) {
             for (var i = 0; i < btn_ele.length; i++) {
@@ -383,7 +376,7 @@ function DecFontSize() {
             }
 
         }
-    } else if (sel_text == "text") {
+    } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
         if (text_ele.length > 0) {
             for (var i = 0; i < text_ele.length; i++) {
@@ -393,7 +386,7 @@ function DecFontSize() {
 
         }
 
-    } else if (sel_text == "div") {
+    } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
         if (div_ele.length > 0) {
             for (var i = 0; i < div_ele.length; i++) {
