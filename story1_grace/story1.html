@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Story 1: Dynamically create HTML elements and change attributes</title>
-    <style>
+    <style type="text/css">
     body {
         font-size: 15px;
     }
@@ -22,33 +22,24 @@
         font-weight: bold;
     }
     
-    #create,
-    #delete,
-    #bgcolor,
-    #font_clor,
-    #inc_fontsize,
-    #dec_fontsize {
+    #create #delete #bgcolor #font_clor #inc_fontsize #dec_fontsize {
         font-size: 15px;
         font-weight: bold;
         color: blue
     }
-
+    
     #contents {
         font-size: 15px;
         position: relative;
         left: 120px;
         top: 60px;
-
     }
     
     table {
         border-collapse: collapse;
-        
     }
     
-    table,
-    th,
-    td {
+    table th td {
         border: 1px solid black;
     }
     </style>
@@ -73,7 +64,7 @@
         <input type="button" value="-" id="dec_fontsize" onclick="DecFontSize()" />
     </div>
     <br/>
-    <div id="contents" ></div>
+    <div id="contents"></div>
 </body>
 
 </html>
