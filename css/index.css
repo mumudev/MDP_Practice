@@ -1,0 +1,80 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 20px;
+}
+
+ul li,
+ol li {
+    list-style: none;
+}
+
+ul li.selected {
+    background-color: blue;
+}
+
+button {
+    line-height: 2.5em;
+    font-size: 12px;
+    padding: 4px;
+    margin: 0 4px;
+}
+
+.dropDown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropDown .dropDown-list {
+    position: absolute;
+    top: 28px;
+    left: 4px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 99;
+}
+
+.dropDown .dropDown-list li {
+    padding: 2px 4px;
+}
+
+.dropDown .dropDown-list li.selected {
+    background-color: blue;
+    color: white;
+}
+
+table.altrowstable {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #a9c6c9;
+    border-collapse: collapse;
+}
+
+table.altrowstable th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #a9c6c9;
+}
+
+table.altrowstable td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #a9c6c9;
+}
+
+table tr:nth-child(odd) td {
+    background-color: #d4e3e5;
+}
+
+table tr:nth-child(even) td {
+    background-color: #c3dde0;
+}
