@@ -5,6 +5,7 @@
 
 .button {
     cursor: pointer;
+    border: 1px solid #dedede;
 }
 
 #head {
@@ -12,24 +13,6 @@
 }
 
 .head_button {
-    /*position: absolute;*/
-    font-size: 15px;
-    margin-left: 10px;
-    float: left;
-    width: 150px;
-    height: 50px;
-    color: black;
-    font-family: 微软雅黑;
-    border: 1px solid #dedede;
-    -moz-border-radius: 10px;
-    /* Gecko browsers */
-    -webkit-border-radius: 10px;
-    /* Webkit browsers */
-    border-radius: 10px;
-    background-color: #dedede;
-}
-
-.head_fontsize {
     /*position: absolute;*/
     font-size: 15px;
     margin-left: 10px;
@@ -59,23 +42,9 @@
     padding-left: 10px;
 }
 
-#list_button {
-    /*position: absolute;*/
+.list_button {
     padding-left: 38px;
     text-align: center;
-    font-size: 15px;
-    float: left;
-    width: 150px;
-    height: 50px;
-    color: black;
-    font-family: 微软雅黑;
-    /*border: 1px solid #dedede;*/
-    -moz-border-radius: 10px;
-    /* Gecko browsers */
-    -webkit-border-radius: 10px;
-    /* Webkit browsers */
-    border-radius: 10px;
-    background-color: #dedede;
 }
 
 .content {

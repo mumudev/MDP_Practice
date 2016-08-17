@@ -7,8 +7,6 @@ function loading() {
     }
 }
 
-
-
 function mouseOver(ele) {
     ele.style.backgroundColor = "#3572b0";
 }
@@ -32,22 +30,47 @@ function getCurrentStyle(node) {
 }
 
 function create() {
-    var doc = document;
-    var content = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
+    var content = document.getElementById("contents_p");
+    var eletype = document.getElementById("list_button").value.toLowerCase();
+    var newNode = initializeNode(eletype);
+    if (newNode) {
+        content.appendChild(newNode);
+    }
+}
+
+function initializeNode(eletype) {
     var newNode = null;
-    if (type == "table") {
-        newNode = doc.createElement(type);
-        newNode.style.height = "100px";
-        var tr1 = doc.createElement("tr");
-        var tr2 = doc.createElement("tr");
-        var td1 = doc.createElement("td");
+    if (eletype) {
+        if (eletype == "button" || eletype == "text") {
+            newNode = document.createElement("input");
+            newNode.type = eletype;
+            newNode.style.height = "50px";
+        } else {
+            newNode = document.createElement(eletype);
+            newNode.style.height = "100px";
+        }
+        newNode.className = eletype + "s";
+        newNode.style.float = "left";
+        newNode.style.width = "100px";
+        newNode.style.border = "1px solid black";
+        newNode.style.fontSize = "15px";
+        newNode = addNodeExampleContent(newNode);
+    }
+    return newNode;
+}
+
+function addNodeExampleContent(newNode) {
+    var eletype = newNode.tagName.toLowerCase();
+    if (eletype == "table") {
+        var tr1 = document.createElement("tr");
+        var tr2 = document.createElement("tr");
+        var td1 = document.createElement("td");
         td1.innerHTML = "A";
-        var td2 = doc.createElement("td");
+        var td2 = document.createElement("td");
         td2.innerHTML = "B";
-        var td3 = doc.createElement("td");
+        var td3 = document.createElement("td");
         td3.innerHTML = "C";
-        var td4 = doc.createElement("td");
+        var td4 = document.createElement("td");
         td4.innerHTML = "D";
         tr1.appendChild(td1);
         tr1.appendChild(td2);
@@ -55,155 +78,54 @@ function create() {
         tr2.appendChild(td4);
         newNode.appendChild(tr1);
         newNode.appendChild(tr2);
-    } else if (type == "div") {
-        newNode = doc.createElement(type);
-        newNode.innerHTML = type;
-        newNode.style.height = "100px";
+    } else if (eletype == "div") {
+        newNode.innerHTML = eletype;
     } else {
-        newNode = doc.createElement("input");
-        newNode.type = type;
-        newNode.value = type;
-        newNode.style.height = "50px";
+        newNode.value = newNode.type;
     }
-    newNode.name = type + "s";
-    newNode.style.float = "left";
-    newNode.style.width = "100px";
-    newNode.style.border = "1px solid black";
-    newNode.style.fontSize = "15px";
-    content.appendChild(newNode);
+    return newNode;
 }
 
-function delete1() {
-    var doc = document;
-    var parentNode = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
-    var delNode = null;
-    if (type == "table") {
-        delNode = doc.getElementsByTagName("table");
-        console.log(delNode);
-        for (i = delNode.length - 1; i >= 0; i--) {
-            if (!(delNode[i].id || delNode[i].className)) {
-                delNode[i].parentNode.removeChild(delNode[i]);
-            }
-        }
-    } else if (type == "div") {
-        delNode = doc.getElementsByTagName("div");
-        console.log(delNode);
-        for (i = delNode.length - 1; i >= 0; i--) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].parentNode.removeChild(delNode[i]);
-            }
-        }
-    } else if (type == "button") {
-        delNode = doc.getElementsByTagName("input");
-        console.log(delNode);
-        for (i = delNode.length - 1; i >= 0; i--) {
-            console.log("class:" + typeof(delNode[i].class));
-            console.log("id:" + delNode[i].id);
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "button") {
-                    delNode[i].parentNode.removeChild(delNode[i]);
-                }
-            }
-        }
-    } else {
-        delNode = doc.getElementsByTagName("input");
-        for (i = delNode.length - 1; i >= 0; i--) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "text") {
-                    delNode[i].parentNode.removeChild(delNode[i]);
-                }
-            }
+function _delete() {
+    var eletype = document.getElementById("list_button").value.toLowerCase();
+    var selNodes = document.getElementsByClassName(eletype + "s");
+    removeAll(selNodes);
+}
+
+function removeAll(selNodes) {
+    for (i = selNodes.length - 1; i >= 0; i--) {
+        if (selNodes[i].className) {
+            selNodes[i].parentNode.removeChild(selNodes[i]);
         }
     }
 }
 
 function backcolor() {
-    var doc = document;
-    var parentNode = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
-    var delNode = null;
-    if (type == "table") {
-        delNode = doc.getElementsByTagName("table");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.backgroundColor = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            }
-        }
-    } else if (type == "div") {
-        delNode = doc.getElementsByTagName("div");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.backgroundColor = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            }
-        }
-    } else if (type == "button") {
-        delNode = doc.getElementsByTagName("input");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            console.log("class:" + typeof(delNode[i].class));
-            console.log("id:" + delNode[i].id);
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "button") {
-                    delNode[i].style.backgroundColor = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-                }
-            }
-        }
-    } else {
-        delNode = doc.getElementsByTagName("input");
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "text") {
-                    delNode[i].style.backgroundColor = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-                }
-            }
+    var eletype = document.getElementById("list_button").value.toLowerCase();
+    var selNodess = document.getElementsByClassName(eletype + "s");
+    changeBackColor(selNodess);
+}
+
+function changeBackColor(selNodess) {
+    for (i = 0; i < selNodess.length; i++) {
+        if (selNodess[i].className) {
+            selNodess[i].style.backgroundColor = "rgb(" + ramdomMaker() +
+                "," + ramdomMaker() + "," + ramdomMaker() + ")";
         }
     }
 }
 
 function fontcolor() {
-    var doc = document;
-    var parentNode = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
-    var delNode = null;
-    if (type == "table") {
-        delNode = doc.getElementsByTagName("table");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.color = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            }
-        }
-    } else if (type == "div") {
-        delNode = doc.getElementsByTagName("div");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.color = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            }
-        }
-    } else if (type == "button") {
-        delNode = doc.getElementsByTagName("input");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            console.log("class:" + typeof(delNode[i].class));
-            console.log("id:" + delNode[i].id);
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "button") {
-                    delNode[i].style.color = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-                }
-            }
-        }
-    } else {
-        delNode = doc.getElementsByTagName("input");
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "text") {
-                    delNode[i].style.color = "rgb(" + ramdomMaker() + "," + ramdomMaker() + "," + ramdomMaker() + ")";
-                }
-            }
+    var eletype = document.getElementById("list_button").value.toLowerCase();
+    var selNodes = document.getElementsByClassName(eletype + "s");
+    changeFontColor(selNodes);
+}
+
+function changeFontColor(selNodes) {
+    for (i = 0; i < selNodes.length; i++) {
+        if (selNodes[i].className) {
+            selNodes[i].style.color = "rgb(" + ramdomMaker() +
+                "," + ramdomMaker() + "," + ramdomMaker() + ")";
         }
     }
 }
@@ -212,93 +134,20 @@ function ramdomMaker() {
     return Math.round(Math.random() * 255);
 }
 
-function plus() {
-    var doc = document;
-    var parentNode = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
-    var delNode = null;
-    if (type == "table") {
-        delNode = doc.getElementsByTagName("table");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) + 2) + "px";
-            }
-        }
-    } else if (type == "div") {
-        delNode = doc.getElementsByTagName("div");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) + 2) + "px";
-            }
-        }
-    } else if (type == "button") {
-        delNode = doc.getElementsByTagName("input");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            console.log("class:" + typeof(delNode[i].class));
-            console.log("id:" + delNode[i].id);
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "button") {
-                    delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) + 2) + "px";
-                }
-            }
-        }
-    } else {
-        delNode = doc.getElementsByTagName("input");
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "text") {
-                    delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) + 2) + "px";
-                }
-            }
-        }
-    }
+function fontSize(ele) {
+    var eletype = document.getElementById("list_button").value.toLowerCase();
+    var operate = ele.value;
+    var selNodes = document.getElementsByClassName(eletype + "s");
+    changeFontSize(selNodes, operate);
 }
 
-function decrease() {
-    var doc = document;
-    var parentNode = doc.getElementById("contents_p");
-    var type = doc.getElementById("list_button").value.toLowerCase();
-    var delNode = null;
-    console.log("comein");
-    if (type == "table") {
-        delNode = doc.getElementsByTagName("table");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            console.log(delNode[i].style.fontSize);
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) - 2) + "px";
-            }
-        }
-    } else if (type == "div") {
-        delNode = doc.getElementsByTagName("div");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) - 2) + "px";
-            }
-        }
-    } else if (type == "button") {
-        delNode = doc.getElementsByTagName("input");
-        console.log(delNode);
-        for (i = 0; i < delNode.length; i++) {
-            console.log("class:" + typeof(delNode[i].class));
-            console.log("id:" + delNode[i].id);
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "button") {
-                    delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) - 2) + "px";
-                }
-            }
-        }
-    } else {
-        delNode = doc.getElementsByTagName("input");
-        for (i = 0; i < delNode.length; i++) {
-            if (delNode[i].id || delNode[i].className) {} else {
-                if (delNode[i].type == "text") {
-                    delNode[i].style.fontSize = (parseInt(delNode[i].style.fontSize) - 2) + "px";
-                }
+function changeFontSize(selNodes, operate) {
+    for (i = 0; i < selNodes.length; i++) {
+        if (selNodes[i].className) {
+            if (operate == "+") {
+                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize) + 2) + "px";
+            } else {
+                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize) - 2) + "px";
             }
         }
     }
