@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Story 1: Dynamically create HTML elements and change attributes</title>
+    <script src="story1.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div>
+        <select name="elements" id="option">
+            <option value="table" selected>table</option>
+            <option value="button">button</option>
+            <option value="text">text</option>
+            <option value="div">div</option>
+        </select>
+        <input type="button" value="Create" id="create" onclick="CreateElements()" />
+        <input type="button" value="Delete" id="delete" onclick="DeleteElements()" />
+        <input type="button" value="Background Color" id="bgcolor" onclick="SetBackgroundColor()" />
+        <input type="button" value="Font Color" id="font_clor" onclick="SetFont_Color()"/> Font Size:
+        <input type="button" value="+" id="inc_fontsize" onclick="IncFontSize()"/>
+        <input type="button" value="-" id="dec_fontsize" onclick="DecFontSize()"/>
+    </div>
+    <br/>
+    <div id="contents" style="font-size:12px"></div>
+</body>
+
+</html>
