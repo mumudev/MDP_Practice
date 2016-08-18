@@ -1,3 +1,9 @@
+/**
+ * @license emulate-jquery v1.0.0
+ * author: tim
+ * License: MIT
+ */
+
 'use strict';
 //模仿 jQueryready
 (function(window, undefined) {
@@ -9,8 +15,9 @@
         return new $.fn.init(selector);
     };
 
-    $.fn = $.prototype;
+    $.VERSION = '1.0.0';
 
+    $.fn = $.prototype;
 
     $.fn.init = function(selector) {
         if (!selector)
@@ -44,11 +51,11 @@
     $.fn.on = function(type, callback, useCapture) {
         if ('attachEvent' in document) {
             $.each(this, function(i, idx) {
-                attachEvent.call(idx, 'on' + type, callback);
+                idx.attachEvent('on' + type, callback);
             });
         } else {
             $.each(this, function(i, idx) {
-                addEventListener.call(idx, type, callback, useCapture);
+                idx.addEventListener(type, callback, useCapture);
             });
         }
     };
@@ -70,8 +77,7 @@
             if (callback.call(elements[i], i, elements[i]) === false)
                 return elements;
         }
-    };
-
+    }; 
     $.fn.each = function(callback) {
         //likeArray
         for (var i = 0; i < this.length; i++) {
@@ -169,18 +175,7 @@
             ele.style.display = 'none';
         });
     };
-    $.fn.data = function(key, val) {
-        if (arguments == 2) {
-            this[0].dataset[key] = val;
-        } else {
-            if (key) {
-                return this[0].dataset[key];
-            } else {
-                return this[0].dataset || {};
-            }
-        }
-
-    };
+    
 
     $.fn.toggle = function() {
         $.each(this, function(i, ele) {
@@ -190,7 +185,21 @@
 
     $.fn.remove = function() {
         this.each(function() {
-            this.remove();
+            //error --- ie 不支持remove
+            this.parentNode.removeChild(this);
+        });
+    };
+
+    $.fn.before = function(dom){
+        this.each(function(index,ele){
+            ele.parentNode.insertBefore(dom,ele);
+        });
+    };
+
+    $.fn.wap = function(dom){//$('#id').wap(nodeList)
+        this.each(function(index, ele){
+            $(ele).before(dom);
+            dom.appendChild(ele);
         });
     };
 
@@ -220,5 +229,70 @@
     $.makeColor = function() {
         return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
     };
+
+
+    function Cache(){
+        this.expando = 'JQ' + $.VERSION + Math.random().toString().replace(/\D/,'') + (Cache.uuid++);
+    }
+    Cache.uuid = 1;
+    Cache.prototype = {
+        constructor:Cache,
+        cache:function(ele){
+            var value = ele[this.expando];
+            if(!value){
+                value = {};
+               if( ele.nodeType ==1 ||  ele.nodeType ==9 ) {
+                    ele[this.expando] = value;
+               }else{
+                    Object.defineProperty(ele, this.expando, {
+                        value:value,
+                        configurable:true,
+                    });
+               }
+            }
+           return value;
+        },
+        access:function(ele,key,value){//set / get 自动判断处理
+             if (key === undefined || (typeof key === 'string' && value === undefined)) {
+                return this.get(ele,key);
+             }
+             this.set(ele,key,value);
+             return value!== undefined ? value :key;
+        },
+        set:function(ele,key,value){//key===string || key === object
+            var cache = this.cache(ele);
+            if(Object.prototype.toString.call(key) === '[object String]'){
+                        cache[key] = value; 
+            }else if(Object.prototype.toString.call(key) === '[object Object]'){
+                for (var prop in key) {
+                    cache[prop] = key[prop];
+                }
+
+            }
+        },
+        get:function(ele,key){
+            return  key===undefined ? this.cache(ele) : this.cache(ele)[key];  
+        },
+    };
+    var dataUser = new Cache();
+
+    $.fn.data = function(key, val) {
+       return dataUser.access(this[0],key,val);
+    };    
+
     window.$ = $;
 }(window, void 0));
+
+
+//数据缓存
+//模块加载器 CMD /AMD
+//sizzle 选择器实现
+
+
+
+
+
+
+
+
+

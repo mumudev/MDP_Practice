@@ -38,15 +38,17 @@
 		function Dropdown(option){
 			this.option = option || {};
 			this.init = function(){
+				var self = this;
 				var list = document.createElement('ul');
 		         list.className = 'dropDown-list';
 		         list.style.display = 'none';
 		         var str = '';
 		         for (var i in this.option.list) {
-		         	str += '<li data-val = "'+ this.option.list[i] +'"" class="'+(this.option.defaultSelected == this.option.list[i]?'selected':'')+'">' + this.option.list[i] + '</li>'
+		         	str += '<li  class="'+(this.option.defaultSelected == this.option.list[i]?'selected':'')+'">' + this.option.list[i] + '</li>'
 		         }
 		         list.innerHTML = str;
-		       	$(this.option.parentEle)[0].appendChild(list);  
+
+		       	$(this.option.parentEle)[0].appendChild(list);
 		        $(this.option.parentEle+' .dropDown-list li').on('click',function(){
 		         	$(this.parentNode.childNodes).removeClass('selected');
 		         	$(this).addClass('selected');
