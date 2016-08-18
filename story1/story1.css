@@ -1,4 +1,14 @@
-p{color:#000000;}
-h1{font-size:30px;}
-.Div{border-style:solid;border-color:blue;}
-table{border-style:solid;border-width:2px;border-color:cyan;}
+p {
+    color: #000000;
+}
+h1 {
+    font - size: 30px;
+}.Div {
+    border - style: solid;
+    border - color: blue;
+}
+table {
+    border - style: solid;
+    border - width: 2px;
+    border - color: cyan;
+}

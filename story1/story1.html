@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Demo</title>
-<link rel="stylesheet" type="text/css" href="story1.css">
-<script type="text/javascript" src="story1.js"></script>	
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Demo</title>
+    <link rel="stylesheet" type="text/css" href="story1.css">
+    <script type="text/javascript" src="story1.js"></script>
+  </head>
+  
+  <body id="body">
+    <h1 id="h1" align="center">Hello</h1>
+    <p id="param" name="test">
+      <select id="demo" name="test">
+        <option value='0' selected="selected">--Please select--</option>
+        <option value='Table'>Table</option>
+        <option value='Button'>Button</option>
+        <option value='Input Text'>Input Text</option>
+        <option value='Div'>Div</option></select>
+      <input type="button" onclick="create()" name="test" value="Create">
+      <input type="button" onclick="deleteAll()" name="test" value="Delete">
+      <button onclick="change_bgcolor()" name="test">BgColor</button>
+      <input type="button" name="test" onclick="change_ftcolor()" value="FontColor">
+      <label for="font size" name="test">FontSize</label>
+      <input type="button" name="test" onclick="fontBigger()" value="+">
+      <input type="button" name="test" onclick="fontSmaller()" value="-">
+      <div id='div1'></div>
+    </p>
+  </body>
 
-</head>
-<body id="body"> 	
-<h1 id="h1" align="center">Hello</h1>
-<p id="param" name="test">
-
-<select id="demo" name="test">
-	<option value='0'selected="selected">--Please select--</option>
-	<option value='Table'>Table</option>
-	<option value='Button'>Button</option>
-	<option value='Input Text'>Input Text</option>
-	<option value='Div'>Div</option>
-</select>
-<input type="button" onclick="create()" name="test" value="Create">
-<input type="button" onclick="deleteAll()"name="test" value="Delete">
-<button onclick="change_bgcolor()"name="test" >BgColor</button>
-<input type="button" name="test" onclick="change_ftcolor()" value="FontColor">
-<label for="font size" name="test">FontSize</label>
-<input type="button" name="test" onclick="fontBigger()" value="+">
-<input type="button" name="test" onclick="fontSmaller()" value="-">
-<div id='div1'></div>
-
-</p>
-
-
-</body>
 </html>
