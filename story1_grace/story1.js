@@ -6,7 +6,7 @@ function getOption() {
 }
 //生成随机的颜色
 function randomColor() {
-    return '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).substr(-6); 
+    return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6);
 }
 //点击create按钮时的事件
 function CreateElements() {
@@ -98,13 +98,14 @@ function getByClass(oParent, sClass) {
     }
     return aResult;
 }
-function AllDelete(aElement){
-    if (aElement.length > 0) {
-            for (var i = 0; i < aElement.length; i++) {
-                aElement[i].parentNode.removeChild(aElement[i]);
-            }
 
+function AllDelete(aElement) {
+    if (aElement.length > 0) {
+        for (var i = 0; i < aElement.length; i++) {
+            aElement[i].parentNode.removeChild(aElement[i]);
         }
+
+    }
 
 }
 //点击delete按钮时
@@ -133,13 +134,14 @@ function DeleteElements() {
     }
 
 }
-function AllSetBgColor(aElement){
-    if (aElement.length > 0) {
-            for (var i = 0; i < aElement.length; i++) {
-                aElement[i].style.background = randomColor();
-            }
 
+function AllSetBgColor(aElement) {
+    if (aElement.length > 0) {
+        for (var i = 0; i < aElement.length; i++) {
+            aElement[i].style.background = randomColor();
         }
+
+    }
 
 }
 //点击background color按钮时
@@ -165,13 +167,14 @@ function SetBackgroundColor() {
         document.getElementById("contents").innerHTML = "bgcolor!!";
     }
 }
-function AllSetFontColor(aElement){
-    if (aElement.length > 0) {
-            for (var i = 0; i < aElement.length; i++) {
-                aElement[i].style.color= randomColor();
-            }
 
+function AllSetFontColor(aElement) {
+    if (aElement.length > 0) {
+        for (var i = 0; i < aElement.length; i++) {
+            aElement[i].style.color = randomColor();
         }
+
+    }
 
 }
 //点击font color按钮时
@@ -181,14 +184,14 @@ function SetFont_Color() {
     var mydiv = document.getElementById("contents");
     if (getOption() == "table") {
         var table_ele = getByClass(mydiv, "DynamicTable");
-AllSetFontColor(table_ele);
-        
+        AllSetFontColor(table_ele);
+
     } else if (getOption() == "button") {
         var btn_ele = getByClass(mydiv, "DynamicButton");
         AllSetFontColor(btn_ele);
     } else if (getOption() == "text") {
         var text_ele = getByClass(mydiv, "DynamicText");
-       AllSetFontColor(text_ele);
+        AllSetFontColor(text_ele);
 
     } else if (getOption() == "div") {
         var div_ele = getByClass(mydiv, "DynamicDiv");
@@ -218,118 +221,107 @@ function getCurrentFontSize(element) {
     return defaultSize;
 }
 
-
-
-// 递增字体大小 
-function increaseSize(element) {
-    if (flag == "true") {
-        current_fontSize = getCurrentFontSize(element);
-    }
-
-    if (first == "true") {
-        var font_Size = subNo(current_fontSize) + 1;
-    } else {
-        var font_Size = subNo(current_fontSize);
-    }
-
-    current_fontSize = font_Size + "px";
-    //alert(fontSize);//px
-
-    element.style.fontSize = current_fontSize;
-}
-
 //截掉'px', 以便于计算 
 function subNo(font_Size) {
     var size = parseInt(font_Size.substring(0, font_Size.length - 2));
     //alert(size);
     return size;
 }
-// 递减字体大小 
-function decreaseSize(element) {
+
+// 改变字体大小 
+function changeSize(element, operator) {
     if (flag == "true") {
         current_fontSize = getCurrentFontSize(element);
     }
 
-    if (first == "true" && subNo(current_fontSize) > 1) {
-        var font_Size = subNo(current_fontSize) - 1;
-    } else {
-        var font_Size = subNo(current_fontSize);
+    if (first == "true") {
+            if (operator == '+') {
+                var font_Size = subNo(current_fontSize) + 1;
+            } else if (operator == '-') {
+                var font_Size = subNo(current_fontSize) - 1;
+            }
+        } else {
+            var font_Size = subNo(current_fontSize);
+        }
+
+        current_fontSize = font_Size + "px";
+        //alert(fontSize);//px
+
+        element.style.fontSize = current_fontSize;
     }
 
-    current_fontSize = font_Size + "px";
-    //alert(fontSize);//px
-
-    element.style.fontSize = current_fontSize;
-}
-
-function JudgeFirstTime(i) {
-    if (i == 0) {
-        first = "true";
-    } else {
-        first = "false";
+    function JudgeFirstTime(i) {
+        if (i == 0) {
+            first = "true";
+        } else {
+            first = "false";
+        }
     }
-}
-function AllIncFontSize(aElement){
-    if (aElement.length > 0) {
+
+    function AllIncFontSize(aElement) {
+        if (aElement.length > 0) {
             for (var i = 0; i < aElement.length; i++) {
                 JudgeFirstTime(i);
-                increaseSize(aElement[i]);
+                changeSize(aElement[i], '+');
             }
 
         }
 
-}
-function IncFontSize() {
-
-    //获取div标签 
-    var mydiv = document.getElementById("contents");
-    if (getOption() == "table") {
-        var table_ele = getByClass(mydiv, "DynamicTable");
-AllIncFontSize(table_ele);
-
-        
-    } else if (getOption() == "button") {
-        var btn_ele = getByClass(mydiv, "DynamicButton");
-        AllIncFontSize(btn_ele);
-    } else if (getOption() == "text") {
-        var text_ele = getByClass(mydiv, "DynamicText");
-        AllIncFontSize(text_ele);
-
-    } else if (getOption() == "div") {
-        var div_ele = getByClass(mydiv, "DynamicDiv");
-        AllIncFontSize(div_ele);
-    } else {
-        document.getElementById("contents").innerHTML = "increase font Size!!";
     }
-}
-function AllDecFontSize(aElement){
-    if (aElement.length > 0) {
+
+    function IncFontSize() {
+
+        //获取div标签 
+        var mydiv = document.getElementById("contents");
+        if (getOption() == "table") {
+            var table_ele = getByClass(mydiv, "DynamicTable");
+            AllIncFontSize(table_ele);
+
+
+        } else if (getOption() == "button") {
+            var btn_ele = getByClass(mydiv, "DynamicButton");
+            AllIncFontSize(btn_ele);
+        } else if (getOption() == "text") {
+            var text_ele = getByClass(mydiv, "DynamicText");
+            AllIncFontSize(text_ele);
+
+        } else if (getOption() == "div") {
+            var div_ele = getByClass(mydiv, "DynamicDiv");
+            AllIncFontSize(div_ele);
+        } else {
+            document.getElementById("contents").innerHTML = "increase font Size!!";
+        }
+    }
+
+    function AllDecFontSize(aElement) {
+        if (aElement.length > 0) {
             for (var i = 0; i < aElement.length; i++) {
                 JudgeFirstTime(i);
-                decreaseSize(aElement[i]);
+                changeSize(aElement[i], '-');
             }
 
         }
 
-}
-function DecFontSize() {
-
-    //获取div标签 
-    var mydiv = document.getElementById("contents");
-    if (getOption() == "table") {
-        var table_ele = getByClass(mydiv, "DynamicTable");
-        AllDecFontSize(table_ele);
-    } else if (getOption() == "button") {
-        var btn_ele = getByClass(mydiv, "DynamicButton");
-        AllDecFontSize(btn_ele);
-    } else if (getOption() == "text") {
-        var text_ele = getByClass(mydiv, "DynamicText");
-       AllDecFontSize(text_ele);
-
-    } else if (getOption() == "div") {
-        var div_ele = getByClass(mydiv, "DynamicDiv");
-        AllDecFontSize(div_ele);
-    } else {
-        document.getElementById("contents").innerHTML = "decrease font Size!!";
     }
-}
+
+    function DecFontSize() {
+
+        //获取div标签 
+        var mydiv = document.getElementById("contents");
+        if (getOption() == "table") {
+            var table_ele = getByClass(mydiv, "DynamicTable");
+            AllDecFontSize(table_ele);
+        } else if (getOption() == "button") {
+            var btn_ele = getByClass(mydiv, "DynamicButton");
+            AllDecFontSize(btn_ele);
+        } else if (getOption() == "text") {
+            var text_ele = getByClass(mydiv, "DynamicText");
+            AllDecFontSize(text_ele);
+
+        } else if (getOption() == "div") {
+            var div_ele = getByClass(mydiv, "DynamicDiv");
+            AllDecFontSize(div_ele);
+        } else {
+            document.getElementById("contents").innerHTML = "decrease font Size!!";
+        }
+    }
