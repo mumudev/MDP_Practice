@@ -4,46 +4,55 @@
 <head>
     <meta charset="utf-8" />
     <title>Story 1: Dynamically create HTML elements and change attributes</title>
-    <style type="text/css">
+    <style rel="stylesheet" type="text/css" href="story1.css"></style>
+    <style>
     body {
-        font-size: 15px;
+    font-size: 15px;
+}
+
+#functionBtn {
+    font-weight: bold;
+    display: inline;
+    position: relative;
+    left: 100px;
+    top: 20px;
+}
+select {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#create, #delete, #bgcolor, #font_clor, #inc_fontsize, #dec_fontsize {
+    font-size: 15px;
+    font-weight: bold;
+    color: blue
+}
+    #contents input, div {
+        margin: 10px;
     }
-    
-    #functionBtn {
-        font-weight: bold;
-        display: inline;
-        position: relative;
-        left: 50px;
-        top: 20px;
-    }
-    
-    select {
-        font-size: 15px;
-        font-weight: bold;
-    }
-    
-    #create #delete #bgcolor #font_clor #inc_fontsize #dec_fontsize {
-        font-size: 15px;
-        font-weight: bold;
-        color: blue
-    }
-    
     #contents {
-        font-size: 15px;
-        position: relative;
-        left: 120px;
-        top: 60px;
-    }
-    
+    font-size: 15px;
+    position: relative;
+    left: 110px;
+    top: 60px;
+    width: 70%;    
+}
+.DynamicDiv {
+    width: 50%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+}
     table {
         border-collapse: collapse;
+        margin: 10px;
     }
     
-    table th td {
+    table, tr, td {
         border: 1px solid black;
     }
     </style>
-    <script src="story1.js" type="text/javascript"></script>
+    <script src="story1.js"></script>
 </head>
 
 <body>
