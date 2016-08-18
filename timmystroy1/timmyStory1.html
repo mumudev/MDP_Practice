@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Timmy's Story1</title>
+      <link rel="stylesheet" type="text/css" href="timmyStory1.css">
+       <script type="text/javascript"  src="story1.js"></script>
+	<style></style>
+</head>
+<body>
+	<div class="header">
+      <h2>Dynamically create HTML elements and change attributes</h2>
+      </div>
+      <div class="nav">
+      <form >
+      <select name="list" id="combolist">
+       <option value="button" >Button</option>
+       <option value="table">Table</option>
+       <option value="div" >Div</option>
+       <option value="input" >Input Text</option>
+      </select>
+      
+        <button type="button" name="create" value="Create" onclick="createCombo()">Create</button> 
+        <button type="button" name="delete" value="Delete" onclick="deleteCombo()"">Delete</button> 
+        <button type="button" name="backgroundColor" value="backgroundColor" onclick="setBackgroundColor()">Background Color</button> 
+        <button type="button" name="fontColor" value="fontColor" onclick="setFontColor()">Font Color</button> 
+        <input  type="text"   name="fontsize" value="Font Size" disabled="disabled" size="5" />
+        <button type="button" name="fontsizeplus" value="+" onclick="setFontSize('+')">+</button> 
+        <button type="button" name="fontsizedicr" value="-" onclick="setFontSize('-')">-</button> 
+        </form>
+        <br/>
+      </div>
+	<div class="section"> 
+        <div class="combo" id="combo"></div>
+     
+      </div>
+
+	<div class="aside"></div>
+      <div class="footer"></div>
+</body>
+</html>			
