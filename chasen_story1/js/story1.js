@@ -145,9 +145,9 @@ function changeFontSize(selNodes, operate) {
     for (i = 0; i < selNodes.length; i++) {
         if (selNodes[i].className) {
             if (operate == "+") {
-                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize) + 2) + "px";
+                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize, 10) + 2) + "px";
             } else {
-                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize) - 2) + "px";
+                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize, 10) - 2) + "px";
             }
         }
     }
