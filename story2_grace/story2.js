@@ -96,6 +96,7 @@ var CheckedElement;
 
 function leftClick(evt,ele) {
     CheckedElement = ele;
+    evt = window.event || arguments.callee.caller.arguments[0];
     evt.stopPropagation?evt.stopPropagation():evt.cancelBubble=true;
     showMenu();
 
@@ -176,7 +177,7 @@ function showMenu() {
     // var container = event.srcElement;
     //containerID=event.srcElement.id;
     var menu = document.getElementById('menu');
-    var evt = window.event || arguments[0];
+    var evt = window.event || arguments.callee.caller.arguments[0];
     /*获取当前鼠标右键按下后的位置，据此定义菜单显示的位置*/
     var rightedge = window.screen.availWidth - evt.clientX;
     var bottomedge = window.screen.availHeight - evt.clientY;
