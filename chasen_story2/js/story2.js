@@ -1,9 +1,8 @@
 function loading() {
     var arr = document.getElementsByClassName("button");
     for (var i = 0; i < arr.length; i++) {
-        arr[i].onmouseover = function() {
-            mouseOver(arr[i])
-        };
+        arr[i].onmouseover = function() { mouseOver(this); };
+        arr[i].onmouseout = function() { mouseOut(this); };
     }
 }
 
@@ -50,6 +49,7 @@ function initializeNode(eletype) {
             newNode.style.height = "100px";
         }
         newNode.className = eletype + "s";
+        newNode.onclick = function() { operate(this); };
         newNode.style.float = "left";
         newNode.style.width = "100px";
         newNode.style.border = "1px solid black";
@@ -86,48 +86,48 @@ function addNodeExampleContent(newNode) {
     return newNode;
 }
 
-function _delete() {
-    var eletype = document.getElementById("list_button").value.toLowerCase();
-    var selNodes = document.getElementsByClassName(eletype + "s");
-    removeAll(selNodes);
+var selElement;
+
+function operate(ele) {
+    selElement = ele;
+    if (ele.style.border != "2px solid blue") {
+        ele.style.border = "2px solid blue";
+        unchooseOther();
+    } else {
+        var menu = document.getElementsByClassName("menu")[0];
+        menu.style.display = "block";
+    }
 }
 
-function removeAll(selNodes) {
-    for (i = selNodes.length - 1; i >= 0; i--) {
-        if (selNodes[i].className) {
-            selNodes[i].parentNode.removeChild(selNodes[i]);
+function unchooseOther() {
+    var childs = selElement.parentNode.childNodes;
+    for (i = 0; i < childs.length; i++) {
+        if (!(childs[i] === selElement)) {
+            childs[i].style.border = "1px solid black";
         }
     }
+}
+
+function cancelMenu() {
+    var menu = document.getElementsByClassName("menu")[0];
+    menu.style.display = "none";
+}
+
+function _delete() {
+    selElement.parentNode.removeChild(selElement);
+    cancelMenu();
 }
 
 function backcolor() {
-    var eletype = document.getElementById("list_button").value.toLowerCase();
-    var selNodess = document.getElementsByClassName(eletype + "s");
-    changeBackColor(selNodess);
-}
-
-function changeBackColor(selNodess) {
-    for (i = 0; i < selNodess.length; i++) {
-        if (selNodess[i].className) {
-            selNodess[i].style.backgroundColor = "rgb(" + ramdomMaker() +
-                "," + ramdomMaker() + "," + ramdomMaker() + ")";
-        }
-    }
+    selElement.style.backgroundColor = "rgb(" + ramdomMaker() +
+        "," + ramdomMaker() + "," + ramdomMaker() + ")";
+    cancelMenu();
 }
 
 function fontcolor() {
-    var eletype = document.getElementById("list_button").value.toLowerCase();
-    var selNodes = document.getElementsByClassName(eletype + "s");
-    changeFontColor(selNodes);
-}
-
-function changeFontColor(selNodes) {
-    for (i = 0; i < selNodes.length; i++) {
-        if (selNodes[i].className) {
-            selNodes[i].style.color = "rgb(" + ramdomMaker() +
-                "," + ramdomMaker() + "," + ramdomMaker() + ")";
-        }
-    }
+    selElement.style.color = "rgb(" + ramdomMaker() +
+        "," + ramdomMaker() + "," + ramdomMaker() + ")";
+    cancelMenu();
 }
 
 function ramdomMaker() {
@@ -135,20 +135,12 @@ function ramdomMaker() {
 }
 
 function fontSize(ele) {
-    var eletype = document.getElementById("list_button").value.toLowerCase();
     var operate = ele.value;
-    var selNodes = document.getElementsByClassName(eletype + "s");
-    changeFontSize(selNodes, operate);
-}
-
-function changeFontSize(selNodes, operate) {
-    for (i = 0; i < selNodes.length; i++) {
-        if (selNodes[i].className) {
-            if (operate == "+") {
-                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize, 10) + 2) + "px";
-            } else {
-                selNodes[i].style.fontSize = (parseInt(selNodes[i].style.fontSize, 10) - 2) + "px";
-            }
-        }
+    if (operate == "+") {
+        selElement.style.fontSize = (parseInt(selElement.style.fontSize, 10) + 5) + "px";
+        cancelMenu();
+    } else {
+        selElement.style.fontSize = (parseInt(selElement.style.fontSize, 10) - 5) + "px";
+        cancelMenu();
     }
 }
