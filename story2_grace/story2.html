@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Story 1: Dynamically create popup menu</title>
+    <script src="story1.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="story1.css" />
+</head>
+
+<body>
+    <h2> Demo: story2 </h2>
+    <hr/>
+    <div id="functionBtn">
+        <select name="elements" id="option">
+            <option value="table" selected>table</option>
+            <option value="button">button</option>
+            <option value="input text">text</option>
+            <option value="div">div</option>
+        </select>
+        <input type="button" value="Create" id="create" onclick="CreateElements()" />
+    </div>
+    <br/>
+    <div id="contents"></div>
+    <!--
+    <div id="menu" class="skin">
+        <ul id="menuitems">
+            <li><a href="#" onclick="deleteElements()">Delete</a></li>
+            <li><a href="#" onclick="setBgroundColor()">Set Background Color</a></li>
+            <li><a href="#" onclick="setFontColor()">Set Font Color</a></li>
+            <li><a href="#" onclick="incFontSize()">Font Size '+'</a></li>
+             <li><a href="#" onclick="decFontSize()">Font Size '-'</a></li>
+        </ul>
+    </div>
+-->
+    <div id="menu" class="skin">
+        <div class="menuitems">
+            <a href="#" onclick="deleteElements()">Delete</a>
+        </div>
+        <hr/>
+        <div class="menuitems">
+            <a href="#" onclick="setBgroundColor()">Set Background Color</a>
+        </div>
+        <div class="menuitems">
+            <a href="#" onclick="setFontColor()">Set Font Color</a>
+        </div>
+        <hr/>
+        <div class="menuitems">
+            <a href="#" onclick="incFontSize()">Font Size ' + '</a>
+        </div>
+        <div class="menuitems">
+            <a href="#" onclick="decFontSize()">Font Size ' - '</a>
+        </div>
+    </div>
+</body>
+
+</html>
