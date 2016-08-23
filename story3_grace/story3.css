@@ -1,0 +1,113 @@
+body {
+    font-size: 15px;
+}
+
+#functionBtn {
+    font-weight: bold;
+    display: inline;
+    position: relative;
+    left: 100px;
+    top: 20px;
+}
+
+select {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#create,
+#delete,
+#bgcolor,
+#font_clor,
+#inc_fontsize,
+#dec_fontsize {
+    font-size: 15px;
+    font-weight: bold;
+    color: blue
+}
+
+#contents input,
+div {
+    margin: 10px;
+}
+
+#contents {
+    font-size: 15px;
+    position: relative;
+    left: 110px;
+    top: 60px;
+    width: 70%;
+}
+
+.DynamicDiv {
+    width: 50%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: gray;
+}
+
+.DynamicTable:hover,
+.DynamicText:hover,
+.DynamicButton:hover,
+.DynamicDiv:hover {
+    border-color: red;
+    border-width: 4px;
+}
+
+table {
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+table:hover {
+    border-color: red;
+}
+
+table,
+tr,
+td {
+    border: 1px solid black;
+}
+
+#container {
+    text-align: center;
+    width: 500px;
+    height: 500px;
+    border: 1px solid blue;
+    margin: 0 auto;
+}
+.eleOptions {
+    width: 120px;
+    border: 1px solid gray;
+    padding: 0px;
+    background-color: #ffffff;
+    text-decoration: none;
+    visibility: hidden;
+    position: absolute;
+
+}
+#menuEle a {
+    text-decoration: none;
+    
+}
+
+
+.skin {
+    width: 180px;
+    border: 1px solid gray;
+    padding: 0px;
+    background-color: #ffffff;
+    text-decoration: none;
+    visibility: hidden;
+    position: absolute;
+}
+
+#menu a {
+    text-decoration: none;
+    
+}
+
+div.menuitems:hover {
+    background-color: #c0c0c0;
+}
+
