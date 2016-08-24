@@ -42,3 +42,14 @@ git checkout -- <filename>
 根据远程分支回退：
 git reset --hard origin/master
 git fetch origin
+
+
+
+提交流程 
+1.切换分支 git checkout tim/story?
+2.提交到暂存区 git add .
+3.查看当前文件状态 git status
+4.提交到版本库 git commit '-m' 'story? && story?'
+5.推送到远程仓库 git push origin tim/story? 
+
+其他 丢弃修改:git checkout -- file/ git reset HEAD file
