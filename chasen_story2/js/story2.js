@@ -29,6 +29,7 @@ function getCurrentStyle(node) {
 }
 
 function create() {
+    cancelMenu();
     var content = document.getElementById("contents_p");
     var eletype = document.getElementById("list_button").value.toLowerCase();
     var newNode = initializeNode(eletype);
@@ -49,7 +50,7 @@ function initializeNode(eletype) {
             newNode.style.height = "100px";
         }
         newNode.className = eletype + "s";
-        newNode.onclick = function() { operate(this,"event"); };
+        newNode.onclick = function() { operate(this, "event"); };
         newNode.style.float = "left";
         newNode.style.width = "100px";
         newNode.style.border = "1px solid black";
@@ -88,20 +89,18 @@ function addNodeExampleContent(newNode) {
 
 var selElement;
 
-function operate(ele,e) {
+function operate(ele, e) {
     selElement = ele;
-    if (ele.style.border != "2px solid blue") {
-        ele.style.border = "2px solid blue";
-        unchooseOther();
-    } else {
-        var EVT = window.event ? window.event : e;
-        var menu = document.getElementsByClassName("menu")[0];
-        var x = EVT.clientX;
-        var y = EVT.clientY;
-        menu.style.left = x + "px";
-        menu.style.top = y + "px";
-        menu.style.display = "block";
-    }
+
+    ele.style.border = "2px solid blue";
+    unchooseOther();
+    var EVT = window.event ? window.event : e;
+    var menu = document.getElementsByClassName("menu")[0];
+    var x = EVT.clientX;
+    var y = EVT.clientY;
+    menu.style.left = x + "px";
+    menu.style.top = y + "px";
+    menu.style.display = "block";
 }
 
 function unchooseOther() {
