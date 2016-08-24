@@ -118,9 +118,10 @@ function setFontColor() {
 }
 
 function changeFontSize(ele, operator) {
-    if (flag == "true") {
-        current_fontSize = getCurrentFontSize(ele);
-    }
+    //if (flag == "true") {
+        var current_fontSize = getCurrentFontSize(ele);
+    //}
+    //var current_fontSize=ele.currentStyle.fontSize;
 
     if (operator == '+') {
         var font_Size = subNo(current_fontSize) + 1;
@@ -146,8 +147,8 @@ function decFontSize() {
 
 var defaultSize = "15px"; //默认字体大小
 //获取元素当前字体大小
-var current_fontSize = 0,
-    flag = "true",
+//var current_fontSize = 0;
+    var flag = "true",
     first = "true";
 
 function getCurrentFontSize(element) {
@@ -158,7 +159,8 @@ function getCurrentFontSize(element) {
         return element.currentStyle.fontSize;
     } else if (document.defaultView) { //非IE
         flag = "false";
-        return document.defaultView.getComputedStyle(mydiv, null).getPropertyValue('font-Size');
+
+        return document.defaultView.getComputedStyle(element, null).getPropertyValue('font-Size');
     }
 
     return defaultSize;
