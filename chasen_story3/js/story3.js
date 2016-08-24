@@ -29,11 +29,12 @@ function getCurrentStyle(node) {
 }
 
 function showTypeMenu(event) {
+    cancelMenu();
     var menuType = document.getElementsByClassName("menu_type")[0];
-    var x = event.screenX;
-    var y = event.screenY;
+    var x = event.clientX;
+    var y = event.clientY;
     menuType.style.left = x + "px";
-    menuType.style.top = (y - 50) + "px";
+    menuType.style.top = y + "px";
     menuType.style.display = "block";
 }
 
@@ -103,7 +104,7 @@ function addNodeExampleContent(newNode) {
 
 var selElement;
 
-function operate(ele,e) {
+function operate(ele, e) {
     selElement = ele;
     if (ele.style.border != "2px solid blue") {
         ele.style.border = "2px solid blue";
