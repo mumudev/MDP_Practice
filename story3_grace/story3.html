@@ -11,61 +11,44 @@
 <body>
     <h2> Demo: story3 </h2>
     <hr/>
-    <div id="functionBtn">
-        <!-- 
-        <select name="elements" id="option">
-            <option value="table" selected>table</option>
-            <option value="button">button</option>
-            <option value="input text">text</option>
-            <option value="div">div</option>
-        </select>
-        -->
-        <input type="button" value="Create" id="create" onclick="chooseElements()" />
+    <div id="functionBtn">       
+        <input type="button" value="Create" id="create" >
+
     </div>
     <br/>
-    <div id="contents"></div>
-    <!--
-    <div id="menu" class="skin">
-        <ul id="menuitems">
-            <li><a href="#" onclick="deleteElements()">Delete</a></li>
-            <li><a href="#" onclick="setBgroundColor()">Set Background Color</a></li>
-            <li><a href="#" onclick="setFontColor()">Set Font Color</a></li>
-            <li><a href="#" onclick="incFontSize()">Font Size '+'</a></li>
-             <li><a href="#" onclick="decFontSize()">Font Size '-'</a></li>
-        </ul>
-    </div>
--->
+    <div id="contents"></div>    
+
     <div id="menuEle" class="eleOptions">
-        <div class="menuitems">
-            <a href="#" onclick="createTable()">Table</a>
+        <div class="menuitems" onclick="createTable()">
+            <a href="#" >Table</a>
         </div>
-        <div class="menuitems">
-            <a href="#" onclick="createButton()">Button</a>
+        <div class="menuitems" onclick="createButton()">
+            <a href="#" >Button</a>
         </div>
-        <div class="menuitems">
-            <a href="#" onclick="createInputText()">Input Text</a>
+        <div class="menuitems" onclick="createInputText()">
+            <a href="#"> Input Text</a>
         </div>
-        <div class="menuitems">
-            <a href="#" onclick="createDiv()">Div</a>
+        <div class="menuitems" onclick="createDiv()">
+            <a href="#" >Div</a>
         </div>
     </div>
-    <div id="menu" class="skin">
-        <div class="menuitems">
-            <a href="#" onclick="deleteElements()">Delete</a>
+    <div id="menu" class="skin" >
+        <div class="menuitems" onclick="deleteElements()">
+            <a href="#" >Delete</a>
         </div>
         <hr/>
-        <div class="menuitems">
-            <a href="#" onclick="setBgroundColor()">Set Background Color</a>
+        <div class="menuitems" onclick="setBgroundColor()">
+            <a href="#" >Set Background Color</a>
         </div>
-        <div class="menuitems">
-            <a href="#" onclick="setFontColor()">Set Font Color</a>
+        <div class="menuitems" onclick="setFontColor()">
+            <a href="#"> Set Font Color</a>
         </div>
         <hr/>
-        <div class="menuitems">
-            <a href="#" onclick="incFontSize()">Font Size ' + '</a>
+        <div class="menuitems" onclick="incFontSize()">
+            <a href="#" >Font Size ' + '</a>
         </div>
-        <div class="menuitems">
-            <a href="#" onclick="decFontSize()">Font Size ' - '</a>
+        <div class="menuitems" onclick="decFontSize()">
+            <a href="#" >Font Size ' - '</a>
         </div>
     </div>
 </body>
