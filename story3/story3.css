@@ -1,0 +1,32 @@
+#menus{
+	display:none;
+	position:relative;
+	width:150px;
+	border:1px solid #cccccc;
+	background-color:#ffffff;
+}
+#menu{
+	display:block;
+	position:relative;
+	width:150px;
+	font-size:15px;
+	text-align:center;
+	background-color: #ffffff;
+	}
+	
+.Table{
+	border:1px solid brown;}	
+#create{
+	font-size: 15px;
+}
+.Div{
+	border:1px solid brown;
+	width: 100px;
+}
+#menu1{
+	display:none;
+	position:relative;
+	width:150px;
+	border:1px solid pink;
+	background-color:#eeeeee;
+}
