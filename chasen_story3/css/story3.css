@@ -35,7 +35,7 @@
     left: 400px;
     float: left;
     z-index: 10;
-    display: block;
+    display: none;
     width: 170px;
     height: 228px;
     /* margin-left: 200px; */
@@ -52,7 +52,7 @@
     left: 200px;
     float: left;
     z-index: 10;
-    display: block;
+    display: none;
     width: 170px;
     height: 228px;
     /* margin-left: 200px; */

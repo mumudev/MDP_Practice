@@ -1,5 +1,3 @@
-var selTag;
-
 function loading() {
     var arr = document.getElementsByClassName("button");
     for (var i = 0; i < arr.length; i++) {
@@ -30,8 +28,13 @@ function getCurrentStyle(node) {
     return style;
 }
 
-function showTypeMenu() {
-    document.getElementsByClassName("menu_type")[0].style.display = "block";
+function showTypeMenu(event) {
+    var menuType = document.getElementsByClassName("menu_type")[0];
+    var x = event.screenX;
+    var y = event.screenY;
+    menuType.style.left = x + "px";
+    menuType.style.top = (y - 50) + "px";
+    menuType.style.display = "block";
 }
 
 function create(ele) {
@@ -44,10 +47,11 @@ function create(ele) {
     cancelMenu_type();
 }
 
-function cancelMenu_type(){
+function cancelMenu_type() {
     var menuType = document.getElementsByClassName("menu_type")[0];
     menuType.style.display = "none";
 }
+
 function initializeNode(eletype) {
     var newNode = null;
     if (eletype) {
@@ -60,7 +64,7 @@ function initializeNode(eletype) {
             newNode.style.height = "100px";
         }
         newNode.className = eletype + "s";
-        newNode.onclick = function() { operate(this); };
+        newNode.onclick = function() { operate(this, "event"); };
         newNode.style.float = "left";
         newNode.style.width = "100px";
         newNode.style.border = "1px solid black";
@@ -99,13 +103,18 @@ function addNodeExampleContent(newNode) {
 
 var selElement;
 
-function operate(ele) {
+function operate(ele,e) {
     selElement = ele;
     if (ele.style.border != "2px solid blue") {
         ele.style.border = "2px solid blue";
         unchooseOther();
     } else {
+        var EVT = window.event ? window.event : e;
         var menu = document.getElementsByClassName("menu")[0];
+        var x = EVT.clientX;
+        var y = EVT.clientY;
+        menu.style.left = x + "px";
+        menu.style.top = y + "px";
         menu.style.display = "block";
     }
 }
