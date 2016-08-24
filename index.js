@@ -16,9 +16,16 @@ var initMethod = {
     init: function() {
         initMethod._bind();
         menu.style.display = "none";
+        document.getElementById("createMenu").style.display = "none";
     },
 
     _bind: function() {
+        document.getElementById("createBtn").onclick = function(e) {
+            document.getElementById("createMenu").style.display = "";
+        };
+        for (var i = 0; i < document.getElementsByName("createBtn").length; i++) {
+            document.getElementsByName("createBtn")[i].onclick = bindMethod.create;
+        }
         for (var i = 0; i < document.getElementsByName("btn").length; i++) {
             document.getElementsByName("btn")[i].onclick = binding;
         }
@@ -58,7 +65,9 @@ var clearBinding = function(e) {
     if (!e.target.closest("[id^='item'],[id='menu']")) {
         selected = null;
         menu.style.display = "none";
-        baseMethod.getElementsByClassName("selected")[0].removeClass("selected");
+        if (baseMethod.getElementsByClassName("selected").length) {
+            baseMethod.getElementsByClassName("selected")[0].removeClass("selected");
+        }
     }
 
 };
@@ -78,47 +87,44 @@ var menuBinding = function(e) {
 
 var bindMethod = {
     create: function(e) {
-        switch (baseMethod.getComboName()) {
-            case "table":
+        switch (e.currentTarget.id) {
+            case "createTextBtn":
                 baseMethod.getContent().appendChild(data.table());
                 break;
-            case "button":
+            case "createButtonBtn":
                 baseMethod.getContent().appendChild(data.button());
                 break;
-            case "inputtext":
+            case "createInputBtn":
                 baseMethod.getContent().appendChild(data.inputtext());
                 break;
-            case "div":
+            case "createdivBtn":
                 baseMethod.getContent().appendChild(data.div());
                 break;
         }
         baseMethod.getElementById("item" + itemId).onclick = menuBinding;
+        document.getElementById("createMenu").style.display = "none";
         itemId++;
     },
 
     delete: function(e) {
-        var comboName = baseMethod.getComboName().toUpperCase();
         var item = baseMethod.getElementById(selected);
         baseMethod.removeElement(item);
         menu.style.display = "none";
     },
 
     changeBgColor: function(e) {
-        var comboName = baseMethod.getComboName().toUpperCase();
         var item = baseMethod.getElementById(selected);
         item.style["background-color"] = "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
 
     },
 
     changeFontColor: function(e) {
-        var comboName = baseMethod.getComboName().toUpperCase();
         var item = baseMethod.getElementById(selected);
         item.style["color"] = "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
 
     },
 
     upFontSize: function(e) {
-        var comboName = baseMethod.getComboName().toUpperCase();
         var item = baseMethod.getElementById(selected);
         var fontSize = item.style["font-size"] === "" ?
             17 : parseInt(item.style["font-size"].replace(/[^0-9]/ig, "")) + 1;
@@ -126,7 +132,6 @@ var bindMethod = {
     },
 
     downFontSize: function(e) {
-        var comboName = baseMethod.getComboName().toUpperCase();
         var item = baseMethod.getElementById(selected);
         var fontSize = item.style["font-size"] === "" ?
             15 : parseInt(item.style["font-size"].replace(/[^0-9]/ig, "")) - 1;

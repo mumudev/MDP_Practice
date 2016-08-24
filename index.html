@@ -8,15 +8,15 @@
 <body>
     <h1 class="title">Demo</h1>
     <nav class="nav">
-        <select name="" id="combo" class="dropbox">
-            <option value="table" class="dropli">Table</option>
-            <option value="button" class="dropli">Button</option>
-            <option value="inputtext" class="dropli">inputtext</option>
-            <option value="div" class="dropli">Div</option>
-        </select>
-        <button class="btn" name="btn" id="createBtn">Create</button>
+        <button class="btn" id="createBtn">Create</button>
     </nav>
     <div class="content" id="content"></div>
+    <div class="createMenu" id="createMenu">
+        <button class="btn" name="createBtn" id="createTextBtn">Table</button>
+        <button class="btn" name="createBtn" id="createButtonBtn">Button</button>
+        <button class="btn" name="createBtn" id="createInputBtn">Input Text</button>
+        <button class="btn" name="createBtn" id="createdivBtn">Div</button>
+    </div>
     <div class="menu" id="menu">
         <button class="btn" name="btn" id="deleteBtn">Delete</button>
         <button class="btn" name="btn" id="changeBgColorBtn">Background Color</button>
@@ -27,4 +27,5 @@
 </body>
 <script src="efframe.js" type="text/javascript"></script>
 <script src="index.js" type="text/javascript"></script>
+
 </html>
