@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Demo for story2</title>
+    <link rel="stylesheet" type="text/css" href="story2.css">
+    <script type="text/javascript" src="story2.js"></script>
+  </head>
+  
+  <body id="body">
+    <h1 id="h1" align="center">Hello</h1>
+    <p id="param" name="test">
+      <select id="demo" name="test">
+        <option value='0' selected="selected">--Please select--</option>
+        <option value='Table'>Table</option>
+        <option value='Button'>Button</option>
+        <option value='Input Text'>Input Text</option>
+        <option value='Div'>Div</option></select>
+      <input type="button" onclick="create()" name="test" value="Create"></p>
+    <div id='div1'></div>
+    <div id='menus'>
+      <li id=menu onclick="_delete()" onmouseout="dark(this)" onmouseover="highlight(this)">Delete</li>
+      <li id=menu onclick="change_bgcolor()" onmouseout="dark(this)" onmouseover="highlight(this)">Background Color</li>
+      <li id=menu onclick="change_ftcolor()" onmouseout="dark(this)" onmouseover="highlight(this)">Font Color</li>
+      <li id=menu onclick="fontBigger()" onmouseout="dark(this)" onmouseover="highlight(this)">Font Size +</li>
+      <li id=menu onclick="fontSmaller()" onmouseout="dark(this)" onmouseover="highlight(this)">Font Size -</li></div>
+  </body>
+
+</html>

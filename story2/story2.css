@@ -1,0 +1,28 @@
+h1 {
+    font-size: 30px;
+}
+.Table{
+	border:1px solid brown;}
+.Div{
+	border:1px solid pink;
+	width:100px;}
+.Button{
+    border:0.5px solid gray;
+}
+input{
+	border:1px solid brown;
+}
+#menu{
+	display:block;
+	position:relative;
+	width:150px;
+	font-size:15px;
+	text-align:center;
+	}
+#menus{
+	display:none;
+	position:relative;
+	width:150px;
+	border:1px solid pink;
+	background-color:#eeeeee;
+}
