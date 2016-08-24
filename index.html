@@ -1,157 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>HTML</title>
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HTML</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
+
 <body>
-
-<div id="btn-contain" style="">
-	<div class="dropDown">
-		<div class="dropDown-text" style="min-width:60px;">table</div>
-	</div>
-	<button class="btn-create">Create</button>
-
-	<!-- <select id="create" style="display:none;">
-		<option>Table</option>
-		<option>Button</option>
-		<option>Text</option>
-		<option>DIV</option>
-	</select> -->
-	<button class="btn-delete">Delete</button>
-	<button class="btn-background">Background</button>
-	<button class="btn-fontColor">Font color</button>
-	<label style="font-size:12px" data-val='12' class="fontSize-text">12px</label>
-	<button class="btn-fontSize-add">+</button>
-	<button class="btn-fontSize-cut">-</button>
-</div>
-
-<div id="content" style="margin-top:20px;">
-	
-</div>
-	
+    <div id="btn-contain" style="">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="min-width:100px;">
+                <span class="dropdown-text">table</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" style="display:none;">
+                <li><a href="javascript:void 0;" value="Table">Table</a></li>
+                <li><a href="javascript:void 0;" value="Button">Button</a></li>
+                <li><a href="javascript:void 0;" value="Text">Input Text</a></li>
+                <li><a href="javascript:void 0;" value="DIV">DIV</a></li>
+            </ul>
+        </div>
+        <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
+            create
+        </button>
+    </div>
+    <div id="content" style="margin-top:20px;">
+    </div>
+    <div class="popUp">
+        <ul class="popUp-menu">
+            <li><a href="#" value="0">Delete</a></li>
+            <li><a href="#" value="1">Background Color</a></li>
+            <li><a href="#" value="2">Font size(+)</a></li>
+            <li><a href="#" value="3">Font size(-)</a></li>
+        </ul>
+    </div>
 </body>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript">
-		//Dropdown-list
-		function Dropdown(option){
-			this.option = option || {};
-			this.init = function(){
-				var self = this;
-				var list = document.createElement('ul');
-		         list.className = 'dropDown-list';
-		         list.style.display = 'none';
-		         var str = '';
-		         for (var i in this.option.list) {
-		         	str += '<li  class="'+(this.option.defaultSelected == this.option.list[i]?'selected':'')+'">' + this.option.list[i] + '</li>'
-		         }
-		         list.innerHTML = str;
+// AC 1: There's a combo list, there are Table, Button, Input Text, DIV in the list.
+// AC 2: In the right of combo list, there's a button named Create.
+// AC 3: Select one item from combo, and click Create, then create desired element in UI below Create button, there are some sample data for created element.
+// AC 4: Click created element, show a border for it, the border is blue with 2 pixels width.
+// AC 5: Click created element, popup a menu, there are Delete, Background Color, Font Color, Font Size + and Font Size - in the menu.
+// AC 6: The functionality of every item in the menu is save as Story 1, while it only applies to currently selected element. 
 
-		       	$(this.option.parentEle)[0].appendChild(list);
-		        $(this.option.parentEle+' .dropDown-list li').on('click',function(){
-		         	$(this.parentNode.childNodes).removeClass('selected');
-		         	$(this).addClass('selected');
-		         	var self = this;
-		         	setTimeout(function(){
-	         			$('.dropDown-text')[0].innerText = $(self).data('val');
-		         		$(self.parentNode).toggle();
-		         	},200);
-		    	});
-		    	$(this.option.dropdownBtn).on('click',function(){
-		    		$($(this)[0].nextElementSibling).toggle();
-		    	});
-			};
-			this.getVal = function(){
-				return $(this.option.parentEle+' .selected').data('val');
-			}
-			this.init();
-		}
+'use strict';
 
-		function createFragment(type){
-			var temlate = {
-				'Table': '<table class="altrowstable temlate-Table" id="alternatecolor">'
-							+'<tr>'
-	                          +'<th>Info Header 1</th><th>Info Header 2</th><th>Info Header 3</th>'
-							+'</tr>'
-							+'<tr>'
-							    +'<td>Text 1A</td><td>Text 1B</td><td>Text 1C</td>'
-							+'</tr>'
-							+'<tr>'
-								+'<td>Text 2A</td><td>Text 2B</td><td>Text 2C</td>'
-							+'</tr>'
-							+'</tr>'
-							+'<tr>'
-								+'<td>Text 3A</td><td>Text 3B</td><td>Text 3C</td>'
-							+'</tr>'
-							+'<tr>'
-								+'<td>Text 4A</td><td>Text 4B</td><td>Text 4C</td>'
-							+'</tr>'
-							+'<tr>'
-								+'<td>Text 5A</td><td>Text 5B</td><td>Text 5C</td>'
-							+'</tr>'
-							+'</table>',
-				'Button': '<button class="temlate-Button" style="color:'+$.makeColor()+';background-color:'+$.makeColor()+'">button</button>',
-				'Text': '<input class="temlate-Text" style="color:'+$.makeColor()+';background-color:'+$.makeColor()+'" type="text" placeholder = "文本框">',
-				'DIV': '<div class="temlate-DIV" style="color:'+$.makeColor()+';background-color:'+$.makeColor()+'">block format context</div>' 
-			};
-			var div = document.createElement('div');
-				div.innerHTML = temlate[type];
-				//文档片段
-			var fragment = document.createDocumentFragment();
-			var nodes = div.childNodes;
-			for (var i = 0; i < nodes.length; i++) {
-				fragment.appendChild(nodes[i].cloneNode(true));
-			}
-			return fragment;
-		}
+function Dropdown(option) {
+    this.option = option || {
+        ele: '.dropdown', //contains
+        list: null,
+    };
+    this.dropdown = $(this.option.ele);
+    this.dropdownText = this.dropdown.find('.dropdown-text');
+    this.dropdownMeu = this.dropdown.find('.dropdown-menu li a');
+    this.val = 'Table';
+    this.initialize();
+}
+Dropdown.prototype = {
+    constructor: Dropdown,
+    initialize: function() {
+        var self = this;
+        this.dropdownMeu.on('click', function() {
+            self.val = this.getAttribute('value');
+            self.dropdownText.text(self.val);
+            $('.dropdown-toggle').next().toggle();
+            event.stopPropagation()
+        });
+        this.toggle();
+    },
+    toggle: function() {
+        $('.dropdown-toggle').on('click', function() {
+            $('.dropdown-toggle').next().toggle();
+            event.stopPropagation()
+        });
+    },
+}
+
+function Template(option) { //根据模板创建element
+    this.option = option || {};
+    this.defalutTemplate = {
+        'Table': '<table class="altrowstable template template-Table" style="font-size:'+this.option.fontSize+'" id="alternatecolor">' + '<tr>' + '<th>Info Header 1</th><th>Info Header 2</th><th>Info Header 3</th>' + '</tr>' + '<tr>' + '<td>Text 1A</td><td>Text 1B</td><td>Text 1C</td>' + '</tr>' + '<tr>' + '<td>Text 2A</td><td>Text 2B</td><td>Text 2C</td>' + '</tr>' + '</tr>' + '<tr>' + '<td>Text 3A</td><td>Text 3B</td><td>Text 3C</td>' + '</tr>' + '<tr>' + '<td>Text 4A</td><td>Text 4B</td><td>Text 4C</td>' + '</tr>' + '<tr>' + '<td>Text 5A</td><td>Text 5B</td><td>Text 5C</td>' + '</tr>' + '</table>',
+        'Button': '<button class="template template-Button" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'">button</button>',
+        'Text': '<input class="template template-Text" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'" type="text" placeholder = "文本框">',
+        'DIV': '<div class="template template-DIV" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'">block format context</div>'
+    };
+    this.createFragment = function(type) {
+        var div = document.createElement('div');
+        div.innerHTML = this.defalutTemplate[type];
+        //文档片段
+        var fragment = document.createDocumentFragment();
+        var nodes = div.childNodes;
+        for (var i = 0; i < nodes.length; i++) {
+            fragment.appendChild(nodes[i].cloneNode(true));
+        }
+        return fragment
+    }
+    this.initialize();
+}
+
+Template.prototype = {
+    constructor: Template,
+    initialize: function() {
+        var fragment = this.createFragment(this.option.type);
+        this.bindEvents();
+        $(this.option.container)[0].appendChild(fragment);
+        return this;
+    },
+    addBorder: function() {
+        if (this[0].parentNode.className !== 'box-selected') {
+            var div = document.createElement('div');
+            div.className = 'box-selected';
+            this.wrap(div);
+        }
+    },
+    bindEvents: function() {
+        var self = this;
+        $(self.option.container).delegate('click', '.template', function(e) {
+            if (!this.data('template')) {
+                this.data('template', self);
+            }
+            $('.template').unwrap('.box-selected');
+            self.addBorder.call(this);
+            self.option.popup.setTemplate(this);
+            self.option.popup.showPopUp.call(this, e);
+        });
+
+    },
+
+}
 
 
-		$(function(){
-			var dropdownOption = {
-				parentEle:'.dropDown',
-				defaultSelected:'Table',
-				dropdownBtn:'.dropDown-text',
-				list:{
-					'Table':'Table',
-					'Button':'Button',
-					'Text':'Text',
-					'DIV':'DIV',
-				}
-			}
-			var dropdown =  new Dropdown(dropdownOption);
-			$('.btn-create').on('click',function(){
-				var type = dropdown.getVal();
-				$('#content')[0].appendChild(createFragment(type)) ;
-			});
-			$('.btn-delete').on('click',function(){
-				var type = dropdown.getVal();
-				$('.temlate-'+type).remove();
-			});
-			$('.btn-background').on('click',function(){
-				var type = dropdown.getVal();
-				$('.temlate-'+type).css('background-color',$.makeColor());
-			});
-			$('.btn-fontColor').on('click',function(){
-				var type = dropdown.getVal();
-				$('.temlate-'+type).css('color',$.makeColor());
-			});
-			$('.btn-fontSize-add').on('click',function(){
-				var type = dropdown.getVal();
-				var fontSize = parseInt($('.fontSize-text')[0].innerText);
-				++fontSize;
-				$('.temlate-'+type).css('font-size',fontSize+'px');
-				$('.fontSize-text')[0].innerText = fontSize+'px';
-			});
-			$('.btn-fontSize-cut').on('click',function(){
-				var type = dropdown.getVal();
-				var fontSize = parseInt($('.fontSize-text')[0].innerText);
-				--fontSize;
-				$('.temlate-'+type).css('font-size',fontSize+'px');
-				$('.fontSize-text')[0].innerText = fontSize+'px';
-			});
-		});
-		
+function Popup() {
+    this.curTemplate = null;
+    this.fontSize = '11px';
+    this.initialize()
+}
+
+Popup.prototype = {
+    constructor: Popup,
+    initialize: function() {
+        this.bindEvents();
+    },
+    bindEvents: function() {
+        var self = this
+        $('.popUp').delegate('click', 'a', function() {
+            var val = this[0].getAttribute('value');
+            var curTemplate = self.getTemplate();
+            if (val === '0') {
+                curTemplate.parent('.box-selected')
+                    .remove();
+            } else if (val === '1') {
+                self.changeBgColor();
+                $('.box-selected').before(curTemplate[0]);
+                self.removeBorder();
+            } else if (val === '2') {
+                self.changeFontSize('add');
+            }else if(val === '3'){
+                self.changeFontSize('cut');
+            }
+            self.hidePopUp();
+        });
+        $(document).on('click',function(){
+            self.hidePopUp();
+        })
+    },
+    showPopUp: function(e) {
+        $('.popUp').show()
+            .css({
+                top: e.clientY +
+                    document.body.scrollTop + 'px',
+                left: e.clientX + 'px'
+            });
+    },
+    hidePopUp: function() {
+        $('.popUp').hide();
+    }, 
+    removeBorder: function() {
+        $('.box-selected').remove();
+    },
+    setTemplate: function(dom) {
+        this.curTemplate = dom;
+    },
+    getTemplate: function() {
+        return this.curTemplate;
+    },
+    changeBgColor: function() {
+        this.curTemplate.css('background', $.makeColor());
+    },
+    changeFontSize: function(type) {
+        var curfontSize = parseInt(this.curTemplate.css('fontSize'));
+        if(type=='add'){
+            this.fontSize = (curfontSize+1)+'px';
+            this.curTemplate.css('fontSize',this.fontSize);
+        }else{
+            this.fontSize  = (curfontSize-1)+'px';
+            this.curTemplate.css('fontSize',this.fontSize);
+        }
+    }
+}
+
+$(function() {
+    var combo = new Dropdown();
+    $(document).on('click', function() {
+        $('.dropdown-toggle').next().hide();
+    });
+    var popup = new Popup();
+    $('#btn-create').on('click', function() {
+        new Template({
+            type: combo.val,
+            container: '#content',
+            fontSize:popup.fontSize,
+            popup: popup
+        });
+    });
+})
+
+
 </script>
 
 </html>
