@@ -4,6 +4,7 @@
 	width:150px;
 	border:1px solid #cccccc;
 	background-color:#ffffff;
+	cursor:pointer;
 }
 #menu{
 	display:block;
@@ -29,4 +30,5 @@
 	width:150px;
 	border:1px solid pink;
 	background-color:#eeeeee;
+	cursor:pointer;
 }

@@ -20,6 +20,7 @@ input{
 	text-align:center;
 	}
 #menus{
+	cursor:pointer;
 	display:none;
 	position:relative;
 	width:150px;
