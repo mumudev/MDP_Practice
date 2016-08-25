@@ -169,10 +169,11 @@ Popup.prototype = {
         })
     },
     showPopUp: function(e) {
+        var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         $('.popUp').show()
             .css({
                 top: e.clientY +
-                    document.body.scrollTop + 'px',
+                    scrollTop + 'px',
                 left: e.clientX + 'px'
             });
     },

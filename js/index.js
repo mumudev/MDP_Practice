@@ -69,11 +69,11 @@
     $.fn.off = function(type, callback, useCapture) {
         if ('attachEvent' in document) {
             $.each(this, function(i, idx) {
-                detachEvent.call(idx, 'on' + type, callback);
+                idx.detachEvent.call('on' + type, callback);
             });
         } else {
             $.each(this, function(i, idx) {
-                removeEventListener.call(idx, type, callback, useCapture);
+                idx.removeEventListener(type, callback, useCapture);
             });
         }
         return this;
@@ -82,13 +82,15 @@
     $.each = function(elements, callback) {
         for (var i = 0; i < elements.length; i++) {
             if (callback.call(elements[i], i, elements[i]) === false)
-                return elements;
+                return i;
         }
     }; 
     $.fn.each = function(callback) {
         //likeArray
+        var ret;
         for (var i = 0; i < this.length; i++) {
-            callback.call(this[i], i, this[i]);
+            ret = callback.call(this[i], i, this[i]);
+            if(ret === false) return;
         }
     };
 
@@ -138,10 +140,13 @@
         return this;
     };
     $.fn.hasClass = function(name) {
+        var ret;
         $.each(this, function(i, ele) {
             var classRE = new RegExp('(^|\\s+)' + name + '(\\s+|$)');
-            return classRE.test(ele.className);
+            ret =  classRE.test(ele.className);
+            if(ret) return !ret;
         });
+        return ret;
     };
     $.fn.removeClass = function(name) {
         $.each(this, function(i, ele) {
@@ -383,7 +388,11 @@
 
             while(currentTarget !== target || !currentTarget || !target){
                 if(target.id === selector || target.className.indexOf(selector)>-1 || target.nodeName.toLowerCase() === selector){
-                    evt.stopPropagation();
+                    if(evt.stopPropagation){
+                        evt.stopPropagation();
+                    }else{
+                        evt.cancelBubble = true;
+                    }
                     return fn.call($(target),evt);
                 }
                 target  = target.parentNode;
