@@ -1,0 +1,55 @@
+.header{
+	text-align: center;
+}
+.nav{
+	text-align: center;
+}
+#combolist{
+	font-size: 18px;
+	size: 20;
+
+}
+.nav button{
+	font-size: 18px;
+	size: 20;
+
+}
+.nav input{
+	font-size: 18px;
+	size: 20;
+
+}
+#selectItem{
+	position: fixed;
+	left: 100px;
+	top: 300px;
+	padding: 1px;
+	border: 1px solid gray;
+	list-style: none;
+	display: none;
+	border-bottom:#999999 1px solid
+	
+}
+#selectOperation{
+	position: fixed;
+	left: 300px;
+	top: 300px;
+	padding: 1px;
+	border: 1px solid gray;
+	list-style: none;
+	display: none;
+	border-bottom:#999999 1px solid
+}
+a{
+	color: black;
+	text-decoration: none;
+
+}
+#div{
+	border: 1px solid black;
+	size: 20px;
+}
+.createdElements button{
+	margin: 5px
+
+}

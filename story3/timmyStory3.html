@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Timmy's Story3</title>
+      <link rel="stylesheet" type="text/css" href="timmyStory3.css">
+       <script type="text/javascript"  src="timmyStory3.js"></script>
+	<style></style>
+</head>
+<body>
+	<div class="header">
+      <h2>Demo: Story3</h2>
+      </div>
+      <div class="nav">
+      <form >
+        <button type="button" name="create" value="Create" onclick="displayMenu('selectItem');closeMenu('selectOperation')">Create</button> 
+          </form>
+          </div>
+         <br/><br/><br/>
+      <div class= "popUpMenu">
+          <ul id="selectItem">
+            <li><a href="#" onclick="createCombo('button')">Button</a></li>
+            <li><a href="#" onclick="createCombo('table')">Table</a></li>
+            <li><a href="#" onclick="createCombo('div')">Div</a></li>
+            <li><a href="#" onclick="createCombo('input')">Input Text</a></li>
+            </ul>
+           <ul id="selectOperation">
+            <li><a href="#" onclick="deleteCombo()">Delete</a></li>
+            <li><a href="#" onclick="setBackgroundColor()">Set Background Color</a></li>
+            <li><a href="#" onclick="setFontColor()">Set Font Color</a></li>
+            <li><a href="#" onclick="setFontSize('+')">Font Size '+'</a></li>
+            <li><a href="#" onclick="setFontSize('-')">Font Size '-'</a></li>
+            </ul>
+
+        </div>
+      
+	<div class="section"> 
+        <div class="combo" id="combo"></div>
+     
+      </div>
+
+	<div class="aside"></div>
+      <div class="footer"></div>
+</body>
+</html>			
