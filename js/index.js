@@ -198,7 +198,6 @@ var baseMethod = {
 
 
 };
-$.fn.extend(baseMethod);
 var data = {
     table: function() {
         // body...

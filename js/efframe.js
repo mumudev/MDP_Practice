@@ -156,6 +156,12 @@
             });
             return ret ? ret : this;
         },
+        show: function() {
+            $.private.each(this, function(i, ele) {
+                ele.style.display = '';
+            });
+            return this;
+        },
         hide: function() {
             $.private.each(this, function(i, ele) {
                 ele.style.display = 'none';
@@ -181,10 +187,14 @@
         },
 
         hasClass: function(name) {
+            var pd = false;
             $.private.each(this, function(i, ele) {
                 var classRE = new RegExp('(^|\\s+)' + name + '(\\s+|$)');
-                return classRE.test(ele.className);
+                if(classRE.test(ele.className)){
+                    pd = true;
+                }
             });
+            return pd;
         },
         addClass: function(name) {
             $.private.each(this, function(i, ele) {
