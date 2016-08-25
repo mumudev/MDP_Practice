@@ -8,7 +8,15 @@ var elementId = {
     upFontSizeBtn: "upFontSizeBtn",
     downFontSizeBtn: "downFontSizeBtn"
 };
-
+var test = [1,2,3];
+if (navigator.userAgent.indexOf('Firefox') >= 0) {
+    var $E = function() {
+        var c = $E.caller;
+        while (c.caller) c = c.caller;
+        return c.arguments[0];
+    };
+    __defineGetter__("event", $E);
+}
 var itemId = 0;
 var selected;
 var initMethod = {
@@ -190,6 +198,7 @@ var baseMethod = {
 
 
 };
+$.fn.extend(baseMethod);
 var data = {
     table: function() {
         // body...
