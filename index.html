@@ -64,18 +64,22 @@ Dropdown.prototype = {
     constructor: Dropdown,
     initialize: function() {
         var self = this;
-        this.dropdownMeu.on('click', function() {
+        this.dropdownMeu.on('click', function(e) {
             self.val = this.getAttribute('value');
             self.dropdownText.text(self.val);
             $('.dropdown-toggle').next().toggle();
-            event.stopPropagation()
+            var evt = window.event || e;
+            evt.stopPropagation&&e.stopPropagation();
+            evt.cancelBubble = true;
         });
         this.toggle();
     },
     toggle: function() {
-        $('.dropdown-toggle').on('click', function() {
+        $('.dropdown-toggle').on('click', function(e) {
             $('.dropdown-toggle').next().toggle();
-            event.stopPropagation()
+            var evt = window.event || e;
+            evt.stopPropagation&&evt.stopPropagation();
+            evt.cancelBubble = true;
         });
     },
 }
