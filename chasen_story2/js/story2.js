@@ -91,16 +91,20 @@ var selElement;
 
 function operate(ele, e) {
     selElement = ele;
-
-    ele.style.border = "2px solid blue";
     unchooseOther();
     var EVT = window.event ? window.event : e;
     var menu = document.getElementsByClassName("menu")[0];
     var x = EVT.clientX;
     var y = EVT.clientY;
-    menu.style.left = x + "px";
-    menu.style.top = y + "px";
-    menu.style.display = "block";
+    if (ele.style.border == "2px solid blue") {
+        ele.style.border = "1px solid black";
+        menu.style.display = "none";
+    } else {
+        ele.style.border = "2px solid blue";
+        menu.style.left = x + "px";
+        menu.style.top = y + "px";
+        menu.style.display = "block";
+    } 
 }
 
 function unchooseOther() {
