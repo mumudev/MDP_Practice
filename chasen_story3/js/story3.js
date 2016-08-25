@@ -5,6 +5,10 @@ function loading() {
         arr[i].onmouseout = function() { mouseOut(this); };
     }
 }
+function cancel(){
+    cancelMenu_type();
+    cancelMenu();
+}
 
 function mouseOver(ele) {
     ele.style.backgroundColor = "#3572b0";
@@ -105,19 +109,17 @@ function addNodeExampleContent(newNode) {
 var selElement;
 
 function operate(ele, e) {
+    cancelMenu_type();
     selElement = ele;
-    if (ele.style.border != "2px solid blue") {
-        ele.style.border = "2px solid blue";
-        unchooseOther();
-    } else {
-        var EVT = window.event ? window.event : e;
-        var menu = document.getElementsByClassName("menu")[0];
-        var x = EVT.clientX;
-        var y = EVT.clientY;
-        menu.style.left = x + "px";
-        menu.style.top = y + "px";
-        menu.style.display = "block";
-    }
+    ele.style.border = "2px solid blue";
+    unchooseOther();
+    var EVT = window.event ? window.event : e;
+    var menu = document.getElementsByClassName("menu")[0];
+    var x = EVT.clientX;
+    var y = EVT.clientY;
+    menu.style.left = x + "px";
+    menu.style.top = y + "px";
+    menu.style.display = "block";
 }
 
 function unchooseOther() {
@@ -132,6 +134,12 @@ function unchooseOther() {
 function cancelMenu() {
     var menu = document.getElementsByClassName("menu")[0];
     menu.style.display = "none";
+    if (selElement) {
+        if (selElement.style.border) {
+            selElement.style.border = "1px solid black";
+        }
+
+    }
 }
 
 function _delete() {
