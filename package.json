@@ -1,0 +1,29 @@
+{
+  "name": "mdp_practice",
+  "title": "MDP_Practice",
+  "version": "0.0.1",
+  "description": "mdp practice homework!",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "file-loader": "^0.9.0",
+    "jquery": "^3.1.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
+  },
+  "author": "Charlie Yu",
+  "license": "private",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mumudev/MDP_Practice.git"
+  },
+  "keywords": [
+    "MDP",
+    "Practice"
+  ],
+  "bugs": {
+    "url": "https://github.com/mumudev/MDP_Practice/issues"
+  },
+  "homepage": "https://github.com/mumudev/MDP_Practice#readme"
+}

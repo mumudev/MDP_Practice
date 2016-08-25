@@ -94,9 +94,8 @@ var menuBinding = function(e) {
     if (baseMethod.getElementsByClassName("selected").length) {
         baseMethod.getElementsByClassName("selected")[0].removeClass("selected");
     }
-    if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
+    if (navigator.userAgent.indexOf('Mozilla') >= 0 ) {
     }else{
-        
     e.target.closest("[id^='item']").addClass("selected");
     }
 };

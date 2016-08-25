@@ -5,6 +5,7 @@
  * @return {Dom}
  */
 (function(window, undefined) {
+
     var readyList = [],
         _isReady = false;
 
@@ -227,4 +228,8 @@
         }
     }
     window.$ = $;
+
+    if ( typeof module === "object" && typeof module.exports === "object" ) {
+        module.exports = window.$;
+    } 
 })(window, void 0);
