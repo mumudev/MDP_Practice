@@ -62,7 +62,13 @@ var binding = function(e) {
 };
 
 var clearBinding = function(e) {
-    if (!e.target.closest("[id^='item'],[id='menu']")) {
+    if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
+        selected = null;
+        menu.style.display = "none";
+        if (baseMethod.getElementsByClassName("selected").length) {
+            baseMethod.getElementsByClassName("selected")[0].removeClass("selected");
+        }
+    }else if (e.target.closest&&!e.target.closest("[id^='item'],[id='menu']")) {
         selected = null;
         menu.style.display = "none";
         if (baseMethod.getElementsByClassName("selected").length) {
@@ -88,7 +94,11 @@ var menuBinding = function(e) {
     if (baseMethod.getElementsByClassName("selected").length) {
         baseMethod.getElementsByClassName("selected")[0].removeClass("selected");
     }
+    if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
+    }else{
+        
     e.target.closest("[id^='item']").addClass("selected");
+    }
 };
 
 var bindMethod = {
