@@ -69,14 +69,16 @@
     };
 
     $.commonAction = {
-        eq: function(attrName, attrValue) {
-            // body...
+        eq: function(i) {
+        var len = this.length,
+            index = i + (i < 0 ? len : 0);
+        return $(this[index]);
         },
-        first: function(attrName, attrValue) {
-            // body...
+        first: function() {
+        return this.eq(0);
         },
-        last: function(attrName, attrValue) {
-            // body...
+        last: function() {
+        return this.eq(-1);
         },
         each: function(callback) {
             //likeArray
@@ -158,7 +160,7 @@
         },
         show: function() {
             $.private.each(this, function(i, ele) {
-                ele.style.display = '';
+                ele.style.display = 'block';
             });
             return this;
         },
@@ -187,14 +189,10 @@
         },
 
         hasClass: function(name) {
-            var pd = false;
             $.private.each(this, function(i, ele) {
                 var classRE = new RegExp('(^|\\s+)' + name + '(\\s+|$)');
-                if(classRE.test(ele.className)){
-                    pd = true;
-                }
+                return classRE.test(ele.className);
             });
-            return pd;
         },
         addClass: function(name) {
             $.private.each(this, function(i, ele) {

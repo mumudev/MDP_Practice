@@ -8,15 +8,7 @@ var elementId = {
     upFontSizeBtn: "upFontSizeBtn",
     downFontSizeBtn: "downFontSizeBtn"
 };
-var test = [1,2,3];
-if (navigator.userAgent.indexOf('Firefox') >= 0) {
-    var $E = function() {
-        var c = $E.caller;
-        while (c.caller) c = c.caller;
-        return c.arguments[0];
-    };
-    __defineGetter__("event", $E);
-}
+var test = [1, 2, 3];
 var itemId = 0;
 var selected;
 var initMethod = {
@@ -37,7 +29,7 @@ var initMethod = {
         for (var i = 0; i < document.getElementsByName("btn").length; i++) {
             document.getElementsByName("btn")[i].onclick = binding;
         }
-        document.body.onclick = clearBinding;
+        document.onclick = clearBinding;
     },
 
     cssStyle: function() {}
@@ -80,9 +72,15 @@ var clearBinding = function(e) {
 
 };
 var menuBinding = function(e) {
+    var newX,newY;
+    if (navigator.userAgent.indexOf('Firefox') >= 0) {
+        newX = e.clientX + document.body.scrollLeft;
+        newY = e.clientY + document.body.scrollTop;
+    } else {
+        newX = window.event.x + document.body.scrollLeft;
+        newY = window.event.y + document.body.scrollTop;
+    }
     selected = this.id;
-    newX = window.event.x + document.body.scrollLeft;
-    newY = window.event.y + document.body.scrollTop;
     menu = document.all.menu;
     menu.style.display = "";
     menu.style.left = newX;
