@@ -141,18 +141,20 @@ function showMenu() {
     /*获取当前鼠标右键按下后的位置，据此定义菜单显示的位置*/
     var rightedge = window.screen.availWidth - evt.clientX;
     var bottomedge = window.screen.availHeight - evt.clientY;
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
     /*如果从鼠标位置到容器右边的空间小于菜单的宽度，就定位菜单的左坐标（Left）为当前鼠标位置向左一个菜单宽度*/
     if (rightedge < menu.offsetWidth)
-        menu.style.left = document.body.scrollLeft + evt.clientX - menu.offsetWidth + "px";
+        menu.style.left = scrollLeft + evt.clientX - menu.offsetWidth + "px";
     else
     /*否则，就定位菜单的左坐标为当前鼠标位置*/
-        menu.style.left = document.body.scrollLeft + evt.clientX + "px";
+        menu.style.left =scrollLeft + evt.clientX + "px";
     /*如果从鼠标位置到容器下边的空间小于菜单的高度，就定位菜单的上坐标（Top）为当前鼠标位置向上一个菜单高度*/
     if (bottomedge < menu.offsetHeight)
-        menu.style.top = document.body.scrollTop + evt.clientY - menu.offsetHeight + "px";
+        menu.style.top = scrollTop + evt.clientY - menu.offsetHeight + "px";
     else
     /*否则，就定位菜单的上坐标为当前鼠标位置*/
-        menu.style.top = document.body.scrollTop + evt.clientY + "px";
+        menu.style.top = scrollTop + evt.clientY + "px";
     /*设置菜单可见*/
     menu.style.visibility = "visible";   
 }
