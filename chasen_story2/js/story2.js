@@ -119,6 +119,9 @@ function unchooseOther() {
 function cancelMenu() {
     var menu = document.getElementsByClassName("menu")[0];
     menu.style.display = "none";
+    if(selElement){
+        selElement.style.border="1px solid black";
+    }
 }
 
 function _delete() {
