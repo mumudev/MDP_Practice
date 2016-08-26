@@ -35,9 +35,16 @@
             var elem = document.querySelectorAll(selector);
             len = elem ? elem.length : 0;
             for (i = 0; i < len; i++) this[i] = elem[i];
-            this.length = len;
-            this.selector = selector || '';
-            return this;
+            elem.length = len;
+            elem.selector = selector || '';
+            elem.extend = $.fn.extend;
+
+    for (var method in $) {
+        if (method.match("Action$")) {
+            elem.extend($[method]);
+        }
+    }
+            return elem;
 
         } else if (selector instanceof NodeList) {
             len = selector ? selector.length : 0;
@@ -222,11 +229,6 @@
         }
     };
 
-    for (var method in $) {
-        if (method.match("Action$")) {
-            $.fn.extend($[method]);
-        }
-    }
     window.$ = $;
 
     if ( typeof module === "object" && typeof module.exports === "object" ) {

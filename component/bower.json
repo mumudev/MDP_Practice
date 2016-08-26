@@ -1,0 +1,21 @@
+{
+  "name": "component",
+  "homepage": "https://github.com/mumudev/MDP_Practice",
+  "authors": [
+    "Charlie Yu <Charlie.Yu@morningstar.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "bootstrap": "^3.3.7"
+  }
+}

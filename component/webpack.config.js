@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require("path");
+var BowerWebpackPlugin = require('bower-webpack-plugin');
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 // var providePlugin = new webpack.ProvidePlugin({
 // $: "jquery",
@@ -58,9 +59,13 @@ module.exports = {
             img: path.join(__dirname, "src/img")
         },
         plugins: [
-            new webpack.ResolverPlugin(
-                new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
-            )
+            new BowerWebpackPlugin({
+                modulesDirectories: ["bower_components"],
+                manifestFiles: "bower.json",
+                includes: /.*/,
+                excludes: [],
+                searchResolveModulesDirectories: true
+            })
         ]
     }
 };
