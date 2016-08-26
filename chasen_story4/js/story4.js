@@ -1,14 +1,37 @@
+var createList;
+
+var buttonData;
+var textData;
+var tableData;
+var divData;
+var imageData;
+
+var buttonAct;
+var tableAct;
+var divAct;
+var imageAct;
+var textAct;
+
 function loading() {
+    alert("loading");
     var arr = document.getElementsByClassName("button");
     for (var i = 0; i < arr.length; i++) {
-        arr[i].onmouseover = function() { mouseOver(this); };
-        arr[i].onmouseout = function() { mouseOut(this); };
+        arr[i].onmouseover = function() {
+            mouseOver(this);
+        };
+        arr[i].onmouseout = function() {
+            mouseOut(this);
+        };
     }
 }
 
 function cancel() {
     cancelMenu_type();
     cancelMenu();
+}
+
+function test() {
+    alert("test");
 }
 
 function mouseOver(ele) {
@@ -55,7 +78,9 @@ function initializeNode(eletype) {
             newNode.style.height = "100px";
         }
         newNode.className = eletype + "s";
-        newNode.onclick = function(e) { operate(this, e); };
+        newNode.onclick = function(e) {
+            operate(this, e);
+        };
         newNode.style.float = "left";
         newNode.style.width = "100px";
         newNode.style.border = "1px solid black";
