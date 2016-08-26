@@ -5,7 +5,8 @@ function loading() {
         arr[i].onmouseout = function() { mouseOut(this); };
     }
 }
-function cancel(){
+
+function cancel() {
     cancelMenu_type();
     cancelMenu();
 }
@@ -32,16 +33,6 @@ function getCurrentStyle(node) {
     return style;
 }
 
-function showTypeMenu(event) {
-    cancelMenu();
-    var menuType = document.getElementsByClassName("menu_type")[0];
-    var x = event.clientX;
-    var y = event.clientY;
-    menuType.style.left = x + "px";
-    menuType.style.top = y + "px";
-    menuType.style.display = "block";
-}
-
 function create(ele) {
     var content = document.getElementById("contents_p");
     var eletype = ele.value.toLowerCase();
@@ -50,11 +41,6 @@ function create(ele) {
         content.appendChild(newNode);
     }
     cancelMenu_type();
-}
-
-function cancelMenu_type() {
-    var menuType = document.getElementsByClassName("menu_type")[0];
-    menuType.style.display = "none";
 }
 
 function initializeNode(eletype) {
@@ -69,7 +55,7 @@ function initializeNode(eletype) {
             newNode.style.height = "100px";
         }
         newNode.className = eletype + "s";
-        newNode.onclick = function() { operate(this, "event"); };
+        newNode.onclick = function(e) { operate(this, e); };
         newNode.style.float = "left";
         newNode.style.width = "100px";
         newNode.style.border = "1px solid black";
@@ -105,27 +91,53 @@ function addNodeExampleContent(newNode) {
     }
     return newNode;
 }
-
+/**
+    global variable selected Element in contents
+*/
 var selElement;
 
+/*
+    show operation menu
+*/
 function operate(ele, e) {
     cancelMenu_type();
     selElement = ele;
-    ele.style.border = "2px solid blue";
-    unchooseOther();
+    //cancel choosing other Elements in contents except selElement
+    unchooseOther(selElement);
     var EVT = window.event ? window.event : e;
     var menu = document.getElementsByClassName("menu")[0];
     var x = EVT.clientX;
     var y = EVT.clientY;
-    menu.style.left = x + "px";
-    menu.style.top = y + "px";
-    menu.style.display = "block";
+    if (ele.style.border == "2px solid blue") {
+        cancelMenu();
+    } else {
+        ele.style.border = "2px solid blue";
+        menu.style.left = x + "px";
+        menu.style.top = y + "px";
+        menu.style.display = "block";
+    }
 }
 
-function unchooseOther() {
-    var childs = selElement.parentNode.childNodes;
+function showTypeMenu(event) {
+    cancelMenu();
+    var menuType = document.getElementsByClassName("menu_type")[0];
+    var x = event.clientX;
+    var y = event.clientY;
+    if (menuType.style.display == "block") {
+        menuType.style.display = "none";
+    } else {
+        menuType.style.left = x + "px";
+        menuType.style.top = y + "px";
+        menuType.style.display = "block";
+    }
+}
+/**
+    cancel choosing other Elements in contents except selElement
+*/
+function unchooseOther(ele) {
+    var childs = ele.parentNode.childNodes;
     for (i = 0; i < childs.length; i++) {
-        if (!(childs[i] === selElement)) {
+        if (childs[i] !== selElement) {
             childs[i].style.border = "1px solid black";
         }
     }
@@ -138,9 +150,18 @@ function cancelMenu() {
         if (selElement.style.border) {
             selElement.style.border = "1px solid black";
         }
-
     }
 }
+
+function cancelMenu_type() {
+    var menuType = document.getElementsByClassName("menu_type")[0];
+    menuType.style.display = "none";
+}
+
+
+/**
+    The operation's function
+**/
 
 function _delete() {
     selElement.parentNode.removeChild(selElement);
@@ -173,3 +194,5 @@ function fontSize(ele) {
         cancelMenu();
     }
 }
+
+/*document.onclick = function() { cancel(); };*/
