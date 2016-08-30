@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Hello World!</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="story1.css">
+</head>
+
+<body>
+	<h1 style="text-align: center; font-family: verdana; color: aliceblue; font-size: 20px">Story-1</h1>
+	<nav style="color:black">
+		<select style="color:black" name="functions">
+				<option value="table" selected>Table</option>
+				<option value="button">Button</option>
+				<option value="input text">Input Text</option>
+				<option value="div">DIV</option>
+		</select>
+		<button class="comboList">Create</button>
+		<button class="comboList">Delete</button>
+		<button class="comboList">Background Color</button>
+		<button class="comboList">Font Color</button>
+		<button class="comboList"> + </button>
+		<button class="comboList"> - </button>
+	</nav>
+</body>
+
+</html>
+<script type="text/javascript">document.write("Hello Worl d!")</script>
+<html>
+
+<head>
+    <title>Demo By Charlie Yu</title>
+    
+</head>
+
+<body>
+    <h1 class="title">Demo</h1>
+    <nav class="nav">
+        <select name="" id="combo" class="dropbox">
+            <option value="table" class="dropli">Table</option>
+            <option value="button" class="dropli">Button</option>
+            <option value="inputtext" class="dropli">inputtext</option>
+            <option value="div" class="dropli">Div</option>
+        </select>
+        <button class="btn" name="btn" id="createBtn">Create</button>
+        <button class="btn" name="btn" id="deleteBtn">Delete</button>
+        <button class="btn" name="btn" id="changeBgColorBtn">Background Color</button>
+        <button class="btn" name="btn" id="changeFontColorBtn">Font Color</button>
+        <label>Font Size</label>
+        <button class="btn" name="btn" id="upFontSizeBtn">+</button>
+        <button class="btn" name="btn" id="downFontSizeBtn">-</button>
+    </nav>
+    <div class="content" id="content"></div>
+	<!--[if IE 8]>
+		some html here.
+	<![endif]-->
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo</title>
+</head>
+<body>
+	<div onmouseover="mOver(this)" onmouseout="mOut(this)" style="background-color:green; width:120px; height:20px;padding:40px; color:#ffffff;">
+		put the mouse over it.
+	</div>
+	<script type="text/javascript">
+		function mOver(obj) {
+			obj.innerHTML = "Thanks!";
+		}
+		function mOut(obj) {
+			obj.innerHTML = "put the mouse over it.";
+		}
+	</script>
+
+	<div id="div1">
+		<p id="p1">p1</p>
+		<p id="p2">p2</p>
+	</div>
+	<script type="text/javascript">
+		var para = document.createElement("p");
+		var node = document.createTextNode("new p");
+		para.appendChild(node);
+
+		var element = document.getElementById("div1");
+		element.appendChild(para);
+
+		var para = document.createElement("p");
+		var node = document.createTextNode("new p");
+		para.appendChild(node);
+
+		var element = document.getElementById("div1");
+		element.appendChild(para);
+
+		//delete a html element
+		var parent = document.getElementById("div1");
+		var child = document.getElementById("p1");
+		parent.removeChild(child);
+		//another way
+		var child = document.getElementById("p2");
+		child.parentNode.removeChild(child);
+	</script>
+</body>
+</html>
