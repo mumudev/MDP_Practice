@@ -56,66 +56,7 @@ function getCurrentStyle(node) {
     return style;
 }
 
-function create(ele) {
-    var content = document.getElementById("contents_p");
-    var eletype = ele.value.toLowerCase();
-    var newNode = initializeNode(eletype);
-    if (newNode) {
-        content.appendChild(newNode);
-    }
-    cancelMenu_type();
-}
 
-function initializeNode(eletype) {
-    var newNode = null;
-    if (eletype) {
-        if (eletype == "button" || eletype == "text") {
-            newNode = document.createElement("input");
-            newNode.type = eletype;
-            newNode.style.height = "50px";
-        } else {
-            newNode = document.createElement(eletype);
-            newNode.style.height = "100px";
-        }
-        newNode.className = eletype + "s";
-        newNode.onclick = function(e) {
-            operate(this, e);
-        };
-        newNode.style.float = "left";
-        newNode.style.width = "100px";
-        newNode.style.border = "1px solid black";
-        newNode.style.fontSize = "15px";
-        newNode = addNodeExampleContent(newNode);
-    }
-    return newNode;
-}
-
-function addNodeExampleContent(newNode) {
-    var eletype = newNode.tagName.toLowerCase();
-    if (eletype == "table") {
-        var tr1 = document.createElement("tr");
-        var tr2 = document.createElement("tr");
-        var td1 = document.createElement("td");
-        td1.innerHTML = "A";
-        var td2 = document.createElement("td");
-        td2.innerHTML = "B";
-        var td3 = document.createElement("td");
-        td3.innerHTML = "C";
-        var td4 = document.createElement("td");
-        td4.innerHTML = "D";
-        tr1.appendChild(td1);
-        tr1.appendChild(td2);
-        tr2.appendChild(td3);
-        tr2.appendChild(td4);
-        newNode.appendChild(tr1);
-        newNode.appendChild(tr2);
-    } else if (eletype == "div") {
-        newNode.innerHTML = eletype;
-    } else {
-        newNode.value = newNode.type;
-    }
-    return newNode;
-}
 /**
     global variable selected Element in contents
 */
