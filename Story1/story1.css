@@ -7,10 +7,10 @@ h1 {}
     padding-bottom: 5px;
 }
 
-.btn {
+#combolist {
     outline: none;
     border-radius: 4px;
-    box-shadow: 1px 1px 2px #888888;
+    height: 30px;
     background-color: #FFF;
 }
 
@@ -18,13 +18,13 @@ h1 {}
     margin: 5px;
     outline: none;
     border-radius: 7px;
-    box-shadow: 1px 1px 2px #888888;
+    box-shadow: 1px 1px 2px ;
 }
 
-.dropbox {
+.combo {
     outline: none;
     border-radius: 4px;
-    box-shadow: 1px 1px 2px #888888;
+    box-shadow: 1px 1px 2px ;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
