@@ -1,0 +1,57 @@
+#menus{
+	display:none;
+	position:absolute;
+	width:150;
+	border:1px solid #cccccc;
+	background-color:#ffffff;
+	cursor:pointer;
+	align:center;
+	left:70px;
+	top:100px;
+}
+.menu{
+	display:block;
+	width:150px;
+	font-size:15px;
+	text-align:center;
+	background-color: #ffffff;
+	
+	}
+	
+.Table{
+	border:1px solid brown;
+	float: left;
+}	
+#create{
+	font-size: 15px;
+}
+.Div{
+	width: 400px;
+	float:left;
+	border:1px solid brown;
+
+}
+.Button{
+	float:left;
+}
+img{
+	float:left;}
+#div1{
+	border:1px solid black;
+}
+
+	
+#menu1{
+	display:none;
+	position:absolute;
+	float:left;
+	width:150px;
+	border:1px solid pink;
+	background-color:#eeeeee;
+	cursor:pointer;
+}
+input{float:left;
+	border:1px solid brown;
+	font-size:18px;
+
+}
