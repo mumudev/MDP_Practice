@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require("path");
 var BowerWebpackPlugin = require('bower-webpack-plugin');
+
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 // var providePlugin = new webpack.ProvidePlugin({
 // $: "jquery",
@@ -12,7 +13,7 @@ module.exports = {
     // plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
-        index: './js/main.js'
+        index: './src/js/main.js'
     },
     //入口文件输出配置
     output: {
@@ -65,6 +66,11 @@ module.exports = {
                 includes: /.*/,
                 excludes: [],
                 searchResolveModulesDirectories: true
+            }),
+            new webpack.ProvidePlugin({
+                jQuery: 'jquery',
+                $: 'jquery',
+                jquery: 'jquery'
             })
         ]
     }

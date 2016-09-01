@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "jquery": "^3.1.0",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "promise": "^0.2.2"
   }
 }
