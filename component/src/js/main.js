@@ -122,8 +122,10 @@ var createBind = {
                 if (json.data) {
                     var newTable = $("<table></table>");
                     newTable.attr("id", "item" + itemId);
-                    newTable.attr("class", "table");
+                    newTable.addClass("table");
+                    newTable.addClass("table-bordered");
                     newTable.attr("name", "table");
+                    newTable.css("width","100%");
                     var rows = json.data.rows;
                     var cols = json.data.cols;
                     var content = "";
@@ -158,6 +160,7 @@ var createBind = {
                     var newBtn = $("<button></button>");
                     newBtn.attr("id", "item" + itemId);
                     newBtn.attr("class", "btn");
+                    newBtn.css("width","100%");
                     newBtn.attr("name", "button");
                     newBtn.attr("title", json.data.title);
                     newBtn.text(json.data.text);
@@ -181,6 +184,7 @@ var createBind = {
                     var newInputText = $("<input></input>");
                     newInputText.attr("id", "item" + itemId);
                     newInputText.attr("class", "form-control");
+                    newInputText.css("width","100%");
                     newInputText.attr("name", "inputText");
                     newInputText.attr("placeholder", json.data.text);
                     dom.content.append(newInputText);
@@ -204,6 +208,7 @@ var createBind = {
                     var newDiv = $("<div></div>");
                     newDiv.attr("id", "item" + itemId);
                     newDiv.attr("class", "btn");
+                    newDiv.css("width","100%");
                     newDiv.attr("name", "button");
                     newDiv.attr("title", json.data.title);
                     newDiv.append($(json.data.text));
@@ -227,6 +232,7 @@ var createBind = {
                     var newImg = $("<img></img>");
                     newImg.attr("id", "item" + itemId);
                     newImg.attr("class", "img");
+                    newImg.css("width","100%");
                     newImg.attr("name", "image");
                     newImg.attr("src", json.data.image);
                     newImg.attr("title", json.data.title);
