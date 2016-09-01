@@ -9,9 +9,9 @@ $(document).ready(function() {
             var str = "";
             var arrData = msg.data;
             if (arrData != null) {
-                for (var i = 0; i < arrData.length; i++) {                   
+                for (var i = 0; i < arrData.length; i++) {
                     str = str + "<div class='menuitems'" + " " + "id='" + arrData[i].id + "'>" + "<a href='#'>" +
-                        arrData[i].text + "</a></div>";                   
+                        arrData[i].text + "</a></div>";
                 }
                 $("#menuEle").html(str);
                 bindCreateEvent();
@@ -36,7 +36,7 @@ $(document).ready(function() {
             if (arrData != null) {
                 for (var i = 0; i < arrData.length; i++) {
                     str = str + "<div class='menuitems'" + " id='" + arrData[i].id + "' title='" + arrData[i].title + "'>" + "<a href='#'>" +
-                        arrData[i].text + "</a></div>";                   
+                        arrData[i].text + "</a></div>";
                 }
                 $("#menuButton").html(str);
                 for (var i = 0; i < arrData.length; i++) {
@@ -82,7 +82,7 @@ $(document).ready(function() {
                     str = str + "<div class='menuitems'" + " id='" + arrData[i].id + "' title='" + arrData[i].title + "'>" + "<a href='#'>" +
                         arrData[i].text + "</a></div>";
                 }
-                $("#menuDiv").html(str);                
+                $("#menuDiv").html(str);
                 for (var i = 0; i < arrData.length; i++) {
                     bindActionEvent("menuDiv", arrData[i].id);
                 }
@@ -104,7 +104,7 @@ $(document).ready(function() {
                     str = str + "<div class='menuitems'" + " id='" + arrData[i].id + "' title='" + arrData[i].title + "'>" + "<a href='#'>" +
                         arrData[i].text + "</a></div>";
                 }
-                $("#menuInputText").html(str);                
+                $("#menuInputText").html(str);
                 for (var i = 0; i < arrData.length; i++) {
                     bindActionEvent("menuInputText", arrData[i].id);
                 }
@@ -126,7 +126,7 @@ $(document).ready(function() {
                     str = str + "<div class='menuitems'" + " id='" + arrData[i].id + "' title='" + arrData[i].title + "'>" + "<a href='#'>" +
                         arrData[i].text + "</a></div>";
                 }
-                $("#menuImage").html(str);               
+                $("#menuImage").html(str);
                 for (var i = 0; i < arrData.length; i++) {
                     bindActionEvent("menuImage", arrData[i].id);
                 }
@@ -138,11 +138,11 @@ $(document).ready(function() {
 
 
 
-function bindCreateEvent() {    
-    $("#menuEle #table").click(function() { createTable(); });    
-    $("#menuEle #button").click(function() { createButton(); });   
-    $("#menuEle #inputText").click(function() { createInputText(); });    
-    $("#menuEle #div").click(function() { createDiv(); });   
+function bindCreateEvent() {
+    $("#menuEle #table").click(function() { createTable(); });
+    $("#menuEle #button").click(function() { createButton(); });
+    $("#menuEle #inputText").click(function() { createInputText(); });
+    $("#menuEle #div").click(function() { createDiv(); });
     $("#menuEle #image").click(function() { createImage(); });
 }
 
@@ -178,9 +178,9 @@ function createImage() {
         async: true,
         success: function(msg) {
             var msgData = msg.data;
-            if (msgData != null) {                
+            if (msgData != null) {
                 var str = $("<img class='DynamicImage'/>");
-                               $("#contents").append(str);
+                $("#contents").append(str);
                 $(".DynamicImage").attr({ src: msgData.image, title: msgData.title, alt: "morningstar logo" });
                 $(".DynamicImage").css("background-color", "red");
                 $(".DynamicImage").click(function(event) { leftClick(event, this, 'menuImage'); });
@@ -221,34 +221,12 @@ function createTable() {
                     }
                     str = str + '</tr>';
                 }
-                $(".DynamicTable").html(str);                
+                $(".DynamicTable").html(str);
                 $(".DynamicTable").click(function(event) { leftClick(event, this, 'menuTable'); });
             }
         }
     });
-
-    /*
-    var mydiv = document.getElementById("contents");
-    var mytable = document.createElement("table");
-    var mytablebody = document.createElement("tbody");
-    var rows = 3,
-        cols = 3;
-    for (var j = 0; j < rows; j++) {
-        var mycurrent_row = document.createElement("tr");
-        for (var i = 0; i < cols; i++) {
-            var mycurrent_cell = document.createElement("td");
-            var currenttext = document.createTextNode("第" + j + "行，第" + i + "列");
-            mycurrent_cell.appendChild(currenttext);
-            mycurrent_row.appendChild(mycurrent_cell);
-        }
-        mytablebody.appendChild(mycurrent_row);
-    }
-    mytable.appendChild(mytablebody);
-    mydiv.appendChild(mytable);
-    mytable.setAttribute("border", "2");
-    mytable.setAttribute("class", "DynamicTable");
-    mytable.addEventListener("click", function(event) { leftClick(event, this); }, false);
-    */
+   
     hideMenu('menuEle');
 
 }
@@ -261,14 +239,14 @@ function createButton() {
         async: true,
         success: function(msg) {
             var msgData = msg.data;
-            if (msgData != null) {                
-                var str = $("<input class='DynamicButton'></input>");              
+            if (msgData != null) {
+                var str = $("<input class='DynamicButton'></input>");
                 $("#contents").append(str);
                 $(".DynamicButton").attr({ type: "button", value: msgData.text, title: msgData.title });
                 $(".DynamicButton").click(function(event) { leftClick(event, this, 'menuButton'); });
             }
         }
-    });   
+    });
     hideMenu('menuEle');
 }
 
@@ -280,15 +258,15 @@ function createInputText() {
         async: true,
         success: function(msg) {
             var msgData = msg.data;
-            if (msgData != null) {               
-                var str = $("<input class='DynamicText'></input>");               
+            if (msgData != null) {
+                var str = $("<input class='DynamicText'></input>");
                 $("#contents").append(str);
                 $(".DynamicText").attr({ type: "text", value: msgData.text });
-                $(".DynamicText").css("border-color","grey");
+                //$(".DynamicText").css("border-color", "black");
                 $(".DynamicText").click(function(event) { leftClick(event, this, 'menuInputText'); });
             }
         }
-    });  
+    });
     hideMenu('menuEle');
 }
 
@@ -301,27 +279,15 @@ function createDiv() {
         success: function(msg) {
             var msgData = msg.data;
             if (msgData != null) {
-                //<input type="button" value=""
                 var str = $("<div class='DynamicDiv'></div>");
-
-                //<input></input>
                 $("#contents").append(str);
-                $(".DynamicDiv").html(msgData.text);
+                $(".DynamicDiv").html(msgData.text);                
                 $(".DynamicDiv").click(function(event) { leftClick(event, this, 'menuDiv'); });
             }
 
         }
     });
 
-    /*
-    var mydiv = document.getElementById("contents");
-    var obj_div = document.createElement("div");
-    obj_div.setAttribute("class", "DynamicDiv");
-    var div_text = document.createTextNode("这是一个动态产生的div标签。");
-    obj_div.appendChild(div_text);
-    mydiv.appendChild(obj_div);
-    obj_div.addEventListener("click", function(event) { leftClick(event, this); }, false);
-     */
     hideMenu('menuEle');
 
 }
@@ -334,6 +300,7 @@ function leftClick(evt, ele, menu) {
     evt.stopPropagation ? evt.stopPropagation() : evt.cancelBubble = true;
     ele.style.borderStyle = "solid";
     ele.style.borderWidth = "2px";
+    ele.style.borderColor = "black";
     arrMenu = ["menuTable", "menuButton", "menuInputText", "menuDiv", "menuImage"];
     //显示相应元素的菜单，隐藏其他的菜单
     for (var i = 0; i < arrMenu.length; i++) {
@@ -432,7 +399,7 @@ function hideMenu(eleId) {
 }
 
 document.onclick = function() {
-   //点击其他空白处时隐藏菜单
+    //点击其他空白处时隐藏菜单
     hideMenu('menuEle');
     hideMenu('menuTable');
     hideMenu('menuButton');
