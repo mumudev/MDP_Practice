@@ -1,4 +1,3 @@
-
 var buttonData;
 var textData;
 var tableData;
@@ -30,7 +29,31 @@ function showTypeMenu(event) {
     }
 }
 
-function cancelMenu() {
+function unchooseOther(ele) {
+    cancelMenu("need");
+    var childs = $(ele).parent().children();
+    for (i = 0; i < childs.length; i++) {
+        if (childs[i] !== selElement) {
+            childs[i].style.border = "1px solid black";
+        }
+    }
+}
+var cancel = {
+    cancelMenu: function() {
+        var menu = document.getElementsByClassName("menu");
+        for (var i = 0; i < menu.length; i++) {
+            menu[i].style.display = "none";
+        }
+        if (selElement) {
+            if (selElement.style.border) {
+                selElement.style.border = "1px solid black";
+            }
+        }
+    }
+};
+
+
+function cancelMenu(str) {
     var menu = document.getElementsByClassName("menu");
     for (var i = 0; i < menu.length; i++) {
         menu[i].style.display = "none";
@@ -40,6 +63,20 @@ function cancelMenu() {
             selElement.style.border = "1px solid black";
         }
     }
+}
+
+
+/**
+        cancel choosing other Elements in contents except selElement
+*/
+function cancelMenu_type() {
+    var menuType = document.getElementsByClassName("menu_type")[0];
+    menuType.style.display = "none";
+}
+
+function cancel() {
+    cancelMenu_type();
+    cancelMenu();
 }
 
 

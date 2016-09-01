@@ -58,7 +58,7 @@ $(document).ready(function() {
 
     function bindEventOnCtdEle(newNode) {
         $(newNode).bind("click", function operate() {
-            cancelMenu();
+            //cancelMenu();
             selElement = this;
             //cancel choosing other Elements in contents except selElement
             unchooseOther(selElement);
@@ -78,8 +78,8 @@ $(document).ready(function() {
             } else {
                 menu = $(".menu_text");
             }
-            var border = this.style.border;
             if (this.style.border == "2px solid blue") {
+                this.style.border = "1px solid black";
                 cancelMenu();
             } else {
                 this.style.border = "2px solid blue";
@@ -118,10 +118,10 @@ $(document).ready(function() {
         } else if (eletype == "button") {
             newNode.html(buttonData.data.text);
             newNode.css("cursor", "pointer");
-            newNode.attr("alt", buttonData.data.title);
+            newNode.attr("title", buttonData.data.title);
         } else {
             newNode.attr("src", imageData.data.image);
-            newNode.attr("alt", imageData.data.title);
+            newNode.attr("title", imageData.data.title);
         }
         return newNode[0];
     }
@@ -182,7 +182,7 @@ $(document).ready(function() {
     function appendItem(act, eleClass) {
         var actArray = act.data;
         for (var i = 0; i < actArray.length; i++) {
-            var newOne = $('<input class="head_button menu_button button" type="button" alt="' + actArray[i].title + '"value="' + actArray[i].text + '">');
+            var newOne = $('<input class="head_button menu_button button" type="button" title="' + actArray[i].title + '"value="' + actArray[i].text + '">');
             $("." + eleClass).append(newOne);
         }
         if (actArray.length > 0) {
@@ -233,7 +233,7 @@ $(document).ready(function() {
     });
 
     function loading() {
-        alert("loading");
+        //alert("loading");
         var arr = document.getElementsByClassName("button");
         for (var i = 0; i < arr.length; i++) {
             arr[i].onmouseover = function() {
@@ -243,15 +243,6 @@ $(document).ready(function() {
                 mouseOut(this);
             };
         }
-    }
-
-    function cancel() {
-        cancelMenu_type();
-        cancelMenu();
-    }
-
-    function test() {
-        alert("test");
     }
 
     function mouseOver(ele) {
@@ -278,23 +269,6 @@ $(document).ready(function() {
 
 
 
-    /**
-        cancel choosing other Elements in contents except selElement
-    */
-    function unchooseOther(ele) {
-        cancelMenu();
-        var childs = $(ele).parent().children();
-        for (i = 0; i < childs.length; i++) {
-            if (childs[i] !== selElement) {
-                childs[i].style.border = "1px solid black";
-            }
-        }
-    }
-
-    function cancelMenu_type() {
-        var menuType = document.getElementsByClassName("menu_type")[0];
-        menuType.style.display = "none";
-    }
 
 
     /**
@@ -303,33 +277,46 @@ $(document).ready(function() {
     var operateFunction = {
         _delete: function() {
             selElement.parentNode.removeChild(selElement);
-            cancelMenu();
+            cancel.cancelMenu();
         },
         backcolor: function() {
-            selElement.style.backgroundColor = "rgb(" + ramdomMaker() +
-                "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            cancelMenu();
+            selElement.style.backgroundColor = "rgb(" + operateFunction.ramdomMaker() +
+                "," + operateFunction.ramdomMaker() + "," + operateFunction.ramdomMaker() + ")";
+            cancel.cancelMenu();
         },
         fontcolor: function() {
-            selElement.style.color = "rgb(" + ramdomMaker() +
-                "," + ramdomMaker() + "," + ramdomMaker() + ")";
-            cancelMenu();
+            selElement.style.color = "rgb(" + operateFunction.ramdomMaker() +
+                "," + operateFunction.ramdomMaker() + "," + operateFunction.ramdomMaker() + ")";
+            cancel.cancelMenu();
         },
         _fontSize: function() {
             var operate = this.value.charAt(this.value.length - 1);
             if (operate == "+") {
                 selElement.style.fontSize = (parseInt(selElement.style.fontSize, 10) + 2) + "px";
-                cancelMenu();
+                cancel.cancelMenu();
             } else {
                 selElement.style.fontSize = (parseInt(selElement.style.fontSize, 10) - 2) + "px";
-                cancelMenu();
+                cancel.cancelMenu();
             }
+        },
+        ramdomMaker: function() {
+            return Math.round(Math.random() * 255);
         }
     };
 
-    function ramdomMaker() {
-        return Math.round(Math.random() * 255);
-    }
+    // function cancelMenu() {
+    //     var menu = document.getElementsByClassName("menu");
+    //     for (var i = 0; i < menu.length; i++) {
+    //         menu[i].style.display = "none";
+    //     }
+    //     if (selElement) {
+    //         if (selElement.style.border) {
+    //             selElement.style.border = "1px solid black";
+    //         }
+    //     }
+    // }
+
+
 
     function bindEventToOpreItem(eleClass) {
         $("." + eleClass).delegate("input:first", "click", operateFunction._delete);
