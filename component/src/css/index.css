@@ -1,10 +1,21 @@
-body {
-    background-color: #eef;
-}
+body {}
 
 h1 {}
 
+.item{
+    margin-top: 10px;
+    width: "100%";
+}
+.container {
+    box-shadow: 4px 10px 20px 3px #ddd;
+}
+
+.createBtn {
+    float: left;
+}
+
 .nav {
+    background: #eee;
     border-top: 1px solid;
     padding-top: 3px;
     border-bottom: 1px solid;
@@ -12,14 +23,16 @@ h1 {}
 }
 
 .createMenu {
-    width: 100%;
-    position: absolute;
+    width: 600%;
+    position: fixed;
     left: 72px;
     border-radius: 0px;
     opacity: 0.86;
     padding: 0px;
+    float: left;
 }
-.menu{
+
+.menu {
     width: 200px;
     position: absolute;
     box-shadow: 1px 1px 2px #888888;
@@ -30,6 +43,7 @@ h1 {}
     padding: 0px;
     margin-left: 0px;
 }
+
 .menu button {
     width: 200px;
     box-shadow: 1px 1px 2px #888888;
@@ -42,14 +56,15 @@ h1 {}
 }
 
 .createMenu button {
-    width: 200px;
+    /* width: 200px; */
+    float: left;
     box-shadow: 1px 1px 2px #888888;
     opacity: 0.86;
     outline: none;
     border-radius: 0px;
     background-color: #FFF;
-    padding: 0px;
-    margin-left: -1px;
+    /* padding: 0px; */
+    margin-left: 3px;
 }
 
 .btn {
