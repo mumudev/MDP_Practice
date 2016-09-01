@@ -2,12 +2,14 @@ body {}
 
 h1 {}
 
-.item{
+.item {
     margin-top: 10px;
-    width: "100%";
+    width: 100%;
 }
+
 .container {
-    box-shadow: 4px 10px 20px 3px #ddd;
+    box-shadow: 4px 10px 20px 3px #d8e8e5;
+    background-color: #effbf0;
 }
 
 .createBtn {
@@ -15,7 +17,7 @@ h1 {}
 }
 
 .nav {
-    background: #eee;
+    background: #91ece3;
     border-top: 1px solid;
     padding-top: 3px;
     border-bottom: 1px solid;
@@ -96,10 +98,10 @@ h1 {}
 }
 
 .div {
-    margin: 5px;
+    /*margin: 5px;*/
     outline: 1px;
     border-radius: 4px;
-    width: 200px;
+    /*width: 200px;*/
 }
 
 .div:hover {
