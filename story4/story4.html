@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Story 4: Request data from server by AJAX</title>
+    <script src="jquery-3.1.0.js"></script>
+    <script src="story4.js"></script>
+    <link rel="stylesheet" type="text/css" href="story4.css" />
+</head>
+
+<body>
+    <h2> Demo: story4 </h2>
+    <hr/>
+    <div id="functionBtn">
+        <input type="button" value="Create" id="create" />
+    </div>
+    <div id="contents"></div>
+    <br/>
+    <div id="menuEle" class="eleOptions">
+    </div>
+
+    <div id="menuTable" class="skin">
+    </div>
+    <div id="menuButton" class="skin">
+    </div>
+    <div id="menuInputText" class="skin">
+    </div>
+    <div id="menuDiv" class="skin">
+    </div>
+    <div id="menuImage" class="skin">
+    </div>
+
+    
+    <div id="menu" class="skin">
+        <div class="menuitems">
+            <a href="#" onclick="deleteElements()">Delete</a>
+        </div>
+        <hr/>
+        <div class="menuitems">
+            <a href="#" onclick="setBgroundColor()">Set Background Color</a>
+        </div>
+        <div class="menuitems">
+            <a href="#" onclick="setFontColor()">Set Font Color</a>
+        </div>
+        <hr/>
+        <div class="menuitems">
+            <a href="#" onclick="incFontSize()">Font Size ' + '</a>
+        </div>
+        <div class="menuitems">
+            <a href="#" onclick="decFontSize()">Font Size ' - '</a>
+        </div>
+    </div>
+    
+
+</body>
+
+</html>
