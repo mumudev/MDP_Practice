@@ -1,0 +1,63 @@
+h1 {}
+
+.nav {
+    border-top: 1px solid;
+    padding-top: 3px;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+}
+.buttons {
+    cursor: pointer;
+    border: 1px solid #dee;
+    font-family: verdana;
+}
+
+.droplist {
+    font-family: verdana;
+    font-size: 15px;
+}
+
+#combolist {
+    height: 30px;
+    background-color: #eee;
+}
+
+.buttonsAdded {
+    margin: 5px;
+    outline: none;
+    border-radius: 7px;
+    box-shadow: 1px 1px 2px ;
+}
+
+.combo {
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 20px;
+    width: 100px;
+}
+
+.table {
+    border: 2px;
+    margin: 5px;
+}
+
+.table tr:hover {
+    background-color: #DEF;
+}
+
+.inputText {
+    margin: 5px;
+    outline: none;
+    border-radius: 4px;
+}
+.divAdded{
+    margin: 5px;
+    outline: 1px;
+    border-radius: 4px;
+    width: 200px;
+
+}
+.divAdded:hover{
+    border: 1px solid;
+}

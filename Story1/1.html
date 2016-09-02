@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Hello World!</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="1.css">
+	<script type="text/javascript" src="1.js"></script>
+</head>
+
+<body >
+	<h1 style="text-align: center; font-family: verdana; color: aliceblue; font-size: 20px">Story-1</h1>
+	
+		<select id="combolist" name="dropbox" class="combo">
+				<option class="droplist" value="table" >Table</option>
+				<option class="droplist" value="button" selected>Button</option>
+				<option class="droplist" value="inputText">Input Text</option>
+				<option class="droplist" value="div">DIV</option>
+		</select>
+		<div id="headButton">
+		<input type="button" id="createButton" class="buttons" value="create" onclick="create()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="deleteButton" class="buttons" value="delete" onclick="_delete()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button"  id="changeBgColor" class="buttons" value="backgound-color" onclick="changeBgColor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="changeFontColor" class="buttons" value="font-color" onclick="changeFontColor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="increaseFontSize" class="buttons" value="increase font size" onclick="increaseFontSize()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="decreaseFontSize" class="buttons" value="decrease font size" onclick="decreaseFontSize()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		</div>
+	<div id="contentsadded" class="contents"></div>
+</body>
