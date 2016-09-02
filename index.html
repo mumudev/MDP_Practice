@@ -6,71 +6,178 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HTML</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-</head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    body {
+        padding: 30px;
+    }
+    
+    .dropdown>.dropdown-menu {
+        position: absolute;
+        margin-bottom: 5px;
+        top: 34px;
+    }
+    
+    .dropdown:after {
+        clear: left;
+    }
+    
+    .dropdown.show>.dropdown-menu{
+        display: block;
+    }
+    /* .dropdown>.dropdown-toggle {
+          float: left;
+      }*/
+    
+    table {
+        font-family: verdana, arial, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #a9c6c9;
+        border-collapse: collapse;
+    }
+    
+    table th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #a9c6c9;
+    }
+    
+    table td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #a9c6c9;
+    }
+    
+    table tr:nth-child(odd) td {
+        background-color: #d4e3e5;
+    }
+    
+    table tr:nth-child(even) td {
+        background-color: #c3dde0;
+    }
+    </style></head>
 
 <body>
     <div id="btn-contain" style="">
-        <div class="dropdown">
+        <div class="dropdown createBtn">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="min-width:100px;">
-                <span class="dropdown-text">table</span>
+                <span class="dropdown-text">create</span>
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" style="display:none;">
+            <!-- <ul class="dropdown-menu" style="display:none;">
                 <li><a href="javascript:void 0;" value="Table">Table</a></li>
                 <li><a href="javascript:void 0;" value="Button">Button</a></li>
                 <li><a href="javascript:void 0;" value="Text">Input Text</a></li>
                 <li><a href="javascript:void 0;" value="DIV">DIV</a></li>
-            </ul>
+            </ul> -->
         </div>
-        <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
+      <!--   <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
             create
-        </button>
+        </button> -->
     </div>
     <div id="content" style="margin-top:20px;">
     </div>
-    <div class="popUp">
-        <ul class="popUp-menu">
+    <div class="dropdown">
+        <ul class="dropdown-menu">
             <li><a href="#" value="0">Delete</a></li>
             <li><a href="#" value="1">Background Color</a></li>
             <li><a href="#" value="2">Font size(+)</a></li>
             <li><a href="#" value="3">Font size(-)</a></li>
         </ul>
-    </div>
+    </div> 
+    <script type="text/template" id="tpl-createBtn">
+            <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <%_.each(obj,function(e,i){%>
+                    <li>
+                        <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+        </script>
+    <script type="text/template" id="tpl-popup">
+            <ul id="popupListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <%_.each(obj,function(e,i){%>
+                    <li>
+                        <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+        </script>
 </body>
-<script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript">
-// AC 1: There's a combo list, there are Table, Button, Input Text, DIV in the list.
-// AC 2: In the right of combo list, there's a button named Create.
-// AC 3: Select one item from combo, and click Create, then create desired element in UI below Create button, there are some sample data for created element.
-// AC 4: Click created element, show a border for it, the border is blue with 2 pixels width.
-// AC 5: Click created element, popup a menu, there are Delete, Background Color, Font Color, Font Size + and Font Size - in the menu.
-// AC 6: The functionality of every item in the menu is save as Story 1, while it only applies to currently selected element. 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/backbone.localStorage.js"></script>
+    <script type="text/javascript">
+
 
 'use strict';
+var domain = 'http://admadevwb8001:8001/api/html/elements';
+//var domain = 'http://localhost:3000/api/html/elements';
+
+var dataAPI = {
+    'createBtn': '',
+    'btnAction': {
+        'button': '/button/actions',
+        'inputText': '/inputText/actions',
+        'table': '/table/actions',
+        'div': '/div/actions',
+        'image': '/image/actions',
+    },
+    'data': {
+        'button': '/button/data',
+        'inputText': '/inputText/data',
+        'table': '/table/data',
+        'div': '/div/data',
+        'image': '/image/data',
+    }
+}
 
 function Dropdown(option) {
-    this.option = option || {
-        ele: '.dropdown', //contains
+    this.option = $.extend(option||{},{
+        ele: '.createBtn.dropdown', //contains
         list: null,
-    };
+    });
     this.dropdown = $(this.option.ele);
-    this.dropdownText = this.dropdown.find('.dropdown-text');
-    this.dropdownMeu = this.dropdown.find('.dropdown-menu li a');
+    var self = this;
+    this.data = $.ajax({
+            type: 'get',
+            url: domain
+        }).done(function(res) {
+            console.log(res);
+            self.dropdown.append(self.option.template(res.data));
+            self.dropdownMeu = self.dropdown.find('.dropdown-menu li a');
+            self.initialize();
+        }).fail(function(err) {
+            console.info(err);
+        });
     this.val = 'Table';
-    this.initialize();
+    this.dropdownText = this.dropdown.find('.dropdown-text');
 }
 Dropdown.prototype = {
     constructor: Dropdown,
     initialize: function() {
         var self = this;
         this.dropdownMeu.on('click', function(e) {
-            self.val = this.getAttribute('value');
+            self.val = $(this).attr('value');
+            console.log($(this).attr('value'))
             self.dropdownText.text(self.val);
             $('.dropdown-toggle').next().toggle();
             var evt = window.event || e;
             evt.stopPropagation&&e.stopPropagation();
             evt.cancelBubble = true;
+            new Template({
+                type: self.val,
+                container: '#content'
+            });
         });
         this.toggle();
     },
@@ -87,31 +194,32 @@ Dropdown.prototype = {
 function Template(option) { //根据模板创建element
     this.option = option || {};
     this.defalutTemplate = {
-        'Table': '<table class="altrowstable template template-Table" style="font-size:'+this.option.fontSize+'" id="alternatecolor">' + '<tr>' + '<th>Info Header 1</th><th>Info Header 2</th><th>Info Header 3</th>' + '</tr>' + '<tr>' + '<td>Text 1A</td><td>Text 1B</td><td>Text 1C</td>' + '</tr>' + '<tr>' + '<td>Text 2A</td><td>Text 2B</td><td>Text 2C</td>' + '</tr>' + '</tr>' + '<tr>' + '<td>Text 3A</td><td>Text 3B</td><td>Text 3C</td>' + '</tr>' + '<tr>' + '<td>Text 4A</td><td>Text 4B</td><td>Text 4C</td>' + '</tr>' + '<tr>' + '<td>Text 5A</td><td>Text 5B</td><td>Text 5C</td>' + '</tr>' + '</table>',
-        'Button': '<button class="template template-Button" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'">button</button>',
-        'Text': '<input class="template template-Text" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'" type="text" placeholder = "文本框">',
-        'DIV': '<div class="template template-DIV" style="color:' + $.makeColor() + ';background-color:' + $.makeColor() + ';font-size:'+this.option.fontSize+'">block format context</div>'
+        'table':'createTableTemplate',
+        'div':'createDivTemplate',
+        'button':'createButtonTemplate',
+        'inputText':'createInputTemplate',
+        'image':'createImageTemplate',
     };
-    this.createFragment = function(type) {
-        var div = document.createElement('div');
-        div.innerHTML = this.defalutTemplate[type];
-        //文档片段
-        var fragment = document.createDocumentFragment();
-        var nodes = div.childNodes;
-        for (var i = 0; i < nodes.length; i++) {
-            fragment.appendChild(nodes[i].cloneNode(true));
-        }
-        return fragment
-    }
     this.initialize();
 }
 
 Template.prototype = {
     constructor: Template,
     initialize: function() {
-        var fragment = this.createFragment(this.option.type);
         this.bindEvents();
-        $(this.option.container)[0].appendChild(fragment);
+        console.log(this.defalutTemplate[this.option.type]);
+        var self = this;
+        $.ajax({
+            type: 'get',
+            url: domain+dataAPI.data[this.option.type],
+        }).done(function(res) {
+            console.log(res);
+            var dom = self[self.defalutTemplate[self.option.type]](res);
+            $(self.option.container).append(dom);
+        }).fail(function(err) {
+            console.info(err);
+        });
+
         return this;
     },
     addBorder: function() {
@@ -134,7 +242,84 @@ Template.prototype = {
         });
 
     },
+    createTableTemplate: (function() {
+        var instance;
+        function Table(data) {
+            this.rowCount = 0;
+            this.cellCount = 0;
+            this.data = data; //只取一次
+            this.init(data);
+        }
+        Table.prototype = {
+            constructor: Table,
+            init: function(res) {
+                this.rowCount = res.data.rows;
+                this.cellCount = res.data.cols;
+                this.cellData = res.data.cells;
 
+                var sortResult = this.sort();
+                this.newTableTemplate()
+            },
+            sort: function() {
+                this.sortResult = this.cellData.sort(function(td0, td1) {
+                    if (td0.row === td1.row) {
+                        return td0.col - td1.col;
+                    } else {
+                        return td0.row - td1.row;
+                    }
+                });
+            },
+            newTableTemplate: function() {
+                var sortResult = this.sortResult;
+                var oFragmeng = document.createDocumentFragment();
+                var table = document.createElement('table');
+                for (var i = 0; i < this.rowCount; i++) {
+                    var tr = document.createElement('tr');
+                    for (var j = 0; j < this.cellCount; j++) {
+                        var td = document.createElement('td');
+                        if (sortResult[i * this.rowCount + j]) {
+                            var     oText = document.createTextNode(sortResult[i * this.rowCount + j].data);
+                        } else {
+                            var     oText = document.createTextNode('');
+                        }
+                        td.appendChild(oText);
+                        tr.appendChild(td);
+                    }
+                    oFragmeng.appendChild(tr);
+                }
+                table.appendChild(oFragmeng)
+                this.table = table;
+            }
+        };
+        return function(data) {
+            var self = this;
+            if (instance && instance.table) {
+                return instance.table;
+            } else {
+                var table = new Table(data).table;
+                return table;
+            }
+        }
+        })(),
+        createDivTemplate:function(res){
+            return $(res.data.text);
+        },
+        createButtonTemplate:function(res){
+            return $('<button>').attr({
+                title:res.data.title,
+            }).text(res.data.text);
+        },
+        createInputTemplate:function(res){
+            var input = document.createElement('input');
+            input.setAttribute('placeholder',res.data.text)
+            return input;
+        },
+        createImageTemplate:function(res){
+            return $('<img>').attr({
+                src:res.data.image,
+                title:res.data.title,
+            });
+        },
 }
 
 
@@ -209,18 +394,14 @@ Popup.prototype = {
 }
 
 $(function() {
-    var combo = new Dropdown();
-    $(document).on('click', function() {
-        $('.dropdown-toggle').next().hide();
+    var popup = new Popup({
+        template:_.template($('#tpl-popup').html()),
     });
-    var popup = new Popup();
-    $('#btn-create').on('click', function() {
-        new Template({
-            type: combo.val,
-            container: '#content',
-            fontSize:popup.fontSize,
-            popup: popup
-        });
+    var combo = new Dropdown({
+        template:_.template($('#tpl-createBtn').html()),
+    });
+    $(document).on('click', function() {
+        //$('.dropdown-toggle').next().hide();
     });
 })
 
