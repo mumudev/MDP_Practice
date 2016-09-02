@@ -1,0 +1,55 @@
+.header{
+	text-align: center;
+}
+.nav{
+	text-align: center;
+}
+
+.nav button{
+	font-size: 18px;
+	height: 30px;
+	width: 100px;
+
+}
+.combo input,button{
+	font-size: 18px;
+	height: 30px;
+	width: 200px;
+
+}
+.combo div{
+	font-size: 18px;
+	height: 30px;
+	width: 400px;
+
+}
+#selectItem ,#selectOperation{
+	position: absolute;
+	left: 715px;
+	top: 80px;
+	padding: 1px;
+	border: 1px solid gray;
+	list-style: none;
+	display: none;
+	border-bottom:#999999 1px solid
+	
+}
+
+a{  
+	background-color:white; 
+	color: black;
+	text-decoration: none;
+
+}
+
+a:link {background-color:white;}
+a:visited {background-color:white;}
+a:hover {background-color:blue;}
+a:active {background-color:#FF704D;}
+table{
+	border-collapse: collapse;
+}
+.createdElements{
+	border: 2px solid black;
+	margin: 5px;
+}
