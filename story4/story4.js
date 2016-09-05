@@ -20,6 +20,22 @@ $(document).ready(function() {
         }
     });
 
+    //show a list for creating elements
+    $("#create").on("click", function(e){
+    $("#menus").show();
+    loading();
+
+    $(document).on("click", function(){
+        $("#menus").hide();
+    });
+
+    e.stopPropagation();
+    });
+    $("#menus").on("click", function(e){
+    e.stopPropagation();
+    });
+
+    //bind event for elements
     var table = document.getElementsByName("Table")[0];
     $(table).click(function() {
         addTable();
@@ -185,7 +201,7 @@ $(document).ready(function() {
 
         document.getElementById("menus").style.display = "none";
 
-    } // body...
+    } 
     function addIma() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -225,10 +241,6 @@ function loading() {
     }
 }
 
-function getElementMenu() {
-    document.getElementById("menus").style.display = "block";
-    loading();
-}
 
 function highlight(self) {
     self.style.backgroundColor = 'pink';
@@ -244,21 +256,21 @@ function showFunctionalities(self) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             xmlDoc = xmlhttp.responseText;
             var txt = eval("(" + xmlDoc + ")");
-            // document.getElementsByName("delete")[0].id=txt.data[0].id;
+            document.getElementsByName("delete")[0].id=txt.data[0].id;
             document.getElementsByName("delete")[0].innerHTML = txt.data[0].text;
-            // document.getElementsByName("delete")[0].title=txt.data[0].title;
-            // document.getElementsByName("backgroundColor")[0].id=txt.data[1].id;
+            document.getElementsByName("delete")[0].title=txt.data[0].title;
+            document.getElementsByName("backgroundColor")[0].id=txt.data[1].id;
             document.getElementsByName("backgroundColor")[0].innerHTML = txt.data[1].text;
-            // document.getElementsByName("backgroundColor")[0].title=txt.data[1].title;
-            // document.getElementsByName("fontColor")[0].id=txt.data[2].id;
+            document.getElementsByName("backgroundColor")[0].title=txt.data[1].title;
+            document.getElementsByName("fontColor")[0].id=txt.data[2].id;
             document.getElementsByName("fontColor")[0].innerHTML = txt.data[2].text;
-            // document.getElementsByName("fontColor")[0].title=txt.data[2].title;
-            // document.getElementsByName("fontBigger")[0].id=txt.data[3].id;
+            document.getElementsByName("fontColor")[0].title=txt.data[2].title;
+            document.getElementsByName("fontBigger")[0].id=txt.data[3].id;
             document.getElementsByName("fontBigger")[0].innerHTML = txt.data[3].text;
-            // document.getElementsByName("fontBigger")[0].title=txt.data[3].title;
-            // document.getElementsByName("fontSmaller")[0].id=txt.data[4].id;
+            document.getElementsByName("fontBigger")[0].title=txt.data[3].title;
+            document.getElementsByName("fontSmaller")[0].id=txt.data[4].id;
             document.getElementsByName("fontSmaller")[0].innerHTML = txt.data[4].text;
-            // document.getElementsByName("fontSmaller")[0].title=txt.data[4].title;
+            document.getElementsByName("fontSmaller")[0].title=txt.data[4].title;
         }
     }
     xmlhttp.open("GET", "http://admadevwb8001:8001/api/html/elements/button/actions", true);
@@ -278,9 +290,9 @@ function showFunctionalities1(self) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             xmlDoc = xmlhttp.responseText;
             var txt = eval("(" + xmlDoc + ")");
-            // document.getElementsByName("delete")[0].id=txt.data[0].id;
+            document.getElementsByName("delete")[0].id=txt.data[0].id;
             document.getElementsByName("delete")[0].innerHTML = txt.data[0].text;
-            // document.getElementsByName("delete")[0].title=txt.data[0].title;
+            document.getElementsByName("delete")[0].title=txt.data[0].title;
         }
     }
     xmlhttp.open("GET", "http://admadevwb8001:8001/api/html/elements/image/actions", true);
