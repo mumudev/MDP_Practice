@@ -14,8 +14,7 @@ var d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10;
   
    // $(".popUpMenu #selectItem").show();
 
-   $("#create").bind("click",function(){$("#selectOperation").hide();$("#selectItem").show();});
-  
+   
    	$("#selectItem").delegate("#button","click",function(){createCombo('button');});
    	$("#selectItem").delegate("#image","click",function(){createCombo('image');});
    	$("#selectItem").delegate("#div","click",function(){createCombo('div');});
@@ -32,6 +31,29 @@ var d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10;
    	$("#selectOperation").delegate("#increaseFontSize","click",function(){setFontSize('+');});
    	$("#selectOperation").delegate("#decreaseFontSize","click",function(){setFontSize('-');});
    	$(".creatElements").bind("click",function(){$(".popUpMenu #selectOperation").show();});
+    $(function () {  
+     $('#create').click(function (event) {  
+         //取消事件冒泡  
+         event.stopPropagation();   
+        $("#selectOperation").hide();
+		//获取新元素的位置信息,定位菜单
+		var x=(document.getElementById("create").offsetLeft+document.getElementById("create").offsetWidth).toString()+"px";
+		var y=(document.getElementById("create").offsetTop+document.getElementById("create").offsetHeight-15).toString()+"px";
+		$("#selectItem").css({"position":"absolute","left":x,"top":y});
+        $("#selectItem").toggle();
+		 return false;
+     });  
+
+	 $(document).click(function(event){
+		  var _con = $('#selectItem');   // 设置目标区域
+		  var _con1 = $('#selectOperation');
+		  if(!_con.is(event.target) && _con.has(event.target).length === 0&&!_con1.is(event.target) && _con1.has(event.target).length === 0){ 
+			handleMenu();          
+			$(".createdElements").css("border","2px solid black");
+		  }
+	});
+ });
+    
 
 });
 
@@ -69,11 +91,11 @@ function createCombo(elementType){
 	}
 	var comboValue=document.getElementById('combo');
 	comboValue.appendChild(newEle);
-	$(newEle).bind("click",function(){
-		changeStyleBorder(newEle);
-		$("#selectItem").hide();
-		deleteMenu($("#selectOperation li"));
-		$("#selectOperation").hide();
+	$(newEle).bind("click",function(event) {  
+         //取消事件冒泡  
+         event.stopPropagation();    
+        changeStyleBorder(newEle);
+		handleMenu();
 		switch(selectCreatedElement().name){
 		case "button":createMenuForOthers(d5);break;
 		case "table":createMenuForOthers(d8);break;
@@ -84,7 +106,15 @@ function createCombo(elementType){
 
 	}
 		$("#selectOperation").show();
-	});
+		//获取新元素的位置信息,定位菜单
+		var x=(newEle.offsetLeft+newEle.offsetWidth).toString()+"px";
+		var y=(newEle.offsetTop+newEle.offsetHeight-15).toString()+"px";
+		$("#selectOperation").css({"position":"absolute","left":x,"top":y});
+		 return false;
+     });  
+		
+		
+	
 	}
 function createMenu(menu,id,text){
 menu.append("<li id="+id+"><a href='#'>"+text+"</a><hr/></li>");
@@ -220,5 +250,29 @@ for (var i = 0; i < d.data.length; i++) {
 }
 
 }
+function handleMenu(){
+	$("#selectItem").hide();
+		deleteMenu($("#selectOperation li"));
+		$("#selectOperation").hide();
 
 
+}
+function blank(){
+ 	$(function () {  
+     $('#create').click(function (event) {  
+         //取消事件冒泡  
+         event.stopPropagation();  
+         //按钮的toggle,如果div是可见的,点击按钮切换为隐藏的;如果是隐藏的,切换为可见的。  
+        $("#selectOperation").hide();$("#selectItem").toggle();
+		 return false;
+     });  
+     //点击空白处隐藏弹出层，下面为滑动消失效果和淡出消失效果。
+	 $(document).click(function(event){
+		  var _con = $('#selectItem');   // 设置目标区域
+		  if(!_con.is(event.target) && _con.has(event.target).length === 0){ // Mark 1
+			//$('#divTop').slideUp('slow');   //滑动消失
+			handleMenu();          //淡出消失
+		  }
+	});
+ });
+ }
