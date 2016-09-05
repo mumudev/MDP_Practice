@@ -16,7 +16,7 @@ var textAct;
 var selElement;
 
 function showTypeMenu(event) {
-    cancelMenu();
+    cancelMenu("need");
     var menuType = document.getElementsByClassName("menu_type")[0];
     var x = event.clientX;
     var y = event.clientY;
@@ -58,11 +58,11 @@ function cancelMenu(str) {
     for (var i = 0; i < menu.length; i++) {
         menu[i].style.display = "none";
     }
-    if (selElement) {
-        if (selElement.style.border) {
-            selElement.style.border = "1px solid black";
-        }
-    }
+    // if (selElement) {
+    //     if (selElement.style.border) {
+    //         selElement.style.border = "1px solid black";
+    //     }
+    // }
 }
 
 
