@@ -22,7 +22,7 @@
         clear: left;
     }
     
-    .dropdown.show>.dropdown-menu{
+    .dropdown.show>.dropdown-menu {
         display: block;
     }
     /* .dropdown>.dropdown-toggle {
@@ -59,7 +59,13 @@
     table tr:nth-child(even) td {
         background-color: #c3dde0;
     }
-    </style></head>
+    
+    .box-selected {
+        border: 1px solid blue;
+        display: inline-block;
+    }
+    </style>
+</head>
 
 <body>
     <div id="btn-contain" style="">
@@ -75,7 +81,7 @@
                 <li><a href="javascript:void 0;" value="DIV">DIV</a></li>
             </ul> -->
         </div>
-      <!--   <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
+        <!--   <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
             create
         </button> -->
     </div>
@@ -88,37 +94,35 @@
             <li><a href="#" value="2">Font size(+)</a></li>
             <li><a href="#" value="3">Font size(-)</a></li>
         </ul>
-    </div> 
+    </div>
     <script type="text/template" id="tpl-createBtn">
-            <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <%_.each(obj,function(e,i){%>
-                    <li>
-                        <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
-                            <%= e.text%>
-                        </a>
-                    </li>
-                    <%})%>
-            </ul>
-        </script>
+        <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <%_.each(obj,function(e,i){%>
+                <li>
+                    <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+    </script>
     <script type="text/template" id="tpl-popup">
-            <ul id="popupListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <%_.each(obj,function(e,i){%>
-                    <li>
-                        <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>">
-                            <%= e.text%>
-                        </a>
-                    </li>
-                    <%})%>
-            </ul>
-        </script>
+        <ul id="popupListView" class="dropdown-menu" aria-labelledby="dropdownMenu" style="position:absolute;display:block;">
+            <%_.each(obj,function(e,i){%>
+                <li>
+                    <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+    </script>
 </body>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/underscore.js"></script>
-    <script src="js/backbone.js"></script>
-    <script src="js/backbone.localStorage.js"></script>
-    <script type="text/javascript">
-
-
+<script src="js/jquery.min.js"></script>
+<script src="js/underscore.js"></script>
+<script src="js/backbone.js"></script>
+<script src="js/backbone.localStorage.js"></script>
+<script type="text/javascript">
 'use strict';
 var domain = 'http://admadevwb8001:8001/api/html/elements';
 //var domain = 'http://localhost:3000/api/html/elements';
@@ -142,23 +146,23 @@ var dataAPI = {
 }
 
 function Dropdown(option) {
-    this.option = $.extend(option||{},{
+    this.option = $.extend(option || {}, {
         ele: '.createBtn.dropdown', //contains
         list: null,
     });
     this.dropdown = $(this.option.ele);
     var self = this;
     this.data = $.ajax({
-            type: 'get',
-            url: domain
-        }).done(function(res) {
-            console.log(res);
-            self.dropdown.append(self.option.template(res.data));
-            self.dropdownMeu = self.dropdown.find('.dropdown-menu li a');
-            self.initialize();
-        }).fail(function(err) {
-            console.info(err);
-        });
+        type: 'get',
+        url: domain
+    }).done(function(res) {
+        console.log(res);
+        self.dropdown.append(self.option.template(res.data));
+        self.dropdownMeu = self.dropdown.find('.dropdown-menu li a');
+        self.initialize();
+    }).fail(function(err) {
+        console.info(err);
+    });
     this.val = 'Table';
     this.dropdownText = this.dropdown.find('.dropdown-text');
 }
@@ -172,7 +176,7 @@ Dropdown.prototype = {
             self.dropdownText.text(self.val);
             $('.dropdown-toggle').next().toggle();
             var evt = window.event || e;
-            evt.stopPropagation&&e.stopPropagation();
+            evt.stopPropagation && e.stopPropagation();
             evt.cancelBubble = true;
             new Template({
                 type: self.val,
@@ -185,7 +189,7 @@ Dropdown.prototype = {
         $('.dropdown-toggle').on('click', function(e) {
             $('.dropdown-toggle').next().toggle();
             var evt = window.event || e;
-            evt.stopPropagation&&evt.stopPropagation();
+            evt.stopPropagation && evt.stopPropagation();
             evt.cancelBubble = true;
         });
     },
@@ -194,11 +198,11 @@ Dropdown.prototype = {
 function Template(option) { //根据模板创建element
     this.option = option || {};
     this.defalutTemplate = {
-        'table':'createTableTemplate',
-        'div':'createDivTemplate',
-        'button':'createButtonTemplate',
-        'inputText':'createInputTemplate',
-        'image':'createImageTemplate',
+        'table': 'createTableTemplate',
+        'div': 'createDivTemplate',
+        'button': 'createButtonTemplate',
+        'inputText': 'createInputTemplate',
+        'image': 'createImageTemplate',
     };
     this.initialize();
 }
@@ -206,44 +210,27 @@ function Template(option) { //根据模板创建element
 Template.prototype = {
     constructor: Template,
     initialize: function() {
-        this.bindEvents();
-        console.log(this.defalutTemplate[this.option.type]);
         var self = this;
         $.ajax({
             type: 'get',
-            url: domain+dataAPI.data[this.option.type],
+            url: domain + dataAPI.data[this.option.type],
         }).done(function(res) {
-            console.log(res);
-            var dom = self[self.defalutTemplate[self.option.type]](res);
-            $(self.option.container).append(dom);
+            self.dom = self[self.defalutTemplate[self.option.type]](res).addClass('template');
+            $(self.dom).data('template',self);
+            $(self.option.container).append(self.dom);
+            console.log(self.dom);
         }).fail(function(err) {
             console.info(err);
         });
-
+        this.bindEvents();
         return this;
-    },
-    addBorder: function() {
-        if (this[0].parentNode.className !== 'box-selected') {
-            var div = document.createElement('div');
-            div.className = 'box-selected';
-            this.wrap(div);
-        }
     },
     bindEvents: function() {
         var self = this;
-        $(self.option.container).delegate('click', '.template', function(e) {
-            if (!this.data('template')) {
-                this.data('template', self);
-            }
-            $('.template').unwrap('.box-selected');
-            self.addBorder.call(this);
-            self.option.popup.setTemplate(this);
-            self.option.popup.showPopUp.call(this, e);
-        });
-
     },
     createTableTemplate: (function() {
         var instance;
+
         function Table(data) {
             this.rowCount = 0;
             this.cellCount = 0;
@@ -278,9 +265,9 @@ Template.prototype = {
                     for (var j = 0; j < this.cellCount; j++) {
                         var td = document.createElement('td');
                         if (sortResult[i * this.rowCount + j]) {
-                            var     oText = document.createTextNode(sortResult[i * this.rowCount + j].data);
+                            var oText = document.createTextNode(sortResult[i * this.rowCount + j].data);
                         } else {
-                            var     oText = document.createTextNode('');
+                            var oText = document.createTextNode('');
                         }
                         td.appendChild(oText);
                         tr.appendChild(td);
@@ -294,37 +281,42 @@ Template.prototype = {
         return function(data) {
             var self = this;
             if (instance && instance.table) {
-                return instance.table;
+                return $(instance.table);
             } else {
                 var table = new Table(data).table;
-                return table;
+                return $(table);
             }
         }
-        })(),
-        createDivTemplate:function(res){
-            return $(res.data.text);
-        },
-        createButtonTemplate:function(res){
-            return $('<button>').attr({
-                title:res.data.title,
-            }).text(res.data.text);
-        },
-        createInputTemplate:function(res){
-            var input = document.createElement('input');
-            input.setAttribute('placeholder',res.data.text)
-            return input;
-        },
-        createImageTemplate:function(res){
-            return $('<img>').attr({
-                src:res.data.image,
-                title:res.data.title,
-            });
-        },
+    })(),
+    createDivTemplate: function(res) {
+        return $(res.data.text);
+    },
+    createButtonTemplate: function(res) {
+        return $('<button>').attr({
+            title: res.data.title,
+        }).text(res.data.text);
+    },
+    createInputTemplate: function(res) {
+        var input = document.createElement('input');
+        input.setAttribute('placeholder', res.data.text)
+        return $(input);
+    },
+    createImageTemplate: function(res) {
+        return $('<img>').attr({
+            src: res.data.image,
+            title: res.data.title,
+        });
+    },
 }
 
 
-function Popup() {
-    this.curTemplate = null;
+function Popup(options) {
+    this.option = options || {};
+    if($('#popupListView')){
+        $('#popupListView').remove();
+    }
+    this.curTemplate = _.template($('#tpl-popup').html());
+    console.log(this.curTemplate);
     this.fontSize = '11px';
     this.initialize()
 }
@@ -332,80 +324,90 @@ function Popup() {
 Popup.prototype = {
     constructor: Popup,
     initialize: function() {
-        this.bindEvents();
+        var self = this;
+        $.ajax({
+            type: 'get',
+            url: domain + dataAPI.btnAction[this.option.type],
+        }).done(function(res) {
+            self.dom = $(self.curTemplate(res.data)).css(self.option.css);
+            $('body').append(self.dom);
+            self.bindEvents();
+        }).fail(function(err) {
+            console.info(err);
+        });
     },
     bindEvents: function() {
         var self = this
-        $('.popUp').delegate('click', 'a', function() {
-            var val = this[0].getAttribute('value');
-            var curTemplate = self.getTemplate();
-            if (val === '0') {
-                curTemplate.parent('.box-selected')
-                    .remove();
-            } else if (val === '1') {
-                self.changeBgColor();
-                $('.box-selected').before(curTemplate[0]);
-                self.removeBorder();
-            } else if (val === '2') {
-                self.changeFontSize('add');
-            }else if(val === '3'){
-                self.changeFontSize('cut');
-            }
-            self.hidePopUp();
+        $('#popupListView').delegate('a','click', function() {
+            var method = $(this).attr('value').trim();
+            console.log(method);
+            self[method](self.option.template.dom);
+            //self.hidePopUp();
         });
-        $(document).on('click',function(){
-            self.hidePopUp();
-        })
     },
-    showPopUp: function(e) {
-        var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        $('.popUp').show()
-            .css({
-                top: e.clientY +
-                    scrollTop + 'px',
-                left: e.clientX + 'px'
-            });
+    delete: function(dom) {
+       dom.parent().remove();
+       this.dom.remove();
     },
-    hidePopUp: function() {
-        $('.popUp').hide();
-    }, 
-    removeBorder: function() {
-        $('.box-selected').remove();
+    backgroundColor: function(dom) {
+        dom.css('backgroundColor',makeColor());
     },
-    setTemplate: function(dom) {
-        this.curTemplate = dom;
+    fontColor: function(dom) {
+        dom.css('color',makeColor());
     },
-    getTemplate: function() {
-        return this.curTemplate;
+    increaseFontSize: function(dom) {
+        fontSize = parseInt(fontSize)+1;
+        dom.css('fontSize',fontSize+'px');
     },
-    changeBgColor: function() {
-        this.curTemplate.css('background', $.makeColor());
-    },
-    changeFontSize: function(type) {
-        var curfontSize = parseInt(this.curTemplate.css('fontSize'));
-        if(type=='add'){
-            this.fontSize = (curfontSize+1)+'px';
-            this.curTemplate.css('fontSize',this.fontSize);
-        }else{
-            this.fontSize  = (curfontSize-1)+'px';
-            this.curTemplate.css('fontSize',this.fontSize);
-        }
+    decreaseFontSize: function(dom) {
+        fontSize = parseInt(fontSize)-1;
+        dom.css('fontSize',fontSize+'px');
     }
 }
 
+var fontSize = '11';
+var btnAction = [];
 $(function() {
-    var popup = new Popup({
-        template:_.template($('#tpl-popup').html()),
-    });
+    // $.when($.ajax(domain+dataAPI.btnAction.button),
+    //     $.ajax(domain+dataAPI.btnAction.inputText),
+    //     $.ajax(domain+dataAPI.btnAction.table),
+    //     $.ajax(domain+dataAPI.btnAction.div),
+    //     $.ajax(domain+dataAPI.btnAction.image)).done(function(){
+    //         for (var i = 0; i < arguments.length; i++) {
+    //             btnAction[i] = arguments[i][0].data;
+    //         }
+    // });
     var combo = new Dropdown({
-        template:_.template($('#tpl-createBtn').html()),
+        template: _.template($('#tpl-createBtn').html()),
     });
     $(document).on('click', function() {
-        //$('.dropdown-toggle').next().hide();
+        $('#popupListView').remove();
+        $('.box-selected').children().unwrap('.box-selected');
+    });
+    $('#content').delegate('.template', 'click', function(e) {
+        var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        var self = $(this).data('template');
+        $(this).data('popup', new Popup({
+            type: self.option.type,
+            css: {
+                top: e.clientY +
+                    scrollTop + 'px',
+                left: e.clientX + 'px'
+            },
+            template:self
+        }));
+        if ($(this).parent().hasClass('box-selected')) {
+            $(this).unwrap('.box-selected');
+        } else {
+            $(this).wrap('<div class="box-selected"></div>');
+        }
+        e.stopPropagation();
     });
 })
 
-
+var makeColor = function() {
+        return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
+};
 </script>
 
 </html>
