@@ -61,30 +61,12 @@ $(document).ready(function() {
         addIma();
     });
 
-    var Delete = document.getElementsByName("delete")[0];
-    $(Delete).click(function() {
-        _delete();
-    });
-
-    var backgroundColor = document.getElementsByName("backgroundColor")[0];
-    $(backgroundColor).click(function() {
-        change_bgcolor();
-    });
-
-    var fontColor = document.getElementsByName("fontColor")[0];
-    $(fontColor).click(function() {
-        change_ftcolor();
-    });
-
-    var fontSmaller = document.getElementsByName("fontSmaller")[0];
-    $(fontSmaller).click(function() {
-        fontSizeDec();
-    });
-
-    var fontBigger = document.getElementsByName("fontBigger")[0];
-    $(fontBigger).click(function() {
-        fontSizeInc();
-    });
+    
+    $("#menu1").delegate("#delete","click",function(){_delete();});
+    $("#menu1").delegate("#backgroundColor","click",function(){change_bgcolor();});
+    $("#menu1").delegate("#fontColor","click",function(){change_ftcolor();});
+    $("#menu1").delegate("#increaseFontSize","click",function(){fontSizeInc();});
+    $("#menu1").delegate("#decreaseFontSize","click",function(){fontSizeDec();});
 
     function addTable() {
         var xmlhttp = new XMLHttpRequest();
@@ -229,6 +211,7 @@ $(document).ready(function() {
 
 });
 
+
 function loading() {
     var arr = document.getElementsByClassName("menu");
     for (var i = 0; i < arr.length; i++) {
@@ -256,21 +239,14 @@ function showFunctionalities(self) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             xmlDoc = xmlhttp.responseText;
             var txt = eval("(" + xmlDoc + ")");
-            document.getElementsByName("delete")[0].id=txt.data[0].id;
-            document.getElementsByName("delete")[0].innerHTML = txt.data[0].text;
-            document.getElementsByName("delete")[0].title=txt.data[0].title;
-            document.getElementsByName("backgroundColor")[0].id=txt.data[1].id;
-            document.getElementsByName("backgroundColor")[0].innerHTML = txt.data[1].text;
-            document.getElementsByName("backgroundColor")[0].title=txt.data[1].title;
-            document.getElementsByName("fontColor")[0].id=txt.data[2].id;
-            document.getElementsByName("fontColor")[0].innerHTML = txt.data[2].text;
-            document.getElementsByName("fontColor")[0].title=txt.data[2].title;
-            document.getElementsByName("fontBigger")[0].id=txt.data[3].id;
-            document.getElementsByName("fontBigger")[0].innerHTML = txt.data[3].text;
-            document.getElementsByName("fontBigger")[0].title=txt.data[3].title;
-            document.getElementsByName("fontSmaller")[0].id=txt.data[4].id;
-            document.getElementsByName("fontSmaller")[0].innerHTML = txt.data[4].text;
-            document.getElementsByName("fontSmaller")[0].title=txt.data[4].title;
+            var Data=txt.data;
+            var str="";
+            for(var i=0;i<Data.length;i++){
+                str = str + "<li class='menu'" + " id='" + Data[i].id + "' title='" + Data[i].title + "'>" 
+                + Data[i].text + "</li>";
+                }
+            $("#menu1").html(str);
+
         }
     }
     xmlhttp.open("GET", "http://admadevwb8001:8001/api/html/elements/button/actions", true);
@@ -290,9 +266,19 @@ function showFunctionalities1(self) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             xmlDoc = xmlhttp.responseText;
             var txt = eval("(" + xmlDoc + ")");
-            document.getElementsByName("delete")[0].id=txt.data[0].id;
-            document.getElementsByName("delete")[0].innerHTML = txt.data[0].text;
-            document.getElementsByName("delete")[0].title=txt.data[0].title;
+            var Data=txt.data;
+            var str="";
+            for(var i=0;i<Data.length;i++){
+                str = str + "<li class='menu'" + " id='" + Data[i].id + "' title='" + Data[i].title + "'>" 
+                + Data[i].text + "</li>";
+                }
+            $("#menu1").html(str);
+            // var Delete=document.createElement('li');
+            // Delete.id=txt.data[0].id;
+            // Delete.innerHTML = txt.data[0].text;
+            // Delete.title=txt.data[0].title;
+            // Delete.className="menu";
+            // document.getElementById('menu1').appendChild(Delete);
         }
     }
     xmlhttp.open("GET", "http://admadevwb8001:8001/api/html/elements/image/actions", true);
@@ -301,7 +287,7 @@ function showFunctionalities1(self) {
     var top = self.offsetTop + self.clientHeight;
     document.getElementById("menu1").style.top = top + "px";
     var left = self.clientWidth + self.offsetLeft;
-    document.getElementById("menu1").style.left = left + "px";
+    document.getElementById("menu1").style.left = left + "px"; 
 
 }
 function changeBorder(self) {
