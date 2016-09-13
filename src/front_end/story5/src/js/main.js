@@ -262,8 +262,7 @@ var createBind = {
 };
 
 $(document).ready(function() {
-    $.ajax(url.base).done(
-        function(json) {
+    $.ajax(url.base).done(function(json) {
             if (json.data) {
                 $.each(json.data, function(i, item) {
                     var newBtn = $('<button class="btn"></button>')
@@ -275,8 +274,7 @@ $(document).ready(function() {
             } else {
                 alert("Error!");
             }
-        }).fail(
-        function() {
+        }).fail(function() {
             console.log("error!");
         });
     $(document).bind("contextmenu", function(e) {
