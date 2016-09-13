@@ -17,7 +17,7 @@ module.exports = {
     },
     //入口文件输出配置
     output: {
-        path: 'webapp/public/js',
+        path: 'webapp/public/dist',
         filename: '[name].js'
     },
     module: {
