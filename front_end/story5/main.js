@@ -1,5 +1,7 @@
 require("bootstrap");
-require("../css/index.css");
+require("./main.css");
+var li = require("./view.js");
+var t = new li({el:$("#menu")});
 dom = {
     createMenu: $("#createMenu"),
     createBtn: $("#createBtn"),
