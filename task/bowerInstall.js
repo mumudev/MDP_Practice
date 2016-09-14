@@ -6,7 +6,8 @@ module.exports = function() {
 
     var input = grunt.file.expand({
         filter: 'isFile'
-    }, ['app/bower.json', './src/front_end/**/bower.json']);
+    }, ['./front_end/**/bower.json']);
+    console.log(input);
     var root = process.cwd();
     input.forEach(function(n) {
         var dirname = path.dirname(n);
