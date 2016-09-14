@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HTML</title>
+    <title>Template</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
     body {
@@ -67,347 +67,367 @@
     </style>
 </head>
 
-<body>
-    <div id="btn-contain" style="">
-        <div class="dropdown createBtn">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="min-width:100px;">
-                <span class="dropdown-text">create</span>
-                <span class="caret"></span>
-            </button>
-            <!-- <ul class="dropdown-menu" style="display:none;">
-                <li><a href="javascript:void 0;" value="Table">Table</a></li>
-                <li><a href="javascript:void 0;" value="Button">Button</a></li>
-                <li><a href="javascript:void 0;" value="Text">Input Text</a></li>
-                <li><a href="javascript:void 0;" value="DIV">DIV</a></li>
-            </ul> -->
-        </div>
-        <!--   <button id="btn-create" class="btn btn-default" type="button" id="dropdownMenu2" style="margin-left:15px;">
+<body id="mvc-app">
+    <div class="dropdown createBtn">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             create
-        </button> -->
+            <span class="caret"></span>
+        </button>
+        <script type="text/template" id="tpl-createBtn">
+            <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <%_.each(obj,function(e,i){%>
+                    <li>
+                        <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" data-id="<%= e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+        </script>
+        <!--   <script type="text/template" id="tpl-table">  
+            <table>
+              
+            </table>
+        </script> -->
     </div>
-    <div id="content" style="margin-top:20px;">
+    <div id="content">
+        <ul id="template-list"></ul>
     </div>
-    <div class="dropdown">
-        <ul class="dropdown-menu">
-            <li><a href="#" value="0">Delete</a></li>
-            <li><a href="#" value="1">Background Color</a></li>
-            <li><a href="#" value="2">Font size(+)</a></li>
-            <li><a href="#" value="3">Font size(-)</a></li>
-        </ul>
-    </div>
-    <script type="text/template" id="tpl-createBtn">
-        <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <%_.each(obj,function(e,i){%>
-                <li>
-                    <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
-                        <%= e.text%>
-                    </a>
-                </li>
-                <%})%>
-        </ul>
-    </script>
     <script type="text/template" id="tpl-popup">
-        <ul id="popupListView" class="dropdown-menu" aria-labelledby="dropdownMenu" style="position:absolute;display:block;">
-            <%_.each(obj,function(e,i){%>
+        <% var data = obj.data, tplType = obj.tplType;%>
+        <ul id="pop-<%=tplType%>" class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <% _.each(data,function(e,i){%>
                 <li>
-                    <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" value="<%= e.id%>">
+                    <a href="javascript:void 0;" class="actions-item <%=e.id%>" title="<%=e.title%>" value="<%=e.id%>">
                         <%= e.text%>
                     </a>
                 </li>
                 <%})%>
         </ul>
     </script>
-</body>
-<script src="js/jquery.min.js"></script>
-<script src="js/underscore.js"></script>
-<script src="js/backbone.js"></script>
-<script src="js/backbone.localStorage.js"></script>
-<script type="text/javascript">
-'use strict';
-var domain = 'http://admadevwb8001:8001/api/html/elements';
-//var domain = 'http://localhost:3000/api/html/elements';
+    <div id="popupView" style="">
+    </div>
+    <!-- jquery.ajax-cross-origin.min.js -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/backbone.localStorage.js"></script>
+    <script type="text/javascript">
+    var domain = 'http://admadevwb8001:8001/api/html/elements';
 
-var dataAPI = {
-    'createBtn': '',
-    'btnAction': {
-        'button': '/button/actions',
-        'inputText': '/inputText/actions',
-        'table': '/table/actions',
-        'div': '/div/actions',
-        'image': '/image/actions',
-    },
-    'data': {
-        'button': '/button/data',
-        'inputText': '/inputText/data',
-        'table': '/table/data',
-        'div': '/div/data',
-        'image': '/image/data',
-    }
-}
-
-function Dropdown(option) {
-    this.option = $.extend(option || {}, {
-        ele: '.createBtn.dropdown', //contains
-        list: null,
-    });
-    this.dropdown = $(this.option.ele);
-    var self = this;
-    this.data = $.ajax({
-        type: 'get',
-        url: domain
-    }).done(function(res) {
-        console.log(res);
-        self.dropdown.append(self.option.template(res.data));
-        self.dropdownMeu = self.dropdown.find('.dropdown-menu li a');
-        self.initialize();
-    }).fail(function(err) {
-        console.info(err);
-    });
-    this.val = 'Table';
-    this.dropdownText = this.dropdown.find('.dropdown-text');
-}
-Dropdown.prototype = {
-    constructor: Dropdown,
-    initialize: function() {
-        var self = this;
-        this.dropdownMeu.on('click', function(e) {
-            self.val = $(this).attr('value');
-            console.log($(this).attr('value'))
-            self.dropdownText.text(self.val);
-            $('.dropdown-toggle').next().toggle();
-            var evt = window.event || e;
-            evt.stopPropagation && e.stopPropagation();
-            evt.cancelBubble = true;
-            new Template({
-                type: self.val,
-                container: '#content'
-            });
-        });
-        this.toggle();
-    },
-    toggle: function() {
-        $('.dropdown-toggle').on('click', function(e) {
-            $('.dropdown-toggle').next().toggle();
-            var evt = window.event || e;
-            evt.stopPropagation && evt.stopPropagation();
-            evt.cancelBubble = true;
-        });
-    },
-}
-
-function Template(option) { //根据模板创建element
-    this.option = option || {};
-    this.defalutTemplate = {
-        'table': 'createTableTemplate',
-        'div': 'createDivTemplate',
-        'button': 'createButtonTemplate',
-        'inputText': 'createInputTemplate',
-        'image': 'createImageTemplate',
-    };
-    this.initialize();
-}
-
-Template.prototype = {
-    constructor: Template,
-    initialize: function() {
-        var self = this;
-        $.ajax({
-            type: 'get',
-            url: domain + dataAPI.data[this.option.type],
-        }).done(function(res) {
-            self.dom = self[self.defalutTemplate[self.option.type]](res).addClass('template');
-            $(self.dom).data('template',self);
-            $(self.option.container).append(self.dom);
-            console.log(self.dom);
-        }).fail(function(err) {
-            console.info(err);
-        });
-        this.bindEvents();
-        return this;
-    },
-    bindEvents: function() {
-        var self = this;
-    },
-    createTableTemplate: (function() {
-        var instance;
-
-        function Table(data) {
-            this.rowCount = 0;
-            this.cellCount = 0;
-            this.data = data; //只取一次
-            this.init(data);
-        }
-        Table.prototype = {
-            constructor: Table,
-            init: function(res) {
-                this.rowCount = res.data.rows;
-                this.cellCount = res.data.cols;
-                this.cellData = res.data.cells;
-
-                var sortResult = this.sort();
-                this.newTableTemplate()
-            },
-            sort: function() {
-                this.sortResult = this.cellData.sort(function(td0, td1) {
-                    if (td0.row === td1.row) {
-                        return td0.col - td1.col;
-                    } else {
-                        return td0.row - td1.row;
+    $(document).ready(function() {
+        var appModel = Backbone.Model.extend({
+            defaults: function() {
+                return {
+                    dataAPI: {
+                        // 'domain': 'http://localhost:3000/api/html/elements',
+                        'domain':'http://admadevwb8001:8001/api/html/elements',
+                        'createBtn': '',
+                        'btnAction': {
+                            'button': '/button/actions',
+                            'inputText': '/inputText/actions',
+                            'table': '/table/actions',
+                            'div': '/div/actions',
+                            'image': '/image/actions',
+                        },
+                        'data': {
+                            'button': '/button/data',
+                            'inputText': '/inputText/data',
+                            'table': '/table/data',
+                            'div': '/div/data',
+                            'image': '/image/data',
+                        }
                     }
+                }
+            },
+            initialize: function() {
+                //请求createBtn
+
+            },
+            reqCreateBtn: function() {
+                var self = this;
+                $.ajax({
+                    type: 'get',
+                    url: this.get('dataAPI').domain
+                }).done(function(res) {
+                    self.trigger('createBtnData', res.data);
+                }).fail(function(err) {
+                    console.info(err);
                 });
             },
-            newTableTemplate: function() {
-                var sortResult = this.sortResult;
-                var oFragmeng = document.createDocumentFragment();
-                var table = document.createElement('table');
-                for (var i = 0; i < this.rowCount; i++) {
-                    var tr = document.createElement('tr');
-                    for (var j = 0; j < this.cellCount; j++) {
-                        var td = document.createElement('td');
-                        if (sortResult[i * this.rowCount + j]) {
-                            var oText = document.createTextNode(sortResult[i * this.rowCount + j].data);
-                        } else {
-                            var oText = document.createTextNode('');
-                        }
-                        td.appendChild(oText);
-                        tr.appendChild(td);
-                    }
-                    oFragmeng.appendChild(tr);
-                }
-                table.appendChild(oFragmeng)
-                this.table = table;
+            reqTplData: function(tplType) {
+                var self = this;
+                $.ajax({
+                    type: 'get',
+                    url: this.get('dataAPI').domain + this.get('dataAPI').data[tplType]
+                }).done(function(res) {
+                    self.trigger('tplData', res.data, tplType);
+                }).fail(function(err) {
+                    console.info(err);
+                });
             }
-        };
-        return function(data) {
-            var self = this;
-            if (instance && instance.table) {
-                return $(instance.table);
-            } else {
-                var table = new Table(data).table;
-                return $(table);
-            }
-        }
-    })(),
-    createDivTemplate: function(res) {
-        return $(res.data.text);
-    },
-    createButtonTemplate: function(res) {
-        return $('<button>').attr({
-            title: res.data.title,
-        }).text(res.data.text);
-    },
-    createInputTemplate: function(res) {
-        var input = document.createElement('input');
-        input.setAttribute('placeholder', res.data.text)
-        return $(input);
-    },
-    createImageTemplate: function(res) {
-        return $('<img>').attr({
-            src: res.data.image,
-            title: res.data.title,
         });
-    },
-}
-
-
-function Popup(options) {
-    this.option = options || {};
-    if($('#popupListView')){
-        $('#popupListView').remove();
-    }
-    this.curTemplate = _.template($('#tpl-popup').html());
-    console.log(this.curTemplate);
-    this.fontSize = '11px';
-    this.initialize()
-}
-
-Popup.prototype = {
-    constructor: Popup,
-    initialize: function() {
-        var self = this;
-        $.ajax({
-            type: 'get',
-            url: domain + dataAPI.btnAction[this.option.type],
-        }).done(function(res) {
-            self.dom = $(self.curTemplate(res.data)).css(self.option.css);
-            $('body').append(self.dom);
-            self.bindEvents();
-        }).fail(function(err) {
-            console.info(err);
-        });
-    },
-    bindEvents: function() {
-        var self = this
-        $('#popupListView').delegate('a','click', function() {
-            var method = $(this).attr('value').trim();
-            console.log(method);
-            self[method](self.option.template.dom);
-            //self.hidePopUp();
-        });
-    },
-    delete: function(dom) {
-       dom.parent().remove();
-       this.dom.remove();
-    },
-    backgroundColor: function(dom) {
-        dom.css('backgroundColor',makeColor());
-    },
-    fontColor: function(dom) {
-        dom.css('color',makeColor());
-    },
-    increaseFontSize: function(dom) {
-        fontSize = parseInt(fontSize)+1;
-        dom.css('fontSize',fontSize+'px');
-    },
-    decreaseFontSize: function(dom) {
-        fontSize = parseInt(fontSize)-1;
-        dom.css('fontSize',fontSize+'px');
-    }
-}
-
-var fontSize = '11';
-var btnAction = [];
-$(function() {
-    // $.when($.ajax(domain+dataAPI.btnAction.button),
-    //     $.ajax(domain+dataAPI.btnAction.inputText),
-    //     $.ajax(domain+dataAPI.btnAction.table),
-    //     $.ajax(domain+dataAPI.btnAction.div),
-    //     $.ajax(domain+dataAPI.btnAction.image)).done(function(){
-    //         for (var i = 0; i < arguments.length; i++) {
-    //             btnAction[i] = arguments[i][0].data;
-    //         }
-    // });
-    var combo = new Dropdown({
-        template: _.template($('#tpl-createBtn').html()),
-    });
-    $(document).on('click', function() {
-        $('#popupListView').remove();
-        $('.box-selected').children().unwrap('.box-selected');
-    });
-    $('#content').delegate('.template', 'click', function(e) {
-        var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        var self = $(this).data('template');
-        $(this).data('popup', new Popup({
-            type: self.option.type,
-            css: {
-                top: e.clientY +
-                    scrollTop + 'px',
-                left: e.clientX + 'px'
+        var appView = Backbone.View.extend({
+            initialize: function(options) {
+                this.model = new options.model;
+                this.model.set({
+                    fontSize: '11px',
+                    curTemplate: '',
+                });
+                this.bindEvents();
+                this.model.reqCreateBtn();
             },
-            template:self
-        }));
-        if ($(this).parent().hasClass('box-selected')) {
-            $(this).unwrap('.box-selected');
-        } else {
-            $(this).wrap('<div class="box-selected"></div>');
-        }
-        e.stopPropagation();
-    });
-})
+            showCreateBtn: function(data) {
+                var createBtnHandler = _.template($('#tpl-createBtn').html());
+                $('.createBtn').append(createBtnHandler(data));
+                //this.model.set('curTemplate',data[0].text);
+            },
+            bindEvents: function() {
+                var self = this;
+                $('.createBtn').on('click', function() {
+                    $('.createBtn').find('#btnListView').toggle();
+                });
+                $('body').delegate('#btnListView li a', 'click', function() {
+                    var tplType = $(this).data('id');
+                    self.createTplhandler(tplType);
+                });
+                $('body').delegate('[tpl]', 'click', function(e) {
+                    var tplType = $(this).attr('tpl');
+                    var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+                    if ($(this).parent().hasClass('box-selected')) {
+                        $(this).unwrap('.box-selected');
+                    } else {
+                        $(this).wrap('<div class="box-selected"></div>');
+                    }
+                    e.stopPropagation();
+                    self.createPop(tplType, {
+                        position:'absolute',
+                        top: e.clientY +
+                            scrollTop + 'px',
+                        left: e.clientX + 'px'
+                    },$(this).parent().hasClass('box-selected'),$(this));
+                });
 
-var makeColor = function() {
-        return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
-};
-</script>
+                this.model.on('createBtnData', function(data) {
+                    self.showCreateBtn(data);
+                });
+                this.model.on('tplData', function(data, tplType) {
+                    var templateData = self.model.get('templateData') || {};
+                    templateData[tplType] = data;
+                    self.model.set('templateData', templateData);
+                    self.createTemplate(tplType);
+                });
+            },
+            createTplhandler: function(tplType) {
+                var self = this;
+                self.model.set('curTemplate', tplType);
+                var templateData = self.model.get('templateData') || {};
+                if (templateData[tplType]) {
+                    self.createTemplate(tplType);
+                } else {
+                    self.model.reqTplData(tplType)
+                }
+            },
+            createTemplate: function(tplType) {
+                var tplDOM = this.model.get('tplDOM') || {}
+                var templateData = this.model.get('templateData') || {};
+                if (!tplDOM[tplType]) {
+                    var renderMethod = this.renderTpl(tplType);
+                    tplDOM[tplType] = renderMethod(templateData[tplType]);
+                    this.model.get('tplDOM', tplDOM);
+                    tplDOM[tplType].attr('tpl', tplType);
+                    $('#template-list').append(tplDOM[tplType]);
+                } else {
+                    $('#template-list').append(tplDOM[tplType]);
+                }
+            },
+            renderTpl: function(tplType) {
+                var self = this;
+                var method = {
+                    table: self.createTable,
+                    div: self.createDiv,
+                    button: self.createButton,
+                    inputText: self.createInput,
+                    image: self.createImage,
+                }
+                return method[tplType];
+            },
+            createTable: function(data) {
+                function Table(data) {
+                    this.rowCount = 0;
+                    this.cellCount = 0;
+                    this.data = data; //只取一次
+                    this.init(data);
+                }
+                Table.prototype = {
+                    constructor: Table,
+                    init: function(res) {
+                        this.rowCount = data.rows;
+                        this.cellCount = data.cols;
+                        this.cellData = data.cells;
+
+                        var sortResult = this.sort();
+                        this.newTableTemplate()
+                    },
+                    sort: function() {
+                        this.sortResult = this.cellData.sort(function(td0, td1) {
+                            if (td0.row === td1.row) {
+                                return td0.col - td1.col;
+                            } else {
+                                return td0.row - td1.row;
+                            }
+                        });
+                    },
+                    newTableTemplate: function() {
+                        var sortResult = this.sortResult;
+                        var oFragmeng = document.createDocumentFragment();
+                        var table = document.createElement('table');
+                        for (var i = 0; i < this.rowCount; i++) {
+                            var tr = document.createElement('tr');
+                            for (var j = 0; j < this.cellCount; j++) {
+                                var td = document.createElement('td');
+                                if (sortResult[i * this.rowCount + j]) {
+                                    var oText = document.createTextNode(sortResult[i * this.rowCount + j].data);
+                                } else {
+                                    var oText = document.createTextNode('');
+                                }
+                                td.appendChild(oText);
+                                tr.appendChild(td);
+                            }
+                            oFragmeng.appendChild(tr);
+                        }
+                        table.appendChild(oFragmeng)
+                        this.table = table;
+                    }
+                }
+                return $(new Table(data).table);
+            },
+            createDiv: function(data) {
+                return $(data.text);
+            },
+            createButton: function(data) {
+                return $('<button>').attr({
+                    title: data.title,
+                }).text(data.text);
+            },
+            createInput: function(data) {
+                var input = document.createElement('input');
+                input.setAttribute('placeholder', data.text)
+                return $(input);
+            },
+            createImage: function(data) {
+                return $('<img>').attr({
+                    src: data.image,
+                    title: data.title,
+                });
+            },
+            hidePopUp:function(){
+                $('.dropdown-menu').hide();
+            },
+            showPopup: function(tplType,position) {
+                $('#pop-'+tplType).css(position).show();
+            },
+            createPop: function(tplType, position,isVisible,curDom) {
+                this.model.set('curDom',$(curDom));
+                this.model.set('curTplType',tplType);
+                var popview = this.model.get('popview')||{};
+                if(!popview[tplType]){
+                    popview[tplType] = new popupView({
+                        tplType: tplType,
+                        position: position
+                    });
+                    popview[tplType].curDom = $(curDom)
+                }else{
+                    if(isVisible){
+                        popview[tplType].curDom = $(curDom)
+                        this.showPopup(tplType,position);
+                    }else{
+                        popview[tplType].curDom = null;
+                        $('.dropdown-menu').hide();
+                    }
+                }
+                this.model.set('popview',popview);
+            }
+        });
+
+        var popupModel = appModel.extend({
+            initialize: function(options) {
+                this.set('tplType', options.tplType);
+                this.reqActionsData(options.tplType);
+            },
+            reqActionsData: function(tplType) {
+                var self = this;
+                $.ajax({
+                    type: 'get',
+                    url: this.get('dataAPI').domain + this.get('dataAPI').btnAction[tplType]
+                }).done(function(res) {
+                    self.trigger('actionsData', res.data, tplType);
+                }).fail(function(err) {
+                    console.info(err);
+                });
+            }
+        });
+        var popupView = Backbone.View.extend({
+            initialize: function(options) {
+                this.position = options.position;
+                this.popTemplate = _.template($('#tpl-popup').html());
+                this.model = new popupModel({
+                    tplType: options.tplType
+                });
+                this.curDom = null;
+                var self = this;
+                this.model.on('actionsData', function(data,tplType) {
+                    var dom = $(self.popTemplate({data:data,tplType:tplType})).css(self.position).show();
+                    self.renderPop(dom);
+                    self.model.off('actionsData');
+                });
+                this.bindEvents(options.tplType);
+            },
+            renderPop: function(dom) {
+                $('#popupView').append(dom);    
+            },
+            bindEvents: function(tplType) {
+                var self = this;
+                $('#popupView').delegate('#pop-'+tplType+' a', 'click', function() {
+                    var method = $(this).attr('value').trim();
+                    self[method](self.curDom.unwrap('.box-selected'));
+                    //self[method](self.option.template.dom);
+                    self.hidePopUp();
+                });
+            },
+            hidePopUp:function(){
+                $('.dropdown-menu').hide();
+            },
+            delete: function(dom) {
+                dom.remove();
+            },
+            backgroundColor: function(dom) {
+                dom.css('backgroundColor', this.makeColor());
+            },
+            fontColor: function(dom) {
+                console.log(dom);
+                dom.css('color', this.makeColor());
+            },
+            increaseFontSize: function(dom) {
+                fontSize = parseInt(fontSize) + 1;
+                dom.css('fontSize', fontSize + 'px');
+            },
+            decreaseFontSize: function(dom) {
+                fontSize = parseInt(fontSize) - 1;
+                dom.css('fontSize', fontSize + 'px');
+            },
+            makeColor:function() {
+                return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
+            }
+
+        });
+
+        new appView({
+            model: appModel,
+        });
+        var fontSize = '11px';
+    });
+    </script>
+</body>
 
 </html>
