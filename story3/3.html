@@ -6,11 +6,26 @@
 	<link rel="stylesheet" type="text/css" href="3.css" />
 	<script type="text/javascript" src="3.js"></script>
 </head>
-<body>
+<body onload="loadingPage()">
 	<table class="btn">
 		<tr>
-			<input class="btn createBtn" type="button" name="create" value="Create" onclick="" />
+			<input class="createBtn" type="button" name="create" value="Create" onclick="showBtnList()"/>
 		</tr>
 	</table>
+	<div class="hiddenBtnList">
+		<input class="hiddenBtn" type="button" name="Table" value="Table" onclick="createTable()" />
+		<input class="hiddenBtn" type="button" name="Button" value="Button" onclick="createButton()" />
+		<input class="hiddenBtn" type="button" name="Input Text" value="Input Text" onclick="createInputText()" />
+		<input class="hiddenBtn" type="button" name="DIV" value="DIV" onclick="createDiv()" />
+	</div>
+	<div class="hiddenFunctionsList">
+        <input type="button" id="deleteButton" class="buttons" value="delete" onclick="_delete()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button"  id="changeBgColor" class="buttons" value="backgound-color" onclick="changeBgColor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="changeFontColor" class="buttons" value="font-color" onclick="changeFontColor()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="increaseFontSize" class="buttons" value="+" onclick="increaseFontSize()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+		<input type="button" id="decreaseFontSize" class="buttons" value="-" onclick="decreaseFontSize()" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" />
+    </div>
+    <div class="contentAdded" id="content-added"></div>
+
 </body>
 </html>

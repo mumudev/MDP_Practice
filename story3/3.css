@@ -1,6 +1,37 @@
-.btn{
+/*.btn{
 	font-family: verdana;
-	font-size: 27px;
-	font-color: #fff;
-	background-color: #fff;
+	font-size: 230px;
+	font-color: #000;
+	background-color: #666;
+}*/
+
+.createBtn {
+	font-family: verdana;
+	font-size: 23px;
+	background-color: white;
+	text-align: center;
+	border: 2px solid grey;
+	margin-top: 20px;
+	margin-left: 200px;
+}
+
+.hiddenBtn {
+	font-family: verdana;
+	font-size: 30px;
+	background-color: white;
+	left: 100px;
+	/*position: absolute;*/
+}
+
+.clear {
+	clear: both;
+}
+
+.buttons{
+	font-family: verdana;
+	font-size: 30px;
+	background-color: white;
+	margin-top: 50px;
+	position: relative;
+	/*top: 200px;*/
 }
