@@ -1,0 +1,5 @@
+<% _.each(datas, function (item) { %>
+    <button class="btn" name="btn" id="<%= item.id %>" title="<%=item.title%>">
+            <%= item.text %>
+        </button>
+    <% }); %>

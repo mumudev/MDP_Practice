@@ -1,17 +1,17 @@
-define(function() {
+define(function () {
     var method = {
 
-        getRandomColor: function() {
+        getRandomColor: function () {
             return "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
         },
 
-        AdaptHeight: function() {
+        AdaptHeight: function () {
             var pageHeight = $(document).height() > $(window).height() ? $(document).height() : $(window).height();
             height = pageHeight - 44;
             $('.container').css('height', height);
         },
 
-        clearSelected: function(e) {
+        clearSelected: function (e) {
             if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
                 $("#menu").hide();
                 $("#createMenu").hide();
@@ -28,18 +28,14 @@ define(function() {
                 $("#createMenu").hide();
             }
         },
-        request:function(url) {
-            var data = null;
-            $.ajax(url.base).done(function(json) {
-                if (json.data) {
-                   data = json.data;
-                } else {
-                    alert("Error!");
+        mergeJson: function () {
+            var resultJsonObject = {};
+            for (var arg in arguments) {
+                for (var attr in arg) {
+                    resultJsonObject[attr] = jsonbject1[attr];
                 }
-            }).fail(function() {
-                console.log("error!");
-            });
-            return data;
+            }
+            return resultJsonObject;
         }
 
     };

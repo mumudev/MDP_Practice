@@ -1,11 +1,9 @@
 require("bootstrap");
-require("./main.css");
-var createMenu = require("./menu/createMenu.js");
-var dropMenu = require("./menu/dropMenu.js");
-
-$(document).ready(function() {
-    var t = new createMenu({ el: $("#createMenu") });
-    $("#createBtn").on("click", function(e) {
-        $("#createMenu").toggle();
+require("./app.css");
+var createMenu = require("./menu/createMenu/item.js");
+$(document).ready(function () {
+    var t = new createMenu({ el: $("#createMenu"), content: $("#content") });
+    $("#createBtn").on("click", function (e) {
+        t.toggle();
     });
 });

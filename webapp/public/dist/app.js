@@ -47,12 +47,10 @@
 	__webpack_require__(1);
 	__webpack_require__(14);
 	var createMenu = __webpack_require__(18);
-	var dropMenu = __webpack_require__(26);
-
-	$(document).ready(function() {
-	    var t = new createMenu({ el: $("#createMenu") });
-	    $("#createBtn").on("click", function(e) {
-	        $("#createMenu").toggle();
+	$(document).ready(function () {
+	    var t = new createMenu({ el: $("#createMenu"), content: $("#content") });
+	    $("#createBtn").on("click", function (e) {
+	        t.toggle();
 	    });
 	});
 
@@ -2511,8 +2509,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./main.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./main.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./app.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./app.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2847,59 +2845,62 @@
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
+	    var htmlTemplate = __webpack_require__(24);
 	    var views = {
-	        button: __webpack_require__(24),
-	        div: __webpack_require__(27),
-	        image: __webpack_require__(28),
-	        inputText: __webpack_require__(29),
-	        table: __webpack_require__(30)
+	        button: __webpack_require__(25),
+	        div: __webpack_require__(30),
+	        image: __webpack_require__(32),
+	        inputText: __webpack_require__(34),
+	        table: __webpack_require__(36)
 	    };
 	    var View = Backbone.View.extend({
-	        template: null, 
+	        template: null,
 	        tagName: "div",
-
+	        context: "",
 	        className: "createMenu",
 	        events: {
 	            'click button': 'create'
 	        },
 
-	        initialize: function() {
-	            this.template = _.template($("#createMenuT").html()); 
+	        initialize: function (options) {
+	            this.content = options.content;
+	            this.template = _.template(htmlTemplate);
 	            this.render();
 	        },
-	        render: function(context) {
+
+	        render: function (context) {
 	            var self = this;
-	            $.ajax(url.base).done(function(json) {
+	            $.ajax(url.base).done(function (json) {
 	                if (json.data) {
 	                    $(self.el).html(self.template({ datas: json.data })); //  渲染模板  
 	                } else {
 	                    alert("Error!");
 	                }
-	            }).fail(function() {
+	            }).fail(function () {
 	                console.log("error!");
 	            });
 	            return this;
 	        },
-	        create: function(e) {
-
-	            $.ajax({
-	                url: url[e.currentTarget.id].data,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
+	        toggle:function(){
+	            this.$el.toggle();
+	        },
+	        
+	        create: function (e) {
+	            var self = this;
+	            $.when($.ajax({ url: url[e.currentTarget.id].data, type: "get" }),
+	                $.ajax({ url: url[e.currentTarget.id].action, type: "get" }))
+	                .done(function (json1, json2) {
 	                    var item = $("<div></div>");
-	                    var itemView = new views[e.currentTarget.id]({el:item,data:json.data});
-	                    $("#content").append(item);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+	                    var itemView = new views[e.currentTarget.id]
+	                    ({ el: item, data: json1[0].data, action: json2[0].data });
+	                    self.content.append(item);
+	                }).fail(function () {
+	                    console.log("table create error!");
+	                });
 	        }
 
 	    });
@@ -18057,14 +18058,21 @@
 
 /***/ },
 /* 24 */
+/***/ function(module, exports) {
+
+	module.exports = "<% _.each(datas, function (item) { %>\r\n    <button class=\"btn\" name=\"createBtn\" id=\"<%= item.id %>\">\r\n            <%= item.text %>\r\n        </button>\r\n    <% }); %>";
+
+/***/ },
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(25);
-	    var dropMenuView = __webpack_require__(26);
+	    var util = __webpack_require__(26);
+	    var htmlTemplate = __webpack_require__(27);
+	    var dropMenuView = __webpack_require__(28);
 	    var View = Backbone.View.extend({
 	        tagName: "button",
 
@@ -18080,36 +18088,11 @@
 	        },
 
 	        initialize: function(options) {
-	            this.template = _.template($("#buttonT").html());
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.data);
 	        },
 	        render: function(data) {
 	            $(this.el).html(this.template( data ));
-	        },
-
-	        delete: function(e) {
-	            $(this.el).hide();
-	        },
-
-	        backgroundColor: function(e) {
-	            $(".selected").css("background-color", util.getRandomColor());
-	        },
-
-	        fontColor: function(e) {
-
-	            $(".selected").css("color", util.getRandomColor());
-	        },
-
-	        increaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
-
-	        decreaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-	            $(".selected").css("font-size", fontSize + "px");
 	        },
 	        select:function(e) {
 	            util.clearSelected(e);
@@ -18119,7 +18102,7 @@
 	                type: "get"
 	            }).done(function(json) {
 	                if (json.data) {
-	                    var dropMenu = new dropMenuView({el:$("#dropMenu"),datas:json.data});
+	                    dropMenuView.render(json.data);
 	                } else {
 	                    alert("Error!");
 	                }
@@ -18133,23 +18116,23 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var method = {
 
-	        getRandomColor: function() {
+	        getRandomColor: function () {
 	            return "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
 	        },
 
-	        AdaptHeight: function() {
+	        AdaptHeight: function () {
 	            var pageHeight = $(document).height() > $(window).height() ? $(document).height() : $(window).height();
 	            height = pageHeight - 44;
 	            $('.container').css('height', height);
 	        },
 
-	        clearSelected: function(e) {
+	        clearSelected: function (e) {
 	            if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
 	                $("#menu").hide();
 	                $("#createMenu").hide();
@@ -18166,18 +18149,14 @@
 	                $("#createMenu").hide();
 	            }
 	        },
-	        request:function(url) {
-	            var data = null;
-	            $.ajax(url.base).done(function(json) {
-	                if (json.data) {
-	                   data = json.data;
-	                } else {
-	                    alert("Error!");
+	        mergeJson: function () {
+	            var resultJsonObject = {};
+	            for (var arg in arguments) {
+	                for (var attr in arg) {
+	                    resultJsonObject[attr] = jsonbject1[attr];
 	                }
-	            }).fail(function() {
-	                console.log("error!");
-	            });
-	            return data;
+	            }
+	            return resultJsonObject;
 	        }
 
 	    };
@@ -18186,14 +18165,21 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
+/***/ function(module, exports) {
+
+	module.exports = "<button class=\"item btn\" name=\"button\" title=\"<%=title%>\"><%=text%></button>";
+
+/***/ },
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(25);
+	    var util = __webpack_require__(26);
+	    var htmlTemplate = __webpack_require__(29);
 	    var View = Backbone.View.extend({
 	        tagName: "div",
 
@@ -18205,12 +18191,12 @@
 
 	        initialize: function(options) {
 	            $(this.el).html("");
-	            this.template = _.template($("#dropMenuT").html());
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.datas);
 	        },
-	        render: function(actions) {
+	        render: function(datas) {
 	            var self = this;
-	            $(self.el).html(self.template({datas:actions}));
+	            $(self.el).html(self.template({datas:datas}));
 	            return this;
 	        },
 	        action: function(e) {
@@ -18244,19 +18230,26 @@
 	            $(".selected").css("font-size", fontSize + "px");
 	        }
 	    };
-	    return View;
+	    return new View({el:$("#dropMenu")});
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ },
-/* 27 */
+/* 29 */
+/***/ function(module, exports) {
+
+	module.exports = "<% _.each(datas, function (item) { %>\r\n    <button class=\"btn\" name=\"btn\" id=\"<%= item.id %>\" title=\"<%=item.title%>\">\r\n            <%= item.text %>\r\n        </button>\r\n    <% }); %>";
+
+/***/ },
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(25);
+	    var util = __webpack_require__(26);
+	    var htmlTemplate = __webpack_require__(31);
 	    var View = Backbone.View.extend({
 	        tagName: "div",
 
@@ -18273,41 +18266,28 @@
 
 
 	        initialize: function(options) {
-	            this.template = _.template($("#divT").html()); 
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.data);
 	        },
 	        render: function(data) {
 	            $(this.el).html(this.template( data ));
 	        },
 
-	        delete: function(e) {
-	            $(this.el).hide();
-	        },
-
-	        backgroundColor: function(e) {
-	            $(".selected").css("background-color", util.getRandomColor());
-	        },
-
-	        fontColor: function(e) {
-
-	            $(".selected").css("color", util.getRandomColor());
-	        },
-
-	        increaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
-
-	        decreaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
 	        select:function(e) {
 	            util.clearSelected(e);
 	            $(this.el).children().addClass("selected");
-	            $("#dropMenu").toggle();
+	            $.ajax({
+	                url: url[$(this.el).children()[0].name].action,
+	                type: "get"
+	            }).done(function(json) {
+	                if (json.data) {
+	                    dropMenuView.render(json.data);
+	                } else {
+	                    alert("Error!");
+	                }
+	            }).fail(function() {
+	                console.log("table create error!");
+	            });
 	        }
 	    });
 	    return View;
@@ -18315,14 +18295,21 @@
 
 
 /***/ },
-/* 28 */
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"item div\" name=\"div\">\r\n    <%=text%>\r\n</div>";
+
+/***/ },
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var url = __webpack_require__(23);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(25);
+	    var util = __webpack_require__(26);
+	    var htmlTemplate = __webpack_require__(33);
 	    var View = Backbone.View.extend({
 	        tagName: "img",
 
@@ -18334,20 +18321,27 @@
 	        },
 
 	        initialize: function(options) {
-	            this.template = _.template($("#imageT").html());
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.data);
 	        },
 	        render: function(data) {
 	            $(this.el).html(this.template(data));
 	        },
-
-	        delete: function(e) {
-	            $(this.el).hide();
-	        },
 	        select: function(e) {
 	            util.clearSelected(e);
 	            $(this.el).children().addClass("selected");
-	            $("#dropMenu").toggle();
+	            $.ajax({
+	                url: url[$(this.el).children()[0].name].action,
+	                type: "get"
+	            }).done(function(json) {
+	                if (json.data) {
+	                    dropMenuView.render(json.data);
+	                } else {
+	                    alert("Error!");
+	                }
+	            }).fail(function() {
+	                console.log("table create error!");
+	            });
 	        }
 	    });
 	    return View;
@@ -18355,14 +18349,21 @@
 
 
 /***/ },
-/* 29 */
+/* 33 */
+/***/ function(module, exports) {
+
+	module.exports = "<img class=\"item img\" name=\"image\" src=\"<%=image%>\" title=\"<%=title%>\">";
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(25);
+	    var util = __webpack_require__(26);
 	    var url = __webpack_require__(23);
+	    var htmlTemplate = __webpack_require__(35);
 	    var View = Backbone.View.extend({
 	        tagName: "input",
 
@@ -18380,41 +18381,28 @@
 
 
 	        initialize: function(options) {
-	            this.template = _.template($("#inputTextT").html()); 
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.data);
 	        },
 	        render: function(data) {
 	            $(this.el).html(this.template( data ));
 	        },
 
-	        delete: function(e) {
-	            $(this.el).hide();
-	        },
-
-	        backgroundColor: function(e) {
-	            $(".selected").css("background-color", util.getRandomColor());
-	        },
-
-	        fontColor: function(e) {
-
-	            $(".selected").css("color", util.getRandomColor());
-	        },
-
-	        increaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
-
-	        decreaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
 	        select:function(e) {
 	            util.clearSelected(e);
 	            $(this.el).children().addClass("selected");
-	            $("#dropMenu").toggle();
+	            $.ajax({
+	                url: url[$(this.el).children()[0].name].action,
+	                type: "get"
+	            }).done(function(json) {
+	                if (json.data) {
+	                    dropMenuView.render(json.data);
+	                } else {
+	                    alert("Error!");
+	                }
+	            }).fail(function() {
+	                console.log("table create error!");
+	            });
 	        }
 	    });
 	    return View;
@@ -18422,14 +18410,21 @@
 
 
 /***/ },
-/* 30 */
+/* 35 */
+/***/ function(module, exports) {
+
+	module.exports = "<input class=\"item form-control\" name=\"inputTextT\" placeholder=\"<%=text%>\">";
+
+/***/ },
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(25);
+	    var util = __webpack_require__(26);
 	    var url = __webpack_require__(23);
+	    var htmlTemplate = __webpack_require__(37);
 	    var View = Backbone.View.extend({
 	        tagName: "table",
 
@@ -18446,47 +18441,39 @@
 	        },
 
 	        initialize: function(options) {
-	            this.template = _.template($("#tableT").html()); 
+	            this.template = _.template(htmlTemplate);
 	            this.render(options.data);
 	        },
 	        render: function(data) {
 	            $(this.el).html(this.template( data ));
 	        },
 
-	        delete: function(e) {
-	            $(this.el).hide();
-	        },
-
-	        backgroundColor: function(e) {
-	            $(".selected").css("background-color", util.getRandomColor());
-	        },
-
-	        fontColor: function(e) {
-
-	            $(".selected").css("color", util.getRandomColor());
-	        },
-
-	        increaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
-
-	        decreaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
 	        select:function(e) {
 	            util.clearSelected(e);
 	            $(this.el).children().addClass("selected");
-	            $("#dropMenu").toggle();
-
+	            $.ajax({
+	                url: url[$(this.el).children()[0].name].action,
+	                type: "get"
+	            }).done(function(json) {
+	                if (json.data) {
+	                    dropMenuView.render(json.data);
+	                } else {
+	                    alert("Error!");
+	                }
+	            }).fail(function() {
+	                console.log("table create error!");
+	            });
 	        }
 	    });
 	    return View;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	module.exports = "<table class=\"item tabletable-bordered\" name=\"table\">\r\n\r\n</table>";
 
 /***/ }
 /******/ ]);
