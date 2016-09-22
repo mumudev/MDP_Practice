@@ -1,0 +1,42 @@
+#create{
+	font-size:18px;
+/*	background-color:#a7dce0;*/
+	color:black;
+}
+
+table{
+	float: left;
+	width:300px;
+}
+[tpl="button"]{
+	float:left;
+	border: 1px solid #a7dce0;
+}
+[tpl="div"]{
+	float:left;
+}
+input{
+	float:left;
+	border: 1px solid #a7dce0;
+
+}
+body{
+	padding:20px;
+	background-color: #fff5f7;
+}
+.box-selected{
+	border: 1px solid blue;
+}
+[class~="box-selected"]{
+	border: 1px solid blue;
+}
+.clear{
+	clear:left;
+}
+td{
+	text-align:center;
+}
+
+.dropdown-menu{
+	background-color: #a7dce0;
+}

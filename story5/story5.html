@@ -1,0 +1,57 @@
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>story5</title>
+    <link rel="stylesheet"  href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="story5.css">
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="underscore.js" type="text/javascript"></script>
+    <script src="backbone.js" type="text/javascript"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="story5.js" type="text/javascript"></script>
+
+    </head>
+
+   
+    <body id="body">
+    <h1 id="h1" align="center">Hello</h1>
+    <div id="div0">
+    <button class="dropdown" id="create">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Create
+          <span class="caret"></span>
+        </a>
+        <script type="text/template" id="tplElements">
+            <ul id="elementsMenu" class="dropdown-menu" >
+                <%_.each(obj,function(e,i){%>
+                    <li>
+                        <a href="javascript:void 0;" class="dropdownMenu-<%= e.id%>" data-id="<%= e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+        </script>
+        </button>
+    </div>
+    <div class="clear"></div>
+    <div id="div1">
+    </div>
+    <script type="text/template" id="tplActions">
+        <% var data = obj.data, tplType = obj.tplType;%>
+        <ul id="Action-<%=tplType%>" class="dropdown-menu">
+            <% _.each(data,function(e,i){%>
+                <li>
+                    <a href="javascript:void 0;" class="actions-<%=e.id%>" title="<%=e.title%>" value="<%=e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+    </script>
+    <div id="div2">
+    </div>
+  </body>
+</html>
