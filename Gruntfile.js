@@ -1,31 +1,32 @@
-module.exports = function(grunt) {
-	
+module.exports = function (grunt) {
+
     'use strict';
     var configParams = require("./config.json");
     var project = {
         paths: {
             get config() {
-                    return this.grunt + 'config/';
-                },
-                get tasks() {
-                    return this.grunt + 'tasks/';
-                },
-                dist: 'dist/',
-                doc: 'doc/',
-                grunt: 'grunt/',
-                tmp: '.tmp/',
-                reports: './reports'
+                return this.grunt + 'config/';
+            },
+            get tasks() {
+                return this.grunt + 'tasks/';
+            },
+            dist: 'dist/',
+            doc: 'doc/',
+            grunt: 'grunt/',
+            tmp: '.tmp/',
+            reports: './reports'
         },
+
         files: {
             get config() {
-                    return project.paths.config + '*.js';
-                },
-                grunt: 'Gruntfile.js',
-                test: ['components/**/test/specs/**/*.js']
+                return project.paths.config + '*.js';
+            },
+            grunt: 'Gruntfile.js',
+            test: ['components/**/test/specs/**/*.js']
         },
-		
-		rpm_post_install_file:'post-install.sh',
-		rpm_unzip_dest:configParams.pkgmainpath,
+
+        rpm_post_install_file: 'post-install.sh',
+        rpm_unzip_dest: configParams.pkgmainpath,
         pkg: grunt.file.readJSON('package.json'),
         gitPrefix: configParams.gitPrefix,
         componentPrefix: configParams.componentPrefix,
