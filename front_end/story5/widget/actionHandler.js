@@ -13,7 +13,7 @@ define(function() {
 
                 // for local preview connection
                 // by default use MA dev server
-                remoteHost: 'http://admadevwb8001:3080/'
+                remoteHost: 'http://admadevwb8001:8001/'
 
             };
         },

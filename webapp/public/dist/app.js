@@ -46,12 +46,17 @@
 
 	__webpack_require__(1);
 	__webpack_require__(14);
-	var createMenu = __webpack_require__(18);
+	var CreateMenuView = __webpack_require__(18);
+	var CreateMenuModel = __webpack_require__(43);
+	var Util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	$(document).ready(function () {
-	    var t = new createMenu({ el: $("#createMenu"), content: $("#content") });
+	    var model = new CreateMenuModel();
+	    var view = new CreateMenuView({ el: $("#createMenu"), content: $("#content"), model: model });
 	    $("#createBtn").on("click", function (e) {
-	        t.toggle();
+	        view.toggle();
 	    });
+	    $(document).on("click",Util.clearBinding);
+	    Util.AdaptHeight();
 	});
 
 
@@ -2857,11 +2862,19 @@
 	        inputText: __webpack_require__(34),
 	        table: __webpack_require__(36)
 	    };
+	    var Models = {
+	        button: __webpack_require__(38),
+	        div: __webpack_require__(39),
+	        image: __webpack_require__(40),
+	        inputText: __webpack_require__(41),
+	        table: __webpack_require__(42)
+	    };
 	    var View = Backbone.View.extend({
 	        template: null,
 	        tagName: "div",
 	        context: "",
 	        className: "createMenu",
+	        model:null,
 	        events: {
 	            'click button': 'create'
 	        },
@@ -2869,6 +2882,7 @@
 	        initialize: function (options) {
 	            this.content = options.content;
 	            this.template = _.template(htmlTemplate);
+	            this.model = options.model;
 	            this.render();
 	        },
 
@@ -2895,8 +2909,9 @@
 	                $.ajax({ url: url[e.currentTarget.id].action, type: "get" }))
 	                .done(function (json1, json2) {
 	                    var item = $("<div></div>");
+	                    var itemModel = new Models[e.currentTarget.id]({data: json1[0].data, action: json2[0].data });
 	                    var itemView = new views[e.currentTarget.id]
-	                    ({ el: item, data: json1[0].data, action: json2[0].data });
+	                    ({ el: item,model: itemModel});
 	                    self.content.append(item);
 	                }).fail(function () {
 	                    console.log("table create error!");
@@ -18028,7 +18043,7 @@
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var url = {
 	        base: "http://admadevwb8001:8001/api/html/elements",
 	        table: {
@@ -18066,49 +18081,47 @@
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(26);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(27);
-	    var dropMenuView = __webpack_require__(28);
+	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
 	        tagName: "button",
-
 	        className: "item-button",
-
+	        model: null,
 	        events: {
-	            "click": "select",
-	            "delete": "delete",
-	            "backgroundColor": "backgroundColor",
-	            "fontColor": "fontColor",
-	            "increaseFontSize": "increaseFontSize",
-	            "decreaseFontSize": "decreaseFontSize",
+	            "click .item": "select"
 	        },
 
-	        initialize: function(options) {
+	        initialize: function (options) {
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.data);
+	            this.model = options.model;
+	            this.render(this.model.get("data"));
 	        },
-	        render: function(data) {
-	            $(this.el).html(this.template( data ));
+
+	        render: function (data) {
+	            $(this.el).html(this.template(data));
 	        },
-	        select:function(e) {
-	            util.clearSelected(e);
-	            $(this.el).children().addClass("selected");
-	            $.ajax({
-	                url: url[$(this.el).children()[0].name].action,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
-	                    dropMenuView.render(json.data);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+
+	        select: function (e) {
+	            if ($("#dropMenu")) {
+	                $("#dropMenu").remove();
+	            }
+	            if ($(this.el).children()[0]) {
+	                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+	                $(this.el).append(dropContent);
+	                var dropMenu = new DropMenu({
+	                    el: dropContent,
+	                    action: this.model.get("action"),
+	                    selected: $(this.el).children()[0],
+	                    e:e
+	                });
+	            } else {
+	                this.remove();
+	            }
 	        }
 	    });
 	    return View;
@@ -18116,55 +18129,7 @@
 
 
 /***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-	    var method = {
-
-	        getRandomColor: function () {
-	            return "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
-	        },
-
-	        AdaptHeight: function () {
-	            var pageHeight = $(document).height() > $(window).height() ? $(document).height() : $(window).height();
-	            height = pageHeight - 44;
-	            $('.container').css('height', height);
-	        },
-
-	        clearSelected: function (e) {
-	            if (navigator.userAgent.indexOf('Mozilla') >= 0 && e.target.localName.match("body")) {
-	                $("#menu").hide();
-	                $("#createMenu").hide();
-	                if ($(".selected").length) {
-	                    $(".selected").eq(0).removeClass("selected");
-	                }
-	            } else if (e.target.closest && !e.target.closest("[id^='item'],[id='menu']")) {
-	                $("#menu").hide();
-	                if ($(".selected").length) {
-	                    $(".selected").eq(0).removeClass("selected");
-	                }
-	            }
-	            if (e.target.closest && !e.target.closest("[id='createBtn'],[id='createMenu']")) {
-	                $("#createMenu").hide();
-	            }
-	        },
-	        mergeJson: function () {
-	            var resultJsonObject = {};
-	            for (var arg in arguments) {
-	                for (var attr in arg) {
-	                    resultJsonObject[attr] = jsonbject1[attr];
-	                }
-	            }
-	            return resultJsonObject;
-	        }
-
-	    };
-	    return method;
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ },
+/* 26 */,
 /* 27 */
 /***/ function(module, exports) {
 
@@ -18178,59 +18143,62 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(26);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(29);
 	    var View = Backbone.View.extend({
 	        tagName: "div",
 
 	        className: "item",
 
+
+	        selected:null,
 	        events: {
 	            "click .btn": "action",
 	        },
 
 	        initialize: function(options) {
-	            $(this.el).html("");
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.datas);
+	            this.render(options.action);
+	            this.selected= options.selected;
+	            $(this.el).css("top",options.e.clientY);
+	            $(this.el).css("left",options.e.clientX);
 	        },
 	        render: function(datas) {
-	            var self = this;
-	            $(self.el).html(self.template({datas:datas}));
-	            return this;
+	            $(this.el).html(this.template({datas:datas}));
 	        },
 	        action: function(e) {
-	            actions[e.currentTarget.id](e);
+	            this[e.currentTarget.id]($(this.selected));
 	        },
+	        delete: function($this) {
+	            $this.remove();
+	            this.remove();
+	        },
+
+	        backgroundColor: function($this) {
+	            $this.css("background-color", util.getRandomColor());
+	        },
+
+	        fontColor: function($this) {
+
+	            $this.css("color", util.getRandomColor());
+	        },
+
+	        increaseFontSize: function($this) {
+	            var fontSize = $this.css("font-size") === "" ?
+	                17 : parseInt($this.css("font-size").replace(/[^0-9]/ig, "")) + 1;
+	            $this.css("font-size", fontSize + "px");
+	        },
+
+	        decreaseFontSize: function($this) {
+	            var fontSize = $this.css("font-size") === "" ?
+	                15 : parseInt($this.css("font-size").replace(/[^0-9]/ig, "")) - 1;
+	            $this.css("font-size", fontSize + "px");
+	        }
 	    });
 	    var actions = {
 
-	        delete: function(e) {
-	            $(".selected").hide();
-	        },
-
-	        backgroundColor: function(e) {
-	            $(".selected").css("background-color", util.getRandomColor());
-	        },
-
-	        fontColor: function(e) {
-
-	            $(".selected").css("color", util.getRandomColor());
-	        },
-
-	        increaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        },
-
-	        decreaseFontSize: function(e) {
-	            var fontSize = $(".selected").css("font-size") === "" ?
-	                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-	            $(".selected").css("font-size", fontSize + "px");
-	        }
 	    };
-	    return new View({el:$("#dropMenu")});
+	    return View;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
@@ -18244,50 +18212,47 @@
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(26);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(31);
+	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
-	        tagName: "div",
-
-	        className: "item-div",
-
+	        tagName: "button",
+	        className: "item-button",
+	        model: null,
 	        events: {
-	            "click": "select",
-	            "delete": "delete",
-	            "backgroundColor": "backgroundColor",
-	            "fontColor": "fontColor",
-	            "increaseFontSize": "increaseFontSize",
-	            "decreaseFontSize": "decreaseFontSize",
+	            "click .item": "select"
 	        },
 
-
-	        initialize: function(options) {
+	        initialize: function (options) {
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.data);
-	        },
-	        render: function(data) {
-	            $(this.el).html(this.template( data ));
+	            this.model = options.model;
+	            this.render(this.model.get("data"));
 	        },
 
-	        select:function(e) {
-	            util.clearSelected(e);
-	            $(this.el).children().addClass("selected");
-	            $.ajax({
-	                url: url[$(this.el).children()[0].name].action,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
-	                    dropMenuView.render(json.data);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+	        render: function (data) {
+	            $(this.el).html(this.template(data));
+	        },
+
+	        select: function (e) {
+	            if ($("#dropMenu")) {
+	                $("#dropMenu").remove();
+	            }
+	            if ($(this.el).children()[0]) {
+	                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+	                $(this.el).append(dropContent);
+	                var dropMenu = new DropMenu({
+	                    el: dropContent,
+	                    action: this.model.get("action"),
+	                    selected: $(this.el).children()[0],
+	                    e:e
+	                });
+	            } else {
+	                this.remove();
+	            }
 	        }
 	    });
 	    return View;
@@ -18304,44 +18269,47 @@
 /* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
-	    var url = __webpack_require__(23);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(26);
+	    var url = __webpack_require__(23);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(33);
+	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
-	        tagName: "img",
-
-	        className: "item-image",
-
+	        tagName: "button",
+	        className: "item-button",
+	        model: null,
 	        events: {
-	            "click": "select",
-	            "delete": "delete"
+	            "click .item": "select"
 	        },
 
-	        initialize: function(options) {
+	        initialize: function (options) {
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.data);
+	            this.model = options.model;
+	            this.render(this.model.get("data"));
 	        },
-	        render: function(data) {
+
+	        render: function (data) {
 	            $(this.el).html(this.template(data));
 	        },
-	        select: function(e) {
-	            util.clearSelected(e);
-	            $(this.el).children().addClass("selected");
-	            $.ajax({
-	                url: url[$(this.el).children()[0].name].action,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
-	                    dropMenuView.render(json.data);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+
+	        select: function (e) {
+	            if ($("#dropMenu")) {
+	                $("#dropMenu").remove();
+	            }
+	            if ($(this.el).children()[0]) {
+	                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+	                $(this.el).append(dropContent);
+	                var dropMenu = new DropMenu({
+	                    el: dropContent,
+	                    action: this.model.get("action"),
+	                    selected: $(this.el).children()[0],
+	                    e:e
+	                });
+	            } else {
+	                this.remove();
+	            }
 	        }
 	    });
 	    return View;
@@ -18358,51 +18326,47 @@
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(26);
 	    var url = __webpack_require__(23);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(35);
+	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
-	        tagName: "input",
-
-	        className: "item-inputText",
-
-	       
+	        tagName: "button",
+	        className: "item-button",
+	        model: null,
 	        events: {
-	            "click": "select",
-	            "delete": "delete",
-	            "backgroundColor": "backgroundColor",
-	            "fontColor": "fontColor",
-	            "increaseFontSize": "increaseFontSize",
-	            "decreaseFontSize": "decreaseFontSize",
+	            "click .item": "select"
 	        },
 
-
-	        initialize: function(options) {
+	        initialize: function (options) {
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.data);
-	        },
-	        render: function(data) {
-	            $(this.el).html(this.template( data ));
+	            this.model = options.model;
+	            this.render(this.model.get("data"));
 	        },
 
-	        select:function(e) {
-	            util.clearSelected(e);
-	            $(this.el).children().addClass("selected");
-	            $.ajax({
-	                url: url[$(this.el).children()[0].name].action,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
-	                    dropMenuView.render(json.data);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+	        render: function (data) {
+	            $(this.el).html(this.template(data));
+	        },
+
+	        select: function (e) {
+	            if ($("#dropMenu")) {
+	                $("#dropMenu").remove();
+	            }
+	            if ($(this.el).children()[0]) {
+	                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+	                $(this.el).append(dropContent);
+	                var dropMenu = new DropMenu({
+	                    el: dropContent,
+	                    action: this.model.get("action"),
+	                    selected: $(this.el).children()[0],
+	                    e:e
+	                });
+	            } else {
+	                this.remove();
+	            }
 	        }
 	    });
 	    return View;
@@ -18419,50 +18383,47 @@
 /* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
-	    var util = __webpack_require__(26);
 	    var url = __webpack_require__(23);
+	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    var htmlTemplate = __webpack_require__(37);
+	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
-	        tagName: "table",
-
-	        className: "item-table",
-
-
+	        tagName: "button",
+	        className: "item-button",
+	        model: null,
 	        events: {
-	            "click": "select",
-	            "delete": "delete",
-	            "backgroundColor": "backgroundColor",
-	            "fontColor": "fontColor",
-	            "increaseFontSize": "increaseFontSize",
-	            "decreaseFontSize": "decreaseFontSize",
+	            "click .item": "select"
 	        },
 
-	        initialize: function(options) {
+	        initialize: function (options) {
 	            this.template = _.template(htmlTemplate);
-	            this.render(options.data);
-	        },
-	        render: function(data) {
-	            $(this.el).html(this.template( data ));
+	            this.model = options.model;
+	            this.render(this.model.get("data"));
 	        },
 
-	        select:function(e) {
-	            util.clearSelected(e);
-	            $(this.el).children().addClass("selected");
-	            $.ajax({
-	                url: url[$(this.el).children()[0].name].action,
-	                type: "get"
-	            }).done(function(json) {
-	                if (json.data) {
-	                    dropMenuView.render(json.data);
-	                } else {
-	                    alert("Error!");
-	                }
-	            }).fail(function() {
-	                console.log("table create error!");
-	            });
+	        render: function (data) {
+	            $(this.el).html(this.template(data));
+	        },
+
+	        select: function (e) {
+	            if ($("#dropMenu")) {
+	                $("#dropMenu").remove();
+	            }
+	            if ($(this.el).children()[0]) {
+	                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+	                $(this.el).append(dropContent);
+	                var dropMenu = new DropMenu({
+	                    el: dropContent,
+	                    action: this.model.get("action"),
+	                    selected: $(this.el).children()[0],
+	                    e:e
+	                });
+	            } else {
+	                this.remove();
+	            }
 	        }
 	    });
 	    return View;
@@ -18473,7 +18434,137 @@
 /* 37 */
 /***/ function(module, exports) {
 
-	module.exports = "<table class=\"item tabletable-bordered\" name=\"table\">\r\n\r\n</table>";
+	module.exports = "<table class=\"item tabletable-bordered\" name=\"table\">\r\n    <% var num = 0;%>\r\n    <% for(var row= 0;row<rows;row++){%>\r\n        <tr>\r\n        <% for(var col= 0;col<cols;col++){%>\r\n            <td>\r\n                <% if(cells[num].row == row&&cells[num].col == col){%>\r\n                <%=cells[num++].data%>\r\n                <%}%>\r\n            </td>\r\n        <% }%>\r\n        </tr>\r\n    <% }%>\r\n</table>";
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            data: {
+
+	            },
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }, 
+	            { "id": "backgroundColor", "text": "Background Color", "title": "Change background color for current element" }, 
+	            { "id": "fontColor", "text": "Font Color", "title": "Change font color for current element" }, 
+	            { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" }, 
+	            { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            data: {
+
+	            },
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }, 
+	            { "id": "backgroundColor", "text": "Background Color", "title": "Change background color for current element" }, 
+	            { "id": "fontColor", "text": "Font Color", "title": "Change font color for current element" }, 
+	            { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" }, 
+	            { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            data: {
+	            },
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            data: {
+
+	            },
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }, 
+	            { "id": "backgroundColor", "text": "Background Color", "title": "Change background color for current element" }, 
+	            { "id": "fontColor", "text": "Font Color", "title": "Change font color for current element" }, 
+	            { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" }, 
+	            { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            data: {
+
+	            },
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }, 
+	            { "id": "backgroundColor", "text": "Background Color", "title": "Change background color for current element" }, 
+	            { "id": "fontColor", "text": "Font Color", "title": "Change font color for current element" }, 
+	            { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" }, 
+	            { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var Backbone = __webpack_require__(19);
+	    var model = Backbone.Model.extend({
+	        defaults: {
+	            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }, 
+	            { "id": "backgroundColor", "text": "Background Color", "title": "Change background color for current element" }, 
+	            { "id": "fontColor", "text": "Font Color", "title": "Change font color for current element" }, 
+	            { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" }, 
+	            { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
+	            selected:false
+	        }
+	    });
+	    return model;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
 
 /***/ }
 /******/ ]);

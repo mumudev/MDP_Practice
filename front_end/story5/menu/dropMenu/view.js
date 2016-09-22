@@ -9,50 +9,53 @@ define(function() {
 
         className: "item",
 
+
+        selected:null,
         events: {
             "click .btn": "action",
         },
 
         initialize: function(options) {
-            $(this.el).html("");
             this.template = _.template(htmlTemplate);
-            this.render(options.datas);
+            this.render(options.action);
+            this.selected= options.selected;
+            $(this.el).css("top",options.e.clientY);
+            $(this.el).css("left",options.e.clientX);
         },
         render: function(datas) {
-            var self = this;
-            $(self.el).html(self.template({datas:datas}));
-            return this;
+            $(this.el).html(this.template({datas:datas}));
         },
         action: function(e) {
-            actions[e.currentTarget.id](e);
+            this[e.currentTarget.id]($(this.selected));
         },
+        delete: function($this) {
+            $this.remove();
+            this.remove();
+        },
+
+        backgroundColor: function($this) {
+            $this.css("background-color", util.getRandomColor());
+        },
+
+        fontColor: function($this) {
+
+            $this.css("color", util.getRandomColor());
+        },
+
+        increaseFontSize: function($this) {
+            var fontSize = $this.css("font-size") === "" ?
+                17 : parseInt($this.css("font-size").replace(/[^0-9]/ig, "")) + 1;
+            $this.css("font-size", fontSize + "px");
+        },
+
+        decreaseFontSize: function($this) {
+            var fontSize = $this.css("font-size") === "" ?
+                15 : parseInt($this.css("font-size").replace(/[^0-9]/ig, "")) - 1;
+            $this.css("font-size", fontSize + "px");
+        }
     });
     var actions = {
 
-        delete: function(e) {
-            $(".selected").hide();
-        },
-
-        backgroundColor: function(e) {
-            $(".selected").css("background-color", util.getRandomColor());
-        },
-
-        fontColor: function(e) {
-
-            $(".selected").css("color", util.getRandomColor());
-        },
-
-        increaseFontSize: function(e) {
-            var fontSize = $(".selected").css("font-size") === "" ?
-                17 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) + 1;
-            $(".selected").css("font-size", fontSize + "px");
-        },
-
-        decreaseFontSize: function(e) {
-            var fontSize = $(".selected").css("font-size") === "" ?
-                15 : parseInt($(".selected").css("font-size").replace(/[^0-9]/ig, "")) - 1;
-            $(".selected").css("font-size", fontSize + "px");
-        }
     };
-    return new View({el:$("#dropMenu")});
+    return View;
 });

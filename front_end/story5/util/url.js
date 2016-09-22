@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     var url = {
         base: "http://admadevwb8001:8001/api/html/elements",
         table: {

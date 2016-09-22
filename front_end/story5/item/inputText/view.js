@@ -1,48 +1,44 @@
-define(function() {
+define(function () {
     var Backbone = require('Backbone');
     var _ = require("underscore");
-    var util = require("../../util/method.js");
     var url = require("../../util/url.js");
+    var util = require("../../util/method.js");
     var htmlTemplate = require("./item.html");
+    var DropMenu = require("../../menu/dropMenu/view.js");
     var View = Backbone.View.extend({
-        tagName: "input",
-
-        className: "item-inputText",
-
-       
+        tagName: "button",
+        className: "item-button",
+        model: null,
         events: {
-            "click": "select",
-            "delete": "delete",
-            "backgroundColor": "backgroundColor",
-            "fontColor": "fontColor",
-            "increaseFontSize": "increaseFontSize",
-            "decreaseFontSize": "decreaseFontSize",
+            "click .item": "select"
         },
 
-
-        initialize: function(options) {
+        initialize: function (options) {
             this.template = _.template(htmlTemplate);
-            this.render(options.data);
-        },
-        render: function(data) {
-            $(this.el).html(this.template( data ));
+            this.model = options.model;
+            this.render(this.model.get("data"));
         },
 
-        select:function(e) {
-            util.clearSelected(e);
-            $(this.el).children().addClass("selected");
-            $.ajax({
-                url: url[$(this.el).children()[0].name].action,
-                type: "get"
-            }).done(function(json) {
-                if (json.data) {
-                    dropMenuView.render(json.data);
-                } else {
-                    alert("Error!");
-                }
-            }).fail(function() {
-                console.log("table create error!");
-            });
+        render: function (data) {
+            $(this.el).html(this.template(data));
+        },
+
+        select: function (e) {
+            if ($("#dropMenu")) {
+                $("#dropMenu").remove();
+            }
+            if ($(this.el).children()[0]) {
+                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+                $(this.el).append(dropContent);
+                var dropMenu = new DropMenu({
+                    el: dropContent,
+                    action: this.model.get("action"),
+                    selected: $(this.el).children()[0],
+                    e:e
+                });
+            } else {
+                this.remove();
+            }
         }
     });
     return View;
