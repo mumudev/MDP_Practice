@@ -121,17 +121,13 @@ var elements = Backbone.View.extend({
         var self = this;
         $(newNode).bind("click", function operate() {
             //cancelMenu();
-            console.log("click!!!");
             selElement = this;
-            console.log("bind------");
             console.log(selElement.style.fontSize);
             //cancel choosing other Elements in contents except selElement
             unchooseOther(selElement);
             var eletype1 = this.tagName.toLowerCase();
-            var menu = $(".menu_act");
             console.log(eletype1);
             self.operateView.render(eletype1);
-            console.log("bind------");
         });
     },
     addNodeExampleContent: function(newNode) {
