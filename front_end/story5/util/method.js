@@ -2,7 +2,9 @@ define(function () {
     var method = {
 
         getRandomColor: function () {
-            return "rgb(" + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + "," + Math.ceil(Math.random() * 255) + ")";
+            return "rgb(" + Math.ceil(Math.random() * 255) + ","
+             + Math.ceil(Math.random() * 255) + "," 
+             + Math.ceil(Math.random() * 255) + ")";
         },
 
         AdaptHeight: function () {
@@ -22,7 +24,7 @@ define(function () {
         },
 
         clearBinding: function (e) {
-            if (!(e.target.closest(".item" )| |e.target.close st("#dropMenu"))&&$("#dropMenu")){
+            if (!(e.target.closest(".item" )||e.target.closest("#dropMenu"))&&$("#dropMenu")){
                 $("#dropMenu").remove();
             }
             // if (!e.target.closest("#createBtn") && $("#dropMenu")) {

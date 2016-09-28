@@ -7,22 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="public/css/bootstrap.css">
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="public/dist/app.js" type="text/javascript"></script>
 </head>
 
 <body>
     <nav class="nav">
         <button class="btn createBtn" id="createBtn">Create</button>
-        <div class="createMenu" id="createMenu" style="display:none">
-            <!-- 
-            <button class="btn" name="createBtn" id="createTextBtn">Table</button>
-            <button class="btn" name="createBtn" id="createButtonBtn">Button</button>
-            <button class="btn" name="createBtn" id="createInputBtn">Input Text</button>
-            <button class="btn" name="createBtn" id="createdivBtn">Div</button>
-             -->
-        </div>
     </nav>
     <div class="container" id="content"></div>
-    <div id="test"></div>
 </body>
-<script src="public/dist/app.js" type="text/javascript"></script>
+<script>
+    
+$(document).ready(function () {
+    var model = new document.story5.CreateMenuModel();
+    var createMenu = $('<div class="createMenu" id="createMenu" style="display:none">');
+    $("nav").append(createMenu);
+    var view = new document.story5.CreateMenuView({ el: createMenu, content: $("#content"), model: model });
+    $("#createBtn").on("click", function (e) {
+        view.toggle();
+    });
+    $(document).on("click",document.story5.Util.clearBinding);
+    document.story5.Util.AdaptHeight();
+});
+
+</script>
+
 </html>

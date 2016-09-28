@@ -46,19 +46,10 @@
 
 	__webpack_require__(1);
 	__webpack_require__(14);
-	var CreateMenuView = __webpack_require__(18);
-	var CreateMenuModel = __webpack_require__(43);
-	var Util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	$(document).ready(function () {
-	    var model = new CreateMenuModel();
-	    var view = new CreateMenuView({ el: $("#createMenu"), content: $("#content"), model: model });
-	    $("#createBtn").on("click", function (e) {
-	        view.toggle();
-	    });
-	    $(document).on("click",Util.clearBinding);
-	    Util.AdaptHeight();
-	});
-
+	document.story5 = {};
+	document.story5.CreateMenuView = __webpack_require__(18);
+	document.story5.CreateMenuModel = __webpack_require__(43);
+	document.story5.Util = __webpack_require__(26);
 
 /***/ },
 /* 1 */
@@ -18085,7 +18076,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(27);
 	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
@@ -18129,7 +18120,49 @@
 
 
 /***/ },
-/* 26 */,
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	    var method = {
+
+	        getRandomColor: function () {
+	            return "rgb(" + Math.ceil(Math.random() * 255) + ","
+	             + Math.ceil(Math.random() * 255) + "," 
+	             + Math.ceil(Math.random() * 255) + ")";
+	        },
+
+	        AdaptHeight: function () {
+	            var pageHeight = $(document).height() > $(window).height() ? $(document).height() : $(window).height();
+	            height = pageHeight - 44;
+	            $('.container').css('height', height);
+	        },
+
+	        mergeJson: function () {
+	            var resultJsonObject = {};
+	            for (var arg in arguments) {
+	                for (var attr in arg) {
+	                    resultJsonObject[attr] = jsonbject1[attr];
+	                }
+	            }
+	            return resultJsonObject;
+	        },
+
+	        clearBinding: function (e) {
+	            if (!(e.target.closest(".item" )||e.target.closest("#dropMenu"))&&$("#dropMenu")){
+	                $("#dropMenu").remove();
+	            }
+	            // if (!e.target.closest("#createBtn") && $("#dropMenu")) {
+	            //     $("#createMenu").hide();
+	            // }
+	        }
+
+	    };
+	    return method;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
 /* 27 */
 /***/ function(module, exports) {
 
@@ -18143,7 +18176,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(29);
 	    var View = Backbone.View.extend({
 	        tagName: "div",
@@ -18216,7 +18249,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(31);
 	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
@@ -18273,7 +18306,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(33);
 	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
@@ -18330,7 +18363,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(35);
 	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
@@ -18387,7 +18420,7 @@
 	    var Backbone = __webpack_require__(19);
 	    var _ = __webpack_require__(22);
 	    var url = __webpack_require__(23);
-	    var util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../util/method.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	    var util = __webpack_require__(26);
 	    var htmlTemplate = __webpack_require__(37);
 	    var DropMenu = __webpack_require__(28);
 	    var View = Backbone.View.extend({
@@ -18434,7 +18467,7 @@
 /* 37 */
 /***/ function(module, exports) {
 
-	module.exports = "<table class=\"item tabletable-bordered\" name=\"table\">\r\n    <% var num = 0;%>\r\n    <% for(var row= 0;row<rows;row++){%>\r\n        <tr>\r\n        <% for(var col= 0;col<cols;col++){%>\r\n            <td>\r\n                <% if(cells[num].row == row&&cells[num].col == col){%>\r\n                <%=cells[num++].data%>\r\n                <%}%>\r\n            </td>\r\n        <% }%>\r\n        </tr>\r\n    <% }%>\r\n</table>";
+	module.exports = "<table class=\"item tabletable-bordered\" name=\"table\">\r\n    <% var num = 0;%>\r\n    <% for(var row= 0;row<rows;row++){%>\r\n        <tr>\r\n        <% for(var col= 0;col<cols;col++){%>\r\n            <td>\r\n                <% if(cells[num].row == row&&cells[num].col == col){%>\r\n                    <%=cells[num++].data%>\r\n                <%}%>\r\n            </td>\r\n        <% }%>\r\n        </tr>\r\n    <% }%>\r\n</table>";
 
 /***/ },
 /* 38 */

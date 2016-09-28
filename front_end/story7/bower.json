@@ -1,5 +1,5 @@
 {
-  "name": "story5",
+  "name": "story7",
   "homepage": "https://github.com/mumudev/MDP_Practice",
   "authors": [
     "Charlie Yu <Charlie.Yu@morningstar.com>"
@@ -9,8 +9,6 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_modules",
     "test",
     "tests"
   ],
@@ -19,7 +17,6 @@
     "bootstrap": "^3.3.7",
     "promise": "^0.2.2",
     "backbone": "^1.3.3",
-    "common": "*",
     "underscore": "^1.8.3"
   }
 }
