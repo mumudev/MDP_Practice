@@ -1,12 +1,14 @@
 define(function () {
     var Backbone = require('Backbone');
     var model = Backbone.Model.extend({
-        name:"image",
         defaults: {
             data: {
-            },
-            action: [{ "id": "delete", "text": "Delete", "title": "Delete the element from DOM" }],
-            selected:false
+                button: 0,
+                div: 0,
+                image: 0,
+                inputText: 0,
+                table: 0
+            }
         }
     });
     return model;

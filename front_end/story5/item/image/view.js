@@ -6,8 +6,8 @@ define(function () {
     var htmlTemplate = require("./item.html");
     var DropMenu = require("../../menu/dropMenu/view.js");
     var View = Backbone.View.extend({
-        tagName: "button",
-        className: "item-button",
+        tagName: "image",
+        className: "item-image",
         model: null,
         events: {
             "click .item": "select"
@@ -23,6 +23,10 @@ define(function () {
             $(this.el).html(this.template(data));
         },
 
+        delete: function () {
+            this.model.set("destroy",true);
+            this.remove();
+        },
         select: function (e) {
             if ($("#dropMenu")) {
                 $("#dropMenu").remove();
@@ -33,7 +37,7 @@ define(function () {
                 var dropMenu = new DropMenu({
                     el: dropContent,
                     action: this.model.get("action"),
-                    selected: $(this.el).children()[0],
+                    selected: this,
                     e:e
                 });
             } else {

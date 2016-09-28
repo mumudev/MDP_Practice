@@ -13,7 +13,8 @@ module.exports = {
     // plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
-        app: './front_end/story5/app'
+        story5: './front_end/story5/app',
+        story7: './front_end/story7/app'
     },
     //入口文件输出配置
     output: {

@@ -1,6 +1,7 @@
 define(function () {
     var Backbone = require('Backbone');
     var model = Backbone.Model.extend({
+        name:"div",
         defaults: {
             data: {
 

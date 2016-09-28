@@ -2913,17 +2913,26 @@
 	        },
 	        create: function (e) {
 	            var self = this;
-	            this.model.itemList[e.currentTarget.id]++;
+	            var itemList = this.model.get("itemList");
+	            itemList[e.currentTarget.id]++;
+	            this.model.set("itemList",itemList);
+	            this.model.trigger("change")
 	            $.when($.ajax({ url: url[e.currentTarget.id].data, type: "get" }),
 	                $.ajax({ url: url[e.currentTarget.id].action, type: "get" }))
 	                .done(function (json1, json2) {
 	                    var item = $("<div></div>");
-	                    var itemModel = new Models[e.currentTarget.id]({ data: json1[0].data, action: json2[0].data });
-	                    var itemView = new views[e.currentTarget.id]
-	                        ({ el: item, model: itemModel });
+	                    var itemModel = new Models[e.currentTarget.id]({
+	                        data: json1[0].data,
+	                        action: json2[0].data
+	                    });
+	                    var itemView = new views[e.currentTarget.id]({
+	                        el: item,
+	                        model: itemModel
+	                    });
 	                    self.content.append(item);
 	                    self.listenToOnce(itemModel, "change", function (el) {
 	                        this.model.itemList[el.name]--;
+	                        this.model.trigger("change");
 	                    });
 	                }).fail(function () {
 	                    console.log("table create error!");
@@ -18643,15 +18652,15 @@
 	                { "id": "increaseFontSize", "text": "Font Size +", "title": "Increase font size for current element" },
 	                { "id": "decreaseFontSize", "text": "Font Size -", "title": "Decrease font size for current element" }],
 
-	            selected: false
+	            selected: false,
+	            itemList: {
+	                button: 0,
+	                div: 0,
+	                image: 0,
+	                inputText: 0,
+	                table: 0
+	            }
 	        },
-	        itemList: {
-	            button: 0,
-	            div: 0,
-	            image: 0,
-	            inputText: 0,
-	            table: 0
-	        }
 	    });
 	    return model;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));

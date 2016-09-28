@@ -22,7 +22,7 @@ define(function () {
         tagName: "div",
         context: "",
         className: "createMenu",
-        model:null,
+        model: null,
         events: {
             'click button': 'create'
         },
@@ -47,20 +47,50 @@ define(function () {
             });
             return this;
         },
-        toggle:function(){
+        toggle: function () {
             this.$el.toggle();
         },
-        
+
+        select: function (e) {
+            if ($("#dropMenu")) {
+                $("#dropMenu").remove();
+            }
+            if ($(this.el).children()[0]) {
+                var dropContent = $("<div class='menu' id='dropMenu'></div>");
+                $(this.el).append(dropContent);
+                var dropMenu = new DropMenu({
+                    el: dropContent,
+                    action: this.model.get("action"),
+                    selected: $(this.el).children()[0],
+                    e: e
+                });
+            } else {
+                this.remove();
+            }
+        },
         create: function (e) {
             var self = this;
+            var itemList = this.model.get("itemList");
+            itemList[e.currentTarget.id]++;
+            this.model.set("itemList",itemList);
+            this.model.trigger("change")
             $.when($.ajax({ url: url[e.currentTarget.id].data, type: "get" }),
                 $.ajax({ url: url[e.currentTarget.id].action, type: "get" }))
                 .done(function (json1, json2) {
                     var item = $("<div></div>");
-                    var itemModel = new Models[e.currentTarget.id]({data: json1[0].data, action: json2[0].data });
-                    var itemView = new views[e.currentTarget.id]
-                    ({ el: item,model: itemModel});
+                    var itemModel = new Models[e.currentTarget.id]({
+                        data: json1[0].data,
+                        action: json2[0].data
+                    });
+                    var itemView = new views[e.currentTarget.id]({
+                        el: item,
+                        model: itemModel
+                    });
                     self.content.append(item);
+                    self.listenToOnce(itemModel, "change", function (el) {
+                        this.model.itemList[el.name]--;
+                        this.model.trigger("change");
+                    });
                 }).fail(function () {
                     console.log("table create error!");
                 });

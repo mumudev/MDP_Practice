@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500" height="320">
+<% 
+    var count = data.div+data.button
+    +data.image+data.inputText+data.table;
+    var buttonHeight=0;
+    var divHeight=0;
+    var imageHeight=0;
+    var inputTextHeight=0;
+    var tableHeight=0;
+    if(count!==0){
+        buttonHeight=parseInt(data.button*300/count);
+        divHeight=parseInt(data.div*300/count);
+        imageHeight=parseInt(data.image*300/count);
+        inputTextHeight=parseInt(data.inputText*300/count);
+        tableHeight=parseInt(data.table*300/count);
+    }
+%>
+    
+    <rect width="90" height="<%=buttonHeight%>" 
+    x="0" y="<%=300-buttonHeight%>" 
+    style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+    <text x="25" y="320" fill="red">button</text>
+
+    <rect width="90" height="<%=divHeight%>" 
+    x="100" y="<%=300-divHeight%>" 
+    style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+    <text x="125" y="320" fill="red">div</text>
+
+    <rect width="90" height="<%=imageHeight%>" 
+    x="200" y="<%=300-imageHeight%>" 
+    style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+    <text x="225" y="320" fill="red">image</text>
+
+    <rect width="90" height="<%=inputTextHeight%>" 
+    x="300" y="<%=300-inputTextHeight%>" 
+    style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+    <text x="325" y="320" fill="red">inputText</text>
+
+    <rect width="90" height="<%=tableHeight%>" 
+    x="400" y="<%=300-tableHeight%>" 
+    style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+    <text x="425" y="320" fill="red">table</text>
+</svg>
