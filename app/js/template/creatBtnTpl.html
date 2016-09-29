@@ -1,0 +1,9 @@
+<ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+    <%_.each(obj,function(e,i){%>
+        <li>
+            <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" data-id="<%= e.id%>">
+                <%= e.text%>
+            </a>
+        </li>
+        <%})%>
+</ul>

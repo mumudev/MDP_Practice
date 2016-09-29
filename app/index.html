@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    body {
+        padding: 30px;
+    }
+    
+    .dropdown>.dropdown-menu {
+        position: absolute;
+        margin-bottom: 5px;
+        top: 34px;
+    }
+    
+    .dropdown:after {
+        clear: left;
+    }
+    
+    .dropdown.show>.dropdown-menu {
+        display: block;
+    }
+    /* .dropdown>.dropdown-toggle {
+          float: left;
+      }*/
+    
+    table {
+        font-family: verdana, arial, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #a9c6c9;
+        border-collapse: collapse;
+    }
+    
+    table th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #a9c6c9;
+    }
+    
+    table td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #a9c6c9;
+    }
+    
+    table tr:nth-child(odd) td {
+        background-color: #d4e3e5;
+    }
+    
+    table tr:nth-child(even) td {
+        background-color: #c3dde0;
+    }
+    
+    .box-selected {
+        border: 1px solid blue;
+        display: inline-block;
+    }
+    </style>
+</head>
+
+<body id="mvc-app">
+    <script type="text/template" id="tpl-createBtn">
+        <ul id="btnListView" class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <%_.each(obj,function(e,i){%>
+                <li>
+                    <a href="javascript:void 0;" class="dropdown-menu-<%= e.id%>" data-id="<%= e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+    </script>
+    <script type="text/template" id="tpl-popup">
+        <% var data = obj.data, tplType = obj.tplType;%>
+            <ul id="pop-<%=tplType%>" class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <% _.each(data,function(e,i){%>
+                    <li>
+                        <a href="javascript:void 0;" class="actions-item <%=e.id%>" title="<%=e.title%>" value="<%=e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+    </script>
+    <div id="popupView" style="">
+    </div>
+    <!-- jquery.ajax-cross-origin.min.js -->
+    <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js" data-main="js/main"></script>
+</body>
+
+</html>
