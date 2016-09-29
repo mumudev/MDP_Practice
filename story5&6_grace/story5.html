@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Use backbone and promise</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="js/lib/jquery-3.1.0.js"></script>
+    <script src="js/lib/underscore.js"></script>
+    <script src="js/lib/backbone.js"></script>
+    <script src="js/story5.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/story5.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="page-header">
+        <h2>Demo: story5
+        <small> >> Use backbone and promise</small>
+    </h2>
+    </div>
+    <div id="content">
+    </div>
+</body>
+<!-- Create按钮 -->
+<script type="text/template" id="tpl-createBtn">
+    <button type='button' class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id='createBtn'> <%= btnValue%>
+        <span class="caret"></span>
+    </button>
+</script>
+<script type="text/template" id="tpl-eleMenu">
+    <ul id="btnMenu">
+        <%_.each(obj,function(e,i){%>
+            <li>
+                <a href="#" class="dropdown-menu-<%= e.id%>" data-id="<%= e.id%>">
+                    <%= e.text%>
+                </a>
+            </li>
+            <%})%>
+    </ul>
+</script>
+<script type="text/template" id="tpl-popupMenu">
+    <% var data = obj.data, eleType = obj.eleType;%>
+        <ul id="pop-<%=eleType%>">
+            <% _.each(data,function(e,i){%>
+                <li>
+                    <a href="#" class="actions-item <%=e.id%>" title="<%=e.title%>" value="<%=e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+</script>
+
+</html>
