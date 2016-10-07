@@ -12,9 +12,8 @@ h1 {
   left: 165px
 }
 
-#create-button {
+#create-new-button {
   position: relative;
-  left: 100px;
 }
 
 .other-button {
@@ -26,38 +25,40 @@ h1 {
   position: relative;
   left: 390px;
 }
-
-#new-item {
-  position: relative;
-  top: 50px;
-}
-        
-#new-item ul li a {   
+     
+ul li a {   
   display:block;   
   width:150px;   
   height:28px;   
   line-height:28px;   
   text-align:center;   
   font-size:14px;  
-  }  
-    
-#new-item ul {  
+}  
+  
+ul {  
   list-style: none; 
   display:none;   
   position:absolute;
   float:none;
-  }  
-    
-    
-#new-item ul li{   
+  z-index: 3;
+}  
+  
+  
+ul li{   
   width:150px;
   display:block;    
   background:#eee;   
   margin-left:2px;
+
+}  
   
-  }  
-    
-#new-item ul li a:hover {   
+ul li a:hover {   
   background:#333;   
   color:#fff;  
-  }  
+}  
+
+#new-item {
+  position: relative;
+  top: 50px;
+}
+

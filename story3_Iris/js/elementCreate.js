@@ -1,13 +1,13 @@
-function createNewElement() {
-    var value=getSelectedValue();
+function createNewElement(element) {
+    list.style.display="";
     var newElement = null;
-    if(value==="table") {
+    if(element==="table") {
         newElement = createNewTable();
-    } else if(value==="button"){
+    } else if(element==="button"){
         newElement = createButton();
-    } else if(value==="input"){
+    } else if(element==="input"){
         newElement = createInputText();
-    } else if(value==="div") {
+    } else if(element==="DIV") {
         newElement = createDIV();
     }
 
@@ -23,7 +23,6 @@ function createNewTable() {
     itemDIV.appendChild(table);
     return table;         
 };
-
 
 function createButton() {
     var button=document.createElement("button");

@@ -2,21 +2,19 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>story2</title>
+        <title>story3</title>
         <link rel="stylesheet" type="text/css" href="..\css\theme.css" />
     </head>
     <body>
-        <h1>Story2|Iris Zhang</h1>
-        <div id="app">
-            <a>Please select an element...</a>
-            <p></p>
-            <select name="elements" id="current-element">
-                <option value="table">Table</option>
-                <option value="button">Button</option>
-                <option value="input">Input Text</option>
-                <option value="div">DIV</option>
-            </select> 
-            <button id="create-button" type="button" onclick="createNewElement()">Create</button>
+        <h1>Story3|Iris Zhang</h1>
+        <div id="app"> 
+            <button id="create-new-button" type="button">Create</button>
+            <ul id="create-list">  
+                <li><a href="#" onclick="createNewElement('table')">Table</a></li>  
+                <li><a href="#" onclick="createNewElement('button')">Button</a></li> 
+                <li><a href="#" onclick="createNewElement('input')">Input</a></li>  
+                <li><a href="#" onclick="createNewElement('DIV')">DIV</a></li>
+            </ul>  
         </div>
 
         <div id="new-item">  
