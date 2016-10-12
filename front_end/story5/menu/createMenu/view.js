@@ -77,7 +77,7 @@ define(function () {
             $.when($.ajax({ url: url[e.currentTarget.id].data, type: "get" }),
                 $.ajax({ url: url[e.currentTarget.id].action, type: "get" }))
                 .done(function (json1, json2) {
-                    var item = $("<div></div>");
+                    var item = $("<div class='col-xs-4'></div>");
                     var itemModel = new Models[e.currentTarget.id]({
                         data: json1[0].data,
                         action: json2[0].data

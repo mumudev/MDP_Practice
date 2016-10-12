@@ -24,10 +24,12 @@ define(function () {
         },
         hoverOut: function(e){
             var item_name = $(e.target).attr("data-id");
+            $("#count-"+item_name).html("");
             $(item_name + ".item").removeClass("hover");
         },
         hover: function(e){
             var item_name = $(e.target).attr("data-id");
+            $("#count-"+item_name).html($(item_name + ".item").length);
             $(item_name + ".item").addClass("hover");
         }
         
