@@ -15182,7 +15182,8 @@
 	        className: "item-button",
 	        model: null,
 	        events: {
-	            "click .item": "select"
+	            "mouseover rect": "hover",
+	            "mouseout rect": "hoverOut"
 	        },
 
 	        initialize: function (options) {
@@ -15190,12 +15191,21 @@
 	            this.model = options.model;
 	            this.render();
 	            this.listenTo(this.model, 'change', this.render);
+	            this.on('all', this.render);
 	        },
 
 	        render: function () {
-	            $(this.el).html(this.template({data:this.model.get("itemList")}));
+	            $(this.el).html(this.template({data:this.model.get("itemList"),widget_width:$(this.el).width()}));
 	        },
-
+	        hoverOut: function(e){
+	            var item_name = $(e.target).attr("data-id");
+	            $(item_name + ".item").removeClass("hover");
+	        },
+	        hover: function(e){
+	            var item_name = $(e.target).attr("data-id");
+	            $(item_name + ".item").addClass("hover");
+	        }
+	        
 	    });
 	    return View;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -15206,7 +15216,7 @@
 /***/ 45:
 /***/ function(module, exports) {
 
-	module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"500\" height=\"320\">\r\n<% \r\n    var count = data.div+data.button\r\n    +data.image+data.inputText+data.table;\r\n    var buttonHeight=0;\r\n    var divHeight=0;\r\n    var imageHeight=0;\r\n    var inputTextHeight=0;\r\n    var tableHeight=0;\r\n    if(count!==0){\r\n        buttonHeight=parseInt(data.button*300/count);\r\n        divHeight=parseInt(data.div*300/count);\r\n        imageHeight=parseInt(data.image*300/count);\r\n        inputTextHeight=parseInt(data.inputText*300/count);\r\n        tableHeight=parseInt(data.table*300/count);\r\n    }\r\n%>\r\n    \r\n    <rect width=\"90\" height=\"<%=buttonHeight%>\" \r\n    x=\"0\" y=\"<%=300-buttonHeight%>\" \r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"25\" y=\"320\" fill=\"red\">button</text>\r\n\r\n    <rect width=\"90\" height=\"<%=divHeight%>\" \r\n    x=\"100\" y=\"<%=300-divHeight%>\" \r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"125\" y=\"320\" fill=\"red\">div</text>\r\n\r\n    <rect width=\"90\" height=\"<%=imageHeight%>\" \r\n    x=\"200\" y=\"<%=300-imageHeight%>\" \r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"225\" y=\"320\" fill=\"red\">image</text>\r\n\r\n    <rect width=\"90\" height=\"<%=inputTextHeight%>\" \r\n    x=\"300\" y=\"<%=300-inputTextHeight%>\" \r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"325\" y=\"320\" fill=\"red\">inputText</text>\r\n\r\n    <rect width=\"90\" height=\"<%=tableHeight%>\" \r\n    x=\"400\" y=\"<%=300-tableHeight%>\" \r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"425\" y=\"320\" fill=\"red\">table</text>\r\n</svg>";
+	module.exports = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100%\" height=\"320\">\r\n<% \r\n    var count = data.div+data.button\r\n    +data.image+data.inputText+data.table;\r\n    var buttonHeight=0;\r\n    var divHeight=0;\r\n    var imageHeight=0;\r\n    var inputTextHeight=0;\r\n    var tableHeight=0;\r\n    if(count!==0){\r\n        buttonHeight=parseInt(data.button*300/count);\r\n        divHeight=parseInt(data.div*300/count);\r\n        imageHeight=parseInt(data.image*300/count);\r\n        inputTextHeight=parseInt(data.inputText*300/count);\r\n        tableHeight=parseInt(data.table*300/count);\r\n    }\r\n%>\r\n    \r\n    <rect class=\"col-xs-2\" height=\"<%=buttonHeight%>\" \r\n    x=\"0\" y=\"<%=300-buttonHeight%>\" data-id=\"button\"\r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"<%=widget_width*0.06%>\" y=\"320\" fill=\"red\">button</text>\r\n\r\n    <rect class=\"col-xs-2\" height=\"<%=divHeight%>\" \r\n    x=\"<%=widget_width*0.2%>\" y=\"<%=300-divHeight%>\"  data-id=\"div\"\r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"<%=widget_width*0.28%>\" y=\"320\" fill=\"red\">div</text>\r\n\r\n    <rect class=\"col-xs-2\" height=\"<%=imageHeight%>\" \r\n    x=\"<%=widget_width*0.4%>\" y=\"<%=300-imageHeight%>\"  data-id=\"img\"\r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"<%=widget_width*0.48%>\" y=\"320\" fill=\"red\">image</text>\r\n\r\n    <rect class=\"col-xs-2\" height=\"<%=inputTextHeight%>\" \r\n    x=\"<%=widget_width*0.6%>\" y=\"<%=300-inputTextHeight%>\"  data-id=\"input\"\r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"<%=widget_width*0.65%>\" y=\"320\" fill=\"red\">inputText</text>\r\n\r\n    <rect class=\"col-xs-2\" height=\"<%=tableHeight%>\" \r\n    x=\"<%=widget_width*0.8%>\" y=\"<%=300-tableHeight%>\"  data-id=\"table\"\r\n    style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)\" />\r\n    <text x=\"<%=widget_width*0.88%>\" y=\"320\" fill=\"red\">table</text>\r\n</svg>";
 
 /***/ },
 

@@ -104,10 +104,6 @@ h1 {}
     /*width: 200px;*/
 }
 
-.div:hover {
-    border: 1px solid;
-}
-
 .selected {
     border: 2px solid blue;
 }

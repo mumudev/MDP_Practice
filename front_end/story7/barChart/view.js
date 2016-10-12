@@ -7,7 +7,8 @@ define(function () {
         className: "item-button",
         model: null,
         events: {
-            "click .item": "select"
+            "mouseover rect": "hover",
+            "mouseout rect": "hoverOut"
         },
 
         initialize: function (options) {
@@ -15,12 +16,21 @@ define(function () {
             this.model = options.model;
             this.render();
             this.listenTo(this.model, 'change', this.render);
+            this.on('all', this.render);
         },
 
         render: function () {
-            $(this.el).html(this.template({data:this.model.get("itemList")}));
+            $(this.el).html(this.template({data:this.model.get("itemList"),widget_width:$(this.el).width()}));
         },
-
+        hoverOut: function(e){
+            var item_name = $(e.target).attr("data-id");
+            $(item_name + ".item").removeClass("hover");
+        },
+        hover: function(e){
+            var item_name = $(e.target).attr("data-id");
+            $(item_name + ".item").addClass("hover");
+        }
+        
     });
     return View;
 });
