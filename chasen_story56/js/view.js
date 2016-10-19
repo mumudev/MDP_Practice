@@ -48,8 +48,8 @@ var elements = Backbone.View.extend({
         this.modelTable = new menuSampleModel(this.dataUrl.get("sampleDatatable"));
         this.modelDiv = new menuSampleModel(this.dataUrl.get("sampleDatadiv"));
         this.modelImage = new menuSampleModel(this.dataUrl.get("sampleDataimage"));
-        // this.model = {};
-        // this.listenTo(self.model, "change", function() {
+        // this.modelButton = {};
+        // this.listenTo(self.modelButton, "change:data", function() {
         //     console.log("Change!");
         //     self.render.call(self, self.eletype);
         // });
