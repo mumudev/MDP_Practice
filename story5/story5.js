@@ -57,7 +57,6 @@ $(function() {
             this.model = new options.model();
             this.model.set({
                 fontSize: '16px',
-                curTemplate: '',
             });
 
             this.bindEvents();
@@ -74,7 +73,7 @@ $(function() {
             $('#create').on('click',
             function() {
 
-                $('#elementsMenu').toggle();
+                $('#elementsMenu').show();
 
             });
 
@@ -110,7 +109,7 @@ $(function() {
                     top: e.clientY + scrollTop + 'px',
                     left: e.clientX + 'px'
                 },
-                $(this).hasClass('box-selected'), $(this));
+                $(this));
 
             });
 
@@ -127,17 +126,14 @@ $(function() {
         createElements: function(eleType) {
             var tplDom = this.model.get('tplDom') || {};
             var templateData = this.model.get('templateData') || {};
-            if (!tplDom[eleType]) {
-                var renderMethod = this.renderTpl(eleType);
-                tplDom[eleType] = renderMethod(templateData[eleType]);
-                this.model.get('tplDom', tplDom);
-                tplDom[eleType].attr('tpl', eleType);
-                $('#div1').append(tplDom[eleType]);
-            } else {
-                $('#div1').append(tplDom[eleType]);
-            }
+            var renderMethod = this.renderElements(eleType);
+            tplDom[eleType] = renderMethod(templateData[eleType]);
+            this.model.get('tplDom', tplDom);
+            tplDom[eleType].attr('tpl', eleType);
+            $('#div1').append(tplDom[eleType]);
+
         },
-        renderTpl: function(eleType) {
+        renderElements: function(eleType) {
             var self = this;
             var method = {
                 table: self.addTable,
@@ -149,6 +145,7 @@ $(function() {
             return method[eleType];
         },
         addTable: function(data) {
+
             var table = document.createElement('table');
             var tt = "";
             for (var i = 0; i < data.rows; i++) {
@@ -171,7 +168,9 @@ $(function() {
             }
             table.innerHTML = tt;
             return $(table).addClass("table table-bordered table-striped");
+
         },
+
         addDiv: function(data) {
             var div = document.createElement('div');
             div.innerHTML = data.text;
@@ -196,28 +195,21 @@ $(function() {
             }).addClass('img-circle');
         },
 
-        // $('.dropdown-menu').hide();
         showAcitionMenu: function(eleType, position) {
             $('#Action-' + eleType).css(position).show();
         },
-        createMenu: function(eleType, position, isVisible, curDom) {
-            this.model.set('curDom', $(curDom));
-            this.model.set('cureleType', eleType);
+        // create action Menu
+        createMenu: function(eleType, position, curDom) {
             var actView = this.model.get('actView') || {};
             if (!actView[eleType]) {
                 actView[eleType] = new actionsView({
                     eleType: eleType,
                     position: position
                 });
-                actView[eleType].curDom = $(curDom);
             } else {
-                if (isVisible) {
-                    actView[eleType].curDom = $(curDom);
-                    this.showAcitionMenu(eleType, position);
-                } else {
-                    actView[eleType].curDom = null;
-                }
+                this.showAcitionMenu(eleType, position);
             }
+            actView[eleType].curDom = $(curDom);
             this.model.set('actView', actView);
         }
 
@@ -280,8 +272,6 @@ $(function() {
             function() {
                 $('[name="action"]').hide();
             });
-            // hidePopUp:function(){
-            //    $('.dropdown-menu').hide();
         },
         delete: function(ele) {
             ele.remove();
@@ -295,10 +285,12 @@ $(function() {
             ele.css('color', this.changeColor());
         },
         increaseFontSize: function(ele) {
+            var fontSize = ele.css('font-size');
             fontSize = parseInt(fontSize) + 2;
             ele.css('fontSize', fontSize + 'px');
         },
         decreaseFontSize: function(ele) {
+            var fontSize = ele.css('font-size');
             fontSize = parseInt(fontSize) - 2;
             ele.css('fontSize', fontSize + 'px');
         },
@@ -311,5 +303,5 @@ $(function() {
     new appView({
         model: appModel,
     });
-    var fontSize = "16px";
+
 });
