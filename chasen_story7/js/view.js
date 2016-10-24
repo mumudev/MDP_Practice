@@ -38,20 +38,18 @@ var menuTypeView = Backbone.View.extend({
 
 var elements = Backbone.View.extend({
     tagName: "div",
-    initialize: function() {
-        this.el = document.getElementById("contents_p");
+    initialize: function(objs) {
+        //this.el = document.getElementById("contents_p");
         this.dataUrl = new dataUrlModel();
         var self = this;
-        this.operateView = new menuOperateView({ el: $(".container") });
-        console.log("~~~~~~~~~~~~");
-        console.log(this.operateView.counter);
-        this.eleCounter = this.operateView.counter;
+        this.eleCounter = this.model;
+        this.operateView = objs.operateView;
         this.modelButton = new menuSampleModel(this.dataUrl.get("sampleDatabutton"));
         this.modelInputText = new menuSampleModel(this.dataUrl.get("sampleDatainputText"));
         this.modelTable = new menuSampleModel(this.dataUrl.get("sampleDatatable"));
         this.modelDiv = new menuSampleModel(this.dataUrl.get("sampleDatadiv"));
         this.modelImage = new menuSampleModel(this.dataUrl.get("sampleDataimage"));
-        this.listenTo(this.eleCounter, "change", this.renderSVG);
+        //this.listenTo(this.eleCounter, "change", this.renderSVG);
         // this.modelButton = {};
         // this.listenTo(self.modelButton, "change:data", function() {
         //     console.log("Change!");
@@ -63,14 +61,6 @@ var elements = Backbone.View.extend({
             self.render.call(self, self.eletype);
         });
 
-    },
-    renderSVG: function() {
-        console.log(this.eleCounter.get("button") * 20 + "px");
-        $("svg rect.rect_button").css("height", (this.eleCounter.get("button") * 20 + 0.5) + "px");
-        $("svg rect.rect_table").css("height", this.eleCounter.get("table") * 20 + 0.5 + "px");
-        $("svg rect.rect_input").css("height", this.eleCounter.get("inputText") * 20 + 0.5 + "px");
-        $("svg rect.rect_div").css("height", this.eleCounter.get("div") * 20 + 0.5 + "px");
-        $("svg rect.rect_image").css("height", this.eleCounter.get("image") * 20 + 0.5 + "px");
     },
     render: function(eletype) {
         // var content = document.getElementById("contents_p");
@@ -237,8 +227,7 @@ var elements = Backbone.View.extend({
 var menuOperateView = Backbone.View.extend({
     counter: {},
     initialize: function() {
-        this.$el = $("div.menu_act");
-        this.counter = new eleCounterModel();
+        this.counter = this.model;
         this.dataUrl = new dataUrlModel();
         this.modelButton = new menuOperateModel(this.dataUrl.get("menuOperatebutton"));
         this.modelInputText = new menuOperateModel(this.dataUrl.get("menuOperateinputText"));
@@ -282,16 +271,16 @@ var menuOperateView = Backbone.View.extend({
 
     _delete: function() {
         //$(selElement).remove();
-            selElement.parentNode.removeChild(selElement);
-            var deltype = selElement.tagName.toLowerCase();
-            if (deltype == "img") {
-                self.counter.set("image", (self.counter.get("image") === 0 ? 0 : self.counter.get("image") - 1));
-            } else if (deltype == "input") {
-                self.counter.set("inputText", (self.counter.get("inputText") === 0 ? 0 : self.counter.get("inputText") - 1));
-            } else {
-                self.counter.set("" + deltype, (self.counter.get("" + deltype) === 0 ? 0 : self.counter.get("" + deltype) - 1));
-            }
-            cancel.cancelMenu();
+        selElement.parentNode.removeChild(selElement);
+        var deltype = selElement.tagName.toLowerCase();
+        if (deltype == "img") {
+            self.counter.set("image", (self.counter.get("image") === 0 ? 0 : self.counter.get("image") - 1));
+        } else if (deltype == "input") {
+            self.counter.set("inputText", (self.counter.get("inputText") === 0 ? 0 : self.counter.get("inputText") - 1));
+        } else {
+            self.counter.set("" + deltype, (self.counter.get("" + deltype) === 0 ? 0 : self.counter.get("" + deltype) - 1));
+        }
+        cancel.cancelMenu();
     },
     backcolor: function() {
         selElement.style.backgroundColor = "rgb(" + Math.round(Math.random() * 255) +
@@ -338,6 +327,25 @@ var menuOperateView = Backbone.View.extend({
             var newOne = $('<input class="head_button menu_button btn btn-info" type="button" title="' + actArray[i].title + '"value="' + actArray[i].text + '">');
             this.$el.append(newOne);
         }
+    }
+
+});
+
+
+var SVGView = Backbone.View.extend({
+    initialize: function() {
+        //this.$el = $("" + selector_str);
+        //this.eleCounter = _counterModel;
+        this.eleCounter = this.model;
+        this.listenTo(this.eleCounter, "change", this.render);
+    },
+    render: function() {
+        console.log(this.eleCounter.get("button") * 20 + "px");
+        $("svg rect.rect_button").css("height", (this.eleCounter.get("button") * 20 + 0.5) + "px");
+        $("svg rect.rect_table").css("height", this.eleCounter.get("table") * 20 + 0.5 + "px");
+        $("svg rect.rect_input").css("height", this.eleCounter.get("inputText") * 20 + 0.5 + "px");
+        $("svg rect.rect_div").css("height", this.eleCounter.get("div") * 20 + 0.5 + "px");
+        $("svg rect.rect_image").css("height", this.eleCounter.get("image") * 20 + 0.5 + "px");
     }
 
 });
