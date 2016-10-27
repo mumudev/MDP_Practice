@@ -1,0 +1,67 @@
+h1 {
+  color: black
+}
+
+#font-size-big {
+  position: relative;
+  left: 150px
+}
+
+#font-size-small {
+  position: relative;
+  left: 165px
+}
+
+#create-new-button {
+  position: relative;
+}
+
+.other-button {
+  position: relative;
+  left: 100px;
+}
+
+#label-font-size {
+  position: relative;
+  left: 390px;
+}
+     
+ul li a {   
+  display:block;   
+  width:150px;   
+  height:28px;   
+  line-height:28px;   
+  text-align:center;   
+  font-size:14px;  
+}  
+  
+ul {  
+  list-style: none;    
+  position:absolute;
+  display:none;
+  float:none;
+  z-index: 3;
+}
+  
+ul li{   
+  width:150px;
+  display:block;    
+  background:#eee;   
+  margin-left:2px;
+
+}  
+  
+ul li a:hover {   
+  background:#333;   
+  color:#fff;  
+}  
+
+#new-item {
+  position: relative;
+  top: 50px;
+}
+
+#create-list {
+  display: none;
+  z-index: 10;
+}
