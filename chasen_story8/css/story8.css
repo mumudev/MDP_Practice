@@ -1,0 +1,13 @@
+.menu {
+    width: 200px;
+    display: none;
+    position: absolute;
+}
+
+.rect {
+    fill: #5bc0de;
+    stroke-width: 1;
+    stroke: #5bc0de;
+    height: 0.5px;
+    position: relative;
+}
