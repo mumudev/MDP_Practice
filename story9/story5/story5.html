@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>story5</title>
+    <link rel="stylesheet"  href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="story5/story5.css">
+    <script src="story5/jquery.min.js" type="text/javascript"></script>
+    <script src="story5/underscore.js" type="text/javascript"></script>
+    <script src="story5/backbone.js" type="text/javascript"></script>
+    <script src="story5/story5.js" type="text/javascript"></script>
+    <script src="story5/barChart.js" type="text/javascript" ></script>
+
+    </head>
+
+   
+    <body id="body">
+    <h3 id="h1" align="center">Demo:story10</h3>
+    <div id="div0">
+    <button  class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="create" aria-haspopup="true" >
+      
+          Create
+          <span class="caret"></span>
+        
+        </button>
+<button type='button' id='showLogs' class="btn dropdown-toggle">Get All Logs</button>
+<div id='getLogs'>
+<button id="closeLogs" type="button">Close</button>
+<div id='logs'></div>
+</div>
+
+                <script type="text/template" id="tplElements">
+            <ul id="elementsMenu" class="dropdown-menu" >
+                <%_.each(obj,function(e,i){%>
+                    <li>
+                        <a href="#" class="dropdownMenu-<%= e.id%>" data-id="<%= e.id%>">
+                            <%= e.text%>
+                        </a>
+                    </li>
+                    <%})%>
+            </ul>
+        </script>
+        <div class="clear" id="clear"></div>
+<div id="div1">
+    </div>
+    <script type="text/template" id="tplActions">
+        <% var data = obj.data, eleType = obj.eleType;%>
+        <ul id="Action-<%=eleType%>" class="dropdown-menu" name="action">
+            <% _.each(data,function(e,i){%>
+                <li>
+                    <a href="#" class="actions-<%=e.id%>" title="<%=e.title%>" value="<%=e.id%>">
+                        <%= e.text%>
+                    </a>
+                </li>
+                <%})%>
+        </ul>
+    </script>
+
+    <div id="div2">
+    </div>
+
+<script type="text/template" id="barChart">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width='100%' height='300' viewBox='0 0 800 300' preserveAspectRatio='xMinYMin meet'>
+<text class='title' x='180' y='25' >SVG bar chart</text>
+
+<g  id="tCount" transform="translate(100,55)">
+    <rect id="table" width="<%=TWid%>" height="30"></rect>
+    <text id='tableCount' class='count' x="<%=TWid%>" y="15" dy=".35em"><%=tableCount%></text>
+  </g>
+ 
+   <g transform="translate(100,95)">
+    <rect id="button" width="<%=BWid%>" height="30"></rect>
+    <text id='buttonCount' class='count' x="<%=BWid%>" y="15" dy=".35em"><%=buttonCount%></text>
+  </g>
+  
+  <g transform="translate(100,135)">
+    <rect id="inputText" width="<%=IWid%>" height="30"></rect>
+    <text id='inputTextCount' class='count' x="<%=IWid%>" y="15" dy=".35em"><%=inputCount%></text>
+  </g>
+ 
+  <g transform="translate(100,175)">
+    <rect id="div" width="<%=DWid%>" height="30"></rect>
+    <text id='divCount' class='count' x="<%=DWid%>" y="15" dy=".35em"><%=divCount%></text>
+  </g>
+  
+  <g transform="translate(100,215)">
+    <rect id="img" width="<%=IgWid%>" height="30"></rect>
+    <text id='imgCount' class='count' x="<%=IgWid%>" y="15" dy=".35em"><%=imgCount%></text> 
+  </g>     
+<text class='label' x='0' y='75' >Table:<%=tableCount%></text>
+ <text class='label' x='0' y='115' >Button:<%=buttonCount%></text>
+ <text class='label' x='0' y='155' >Input text:<%=inputCount%></text>
+  <text class='label' x='0' y='195' >Div:<%=divCount%></text>
+  <text class='label' x='0' y='235' >Image:<%=imgCount%></text>
+  </svg>
+  </script>
+    </div>
+  </body>
+
+
+    </html> 

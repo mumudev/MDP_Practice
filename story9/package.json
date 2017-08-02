@@ -1,0 +1,30 @@
+{
+  "name": "story9",
+  "version": "1.0.0",
+  "description": "my test for font-end story",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1"
+  },
+  "scripts": {
+    "test": "make test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limon1sal/story9.git"
+  },
+  "keywords": [
+    "nodeJS"
+  ],
+  "author": "fiona",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/limon1sal/story9/issues"
+  },
+  "homepage": "https://github.com/limon1sal/story9#readme"
+}

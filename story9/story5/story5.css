@@ -1,0 +1,87 @@
+ #create{
+    color:black;
+    font-size:18px;
+/*  background-color:#a7dce0;*/
+    
+}
+#getLogs{
+  width: 800px;
+  background-color: #edc1c0;
+  display:none;
+
+}
+#closeLogs{
+  float:right;
+}
+
+[tpl="button"]{
+    float:left;
+    border: 1px solid #a7dce0;
+}
+[tpl="div"]{
+    float:left;
+    width:500px;
+}
+input{
+    border: 1px solid #a7dce0;
+    float:left;
+    
+
+}
+body{
+    background-color: #fff5f7;
+    padding-left:20px;
+    padding-right: 20px;
+    
+}
+.box-selected{
+    border: 2px solid cyan;
+}
+
+.clear{
+    clear:left;
+}
+td{
+    text-align:center;
+}
+
+.dropdown-menu{
+    background-color: #a7dce0;
+    cursor:pointer;
+}
+img{
+    float:left;
+}
+#elementsMenu{
+    left:20px;
+    top:93px;
+    
+}
+
+
+ rect {
+  fill: #a7dce0;
+}
+
+ .count {
+  fill: none;
+  font: 18px sans-serif;
+  text-anchor: end;
+}
+
+.label{
+  fill: black;
+  font: 18px sans-serif;
+  
+}
+.title{
+  fill: black;
+  font: 20px sans-serif;
+
+}
+svg{
+    border:0.5px solid #a7dce0;
+}
+.selected{
+ border: 2px solid blue;
+}
